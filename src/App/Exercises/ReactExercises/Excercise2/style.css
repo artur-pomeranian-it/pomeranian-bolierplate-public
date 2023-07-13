@@ -1,0 +1,32 @@
+.excercise-2 .button {
+  width: 100%;
+  max-width: 326px;
+  height: 56px;
+  padding: 8px 36px;
+
+  border-radius: 8px;
+  border: 1px solid var(--primary-primary, #FE3756);
+  background: var(--primary-primary, #FE3756);
+  
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 31px;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  transition: transform 200ms ;
+}
+
+.excercise-2 .button:hover {
+  cursor: pointer;
+}
+
+.excercise-2 .button:active {
+  transform: scale(0.95);
+}
+
+.excercise-2 .h1 {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 69px; /* 172.5% */
+}
