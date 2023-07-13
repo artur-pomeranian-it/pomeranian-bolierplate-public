@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './style.css';
 
 export function Excercise3() {
+  const [inputText, setInputText] = useState('');
+  const [placeholderText, setPlaceholderText] = useState('');
+
+  function handleChange(event) {
+    setInputText(event.target.value);
+  }
+
+  function handleClick(event) {
+    setPlaceholderText(placeholderText + ' ' + inputText);
+    setInputText('');
+  }
+
   return (
     <div className="excercise-3">
       <div className="wrapper">
@@ -17,13 +29,15 @@ export function Excercise3() {
             name="text1"
             id="text1_id"
             placeholder="tekst do wpisania"
+            onChange={handleChange}
+            value={inputText}
           />
         </div>
-        <button type="submit" className="button">
+        <button type="submit" className="button" onClick={handleClick}>
           kliknij
         </button>
       </div>
-      <div className="placeholder">Placeholder</div>
+      <div className="placeholder">{placeholderText}</div>
     </div>
   );
 }
