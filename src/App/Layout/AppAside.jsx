@@ -1,5 +1,9 @@
 import { NavLink } from 'react-router-dom';
 
+import { HouseIcon } from '../Components/Icons/HouseIcon';
+import { EditIcon } from '../Components/Icons/EditIcon';
+import { ElementIcon } from '../Components/Icons/ElementIcon';
+
 import './styles/aside.css';
 
 export function AppAside() {
@@ -8,13 +12,21 @@ export function AppAside() {
       <nav>
         <ul>
           <li>
-            <NavLink to="dashboard">Dashboard</NavLink>
+            <NavLink to="dashboard">
+              <HouseIcon className="icon" /> Dashboard
+            </NavLink>
           </li>
           <li>
-            <NavLink to="blocks">Bloki</NavLink>
+            <NavLink to="blocks">
+              <ElementIcon className="icon" />
+              Bloki
+            </NavLink>
           </li>
           <li>
-            <NavLink to="exercises">Ćwiczenia</NavLink>
+            <NavLink to="exercises">
+              <EditIcon className="icon" />
+              Ćwiczenia
+            </NavLink>
           </li>
         </ul>
       </nav>
