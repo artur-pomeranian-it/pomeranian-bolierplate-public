@@ -9,7 +9,7 @@ aside {
 
 aside ul {
   /* Nadpisanie domyślnych styli przeglądarki */
-  padding-inline-start: 1rem;
+  padding-inline-start: 0.5rem;
   list-style: none;
 }
 
@@ -24,18 +24,31 @@ aside li {
 }
 
 aside li a {
-  display: block;
+  display: flex;
   padding: 0.5rem;
   line-height: 27px;
-  text-decoration: none;  
+  text-decoration: none;
+  align-items: center;
+  color: var(--secondary-secondary, #23213D);
+}
+
+a:visited {
+  color: inherit;
 }
 
 .icon {
   margin-right: 1rem;
 }
 
+.icon path {
+  stroke: var(--secondary-secondary, #23213D);
+}
+
 
 aside a.active {
-  background-color: var(--color-primary-blue);
-  color: var(--color-white);
+  color: var(--primary-primary, #FE3756);
+}
+
+aside a.active path {
+  stroke: var(--primary-primary, #FE3756);
 }
