@@ -5,6 +5,7 @@ import { EditIcon } from '../Components/Icons/EditIcon';
 import { ElementIcon } from '../Components/Icons/ElementIcon';
 import { PersonalCardIcon } from '../Components/Icons/PersonalCardIcon';
 import { CalendarIcon } from '../Components/Icons/CalendarIcon';
+import { SettingIcon } from '../Components/Icons/SettingIcon';
 
 import './styles/aside.css';
 
@@ -20,7 +21,7 @@ export function AppAside() {
           </li>
           <li>
             <NavLink to="cv">
-              <PersonalCardIcon className="icon" /> CV
+              <PersonalCardIcon className="icon" /> Moje cv
             </NavLink>
           </li>
           <li>
@@ -39,6 +40,13 @@ export function AppAside() {
             <NavLink to="calendar">
               <CalendarIcon className="icon" />
               Kalendarz
+            </NavLink>
+          </li>
+          <hr></hr>
+          <li>
+            <NavLink to="settings">
+              <SettingIcon className="icon" />
+              Ustawienia
             </NavLink>
           </li>
         </ul>

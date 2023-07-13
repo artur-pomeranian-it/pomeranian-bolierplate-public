@@ -29,11 +29,12 @@ aside li a {
   line-height: 27px;
   text-decoration: none;
   align-items: center;
-  color: var(--secondary-secondary, #23213D);
+  
 }
 
-a:visited {
-  color: inherit;
+aside li a,
+a:visited  {
+  color: var(--secondary-secondary, #23213D);
 }
 
 .icon {
@@ -49,6 +50,6 @@ aside a.active {
   color: var(--primary-primary, #FE3756);
 }
 
-aside a.active path {
+aside a.active .icon path {
   stroke: var(--primary-primary, #FE3756);
 }
