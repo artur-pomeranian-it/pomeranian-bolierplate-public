@@ -3,41 +3,26 @@ import React, { useState } from 'react';
 import './style.css';
 
 export function Block9Excercise1() {
-  const [inputText, setInputText] = useState('');
-  const [placeholderText, setPlaceholderText] = useState('');
-
-  function handleChange(event) {
-    setInputText(event.target.value);
-  }
+  const [clicks, setClicks] = useState(0);
+  const [text, setText] = useState('start');
 
   function handleClick(event) {
-    setPlaceholderText(placeholderText + ' ' + inputText);
-    setInputText('');
+    if (clicks < 5) {
+      setClicks(clicks + 1);
+      setText(`kliknięto ${clicks}`);
+    } else {
+      setText(`gratulacje wyklikałeś przycisk`);
+    }
   }
 
   return (
     <div className="block-9-excercise-1">
       <div className="wrapper">
         <h1 className="h1">Cześć!</h1>
-        <div className="form" action="">
-          <label className="label" htmlFor="text1_id">
-            Wpisz tekst
-          </label>
-          <input
-            className="input"
-            type="text"
-            name="text1"
-            id="text1_id"
-            placeholder="tekst do wpisania"
-            onChange={handleChange}
-            value={inputText}
-          />
-        </div>
         <button type="submit" className="button" onClick={handleClick}>
-          kliknij
+          {text}
         </button>
       </div>
-      <div className="placeholder">{placeholderText}</div>
     </div>
   );
 }
