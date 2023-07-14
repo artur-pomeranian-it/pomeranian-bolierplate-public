@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './style.css';
 
 export function Block9Excercise3() {
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState('A');
   const [answer, setAnswer] = useState('Tak / Nie');
 
   function handleChange(event) {
@@ -18,7 +18,7 @@ export function Block9Excercise3() {
   return (
     <div className="block-9-excercise-3">
       <div className="wrapper">
-        <h1 className="h1">Cześć!</h1>
+        <h1 className="h1">Czy {inputText} jest większe od 10?</h1>
         <input
           className="input"
           type="text"
