@@ -1,0 +1,20 @@
+
+/* combinator selectors */
+.descendant span  {    
+    border-bottom: 1px solid blue;
+}
+.child-selector > .son {
+    border-bottom: 1px solid red;
+}
+.adjacent-sibling + b{
+ color: orange;
+}
+
+
+/* attribute selector */
+.attribute-selector li[id]{
+ color: red;
+}
+.attribute-selector a[href$="com"]{
+    color: pink;
+}
