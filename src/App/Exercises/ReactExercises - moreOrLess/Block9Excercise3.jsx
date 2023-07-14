@@ -4,40 +4,32 @@ import './style.css';
 
 export function Block9Excercise3() {
   const [inputText, setInputText] = useState('');
-  const [placeholderText, setPlaceholderText] = useState('');
+  const [answer, setAnswer] = useState('Tak / Nie');
 
   function handleChange(event) {
-    setInputText(event.target.value);
-  }
+    const text = event.target.value;
+    setInputText(text);
+    const number = parseInt(text, 10);
+    const response = number > 10 ? 'Tak' : 'Nie';
 
-  function handleClick(event) {
-    setPlaceholderText(placeholderText + ' ' + inputText);
-    setInputText('');
+    setAnswer(response);
   }
 
   return (
-    <div className="block-9-excercise-1">
+    <div className="block-9-excercise-3">
       <div className="wrapper">
         <h1 className="h1">Cześć!</h1>
-        <div className="form" action="">
-          <label className="label" htmlFor="text1_id">
-            Wpisz tekst
-          </label>
-          <input
-            className="input"
-            type="text"
-            name="text1"
-            id="text1_id"
-            placeholder="tekst do wpisania"
-            onChange={handleChange}
-            value={inputText}
-          />
-        </div>
-        <button type="submit" className="button" onClick={handleClick}>
-          kliknij
-        </button>
+        <input
+          className="input"
+          type="text"
+          name="text1"
+          id="text1_id"
+          placeholder="tekst do wpisania"
+          onChange={handleChange}
+          value={inputText}
+        />
+        <div className="placeholder">Odpowiedź: {answer}</div>
       </div>
-      <div className="placeholder">{placeholderText}</div>
     </div>
   );
 }
