@@ -1,9 +1,17 @@
-import './styles.css';
+// import './styles.css';
 
 export const SelectorsAndCascade = () => {
   return (
     <div>
       <h1>Selektory i Kaskadowość</h1>
+      <div>
+        UWAGA w pliku
+        <code>
+          /Exercises/HtmlCss/SelectorsAndCascade/SelectorsAndCascade.jsx
+        </code>{' '}
+        zakomentowany jest <code>import './styles.css';</code> jest to po to,
+        żeby style z tego ćwiczenia nie gryzły się z resztą projektu.
+      </div>
       <section>
         <h2>Podstawowe seleltory</h2>
         <ul>
