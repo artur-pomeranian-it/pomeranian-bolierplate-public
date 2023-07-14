@@ -10,8 +10,7 @@
 }
 
 .block-9-excercise-2 .button {
-  width: 100%;
-  max-width: 326px;
+  min-width: 326px;
   height: 56px;
   padding: 8px 36px;
 
@@ -39,38 +38,7 @@
 .block-9-excercise-2 .h1 {
   font-size: 40px;
   font-weight: 500;
-  line-height: 69px; /* 172.5% */
+  line-height: 77; 
+  margin: 0;
 }
 
-
-.block-9-excercise-2 .form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 6px;
-
-}
-
-.block-9-excercise-2 .label {
-  color: var(--text-text-primary, #222);
-  font-weight: 700;
-  line-height: 27px; /* 168.75% */
-  
-}
-
-.block-9-excercise-2 .input {
-  height: 48px;
-  width: 456px;
-  padding: 8px 16px;
-  border: 1px solid var(--grey-300, #C8CBD1);
-  background: #FFF;
-}
-
-.block-9-excercise-2 .input:hover {
-  box-shadow:0 0 4px rgba(0,0,0,0.5);
-}
-
-.block-9-excercise-2 .placeholder {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}

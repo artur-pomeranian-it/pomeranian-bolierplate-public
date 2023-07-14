@@ -3,41 +3,27 @@ import React, { useState } from 'react';
 import './style.css';
 
 export function Block9Excercise2() {
-  const [inputText, setInputText] = useState('');
-  const [placeholderText, setPlaceholderText] = useState('');
-
-  function handleChange(event) {
-    setInputText(event.target.value);
-  }
+  const [display, setDisplay] = useState(false);
+  const [buttonText, setButtonText] = useState('Pokaż');
 
   function handleClick(event) {
-    setPlaceholderText(placeholderText + ' ' + inputText);
-    setInputText('');
+    if (!display) {
+      setButtonText('ukryj');
+    } else {
+      setButtonText('Pokaż');
+    }
+    setDisplay(!display);
   }
 
   return (
     <div className="block-9-excercise-1">
       <div className="wrapper">
         <h1 className="h1">Cześć!</h1>
-        <div className="form" action="">
-          <label className="label" htmlFor="text1_id">
-            Wpisz tekst
-          </label>
-          <input
-            className="input"
-            type="text"
-            name="text1"
-            id="text1_id"
-            placeholder="tekst do wpisania"
-            onChange={handleChange}
-            value={inputText}
-          />
-        </div>
         <button type="submit" className="button" onClick={handleClick}>
-          kliknij
+          {buttonText}
         </button>
+        <div className="placeholder">{display && <p>now you see me</p>}</div>
       </div>
-      <div className="placeholder">{placeholderText}</div>
     </div>
   );
 }
