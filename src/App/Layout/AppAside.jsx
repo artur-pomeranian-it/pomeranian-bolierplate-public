@@ -42,6 +42,9 @@ export function AppAside() {
               Kalendarz
             </NavLink>
           </li>
+          <li>
+            <NavLink to="blog">Blog</NavLink>
+          </li>
           <hr></hr>
           <li>
             <NavLink to="settings">
