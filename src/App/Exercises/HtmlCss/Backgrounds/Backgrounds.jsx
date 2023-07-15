@@ -1,6 +1,5 @@
 import './styles.css';
 import snowWolf from '../../../Images/snow-wolf.png';
-import star from '../../../Images/star.svg';
 
 export const Backgrounds = () => {
   return (
