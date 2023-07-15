@@ -86,9 +86,9 @@ export const ImageFiles = () => {
       </section>
       <section>
         <h2>React Component - Round image</h2>
-        <RoundImage />
-        <RoundImage />
-        <RoundImage />
+        <RoundImage size={150} />
+        <RoundImage size={250} />
+        <RoundImage size={350} />
       </section>
     </article>
   );
