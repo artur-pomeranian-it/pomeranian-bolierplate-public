@@ -1,9 +1,10 @@
+import Author from './Author';
 import './styles.css';
 
 export const Blog = () => {
   return (
     <div className="blog">
-      <h1>&gt; BLOG</h1>
+      <h1>&lt; BLOG</h1>
       <section className="blog-post">
         <div className="date">30-11-2022</div>
         <h2 className="blog-post-header">
@@ -22,8 +23,7 @@ export const Blog = () => {
           cassette from which to enjoy the dulcet tones of everyone from
           Salt-N-Pepa to Rick Astley.
         </p>
-        <div className="author">Radosława Majdan</div>
-        <div className="position">Senior Marketing Specialist</div>
+        <Author />
       </section>
       <section className="blog-post">
         <div className="date">30-11-2022</div>
@@ -34,9 +34,9 @@ export const Blog = () => {
             out of control and at times hard to handle. But if you can’t handle
             me at my worst, then you sure as hell don’t deserve me at my best.
           </q>
+          <div className="quote-author">Marilyn Monroe</div>
         </p>
-        <div className="author">Radosława Majdan</div>
-        <div className="position">Senior Marketing Specialist</div>
+        <Author />
       </section>
       <section className="blog-post">
         <div className="date">30-11-2022</div>
@@ -53,12 +53,17 @@ export const Blog = () => {
           scandals.
         </p>
         <ul>
-          <li>WP.PL 1</li>
-          <li>WP.PL 2</li>
-          <li>ONET.PL</li>
+          <li>
+            <a href="https://wp.pl">WP.PL 1</a>
+          </li>
+          <li>
+            <a href="https://wp.pl">WP.PL 1</a>
+          </li>
+          <li>
+            <a href="https://onet.pl">ONET.PL</a>
+          </li>
         </ul>
-        <div className="author">Radosława Majdan</div>
-        <div className="position">Senior Marketing Specialist</div>
+        <Author />
       </section>
     </div>
   );
