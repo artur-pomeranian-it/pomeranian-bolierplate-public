@@ -6,6 +6,11 @@ export const Colors = () => {
       <h1>Kolory</h1>
       <section>
         <h2>Jak możemy definiować kolory</h2>
+        <small>
+          <a href="https://www.w3schools.com/colors/colors_converter.asp">
+            Color converter
+          </a>
+        </small>
         <ul>
           <li>
             red - colorName <span className="colors-name">example</span>
