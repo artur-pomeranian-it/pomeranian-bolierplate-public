@@ -1,7 +1,7 @@
 import { Colors } from './Colors';
 
 export const blockRouterMetaData = {
-  path: 'some-path-that-you-wants',
+  path: 'css-colors',
   date: '15-07-2023',
   linkLabel: 'Kolory CSS',
   blockNo: 12,
