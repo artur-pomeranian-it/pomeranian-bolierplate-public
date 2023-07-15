@@ -108,6 +108,9 @@
     w najechanym elemencie (hover)
     data się centruje i powiększa
   */
+  .blog-post {
+    overflow: hidden;
+  }
 
   .blog-post:hover .date {
     transform: scale(1.5) translateX(45%);
