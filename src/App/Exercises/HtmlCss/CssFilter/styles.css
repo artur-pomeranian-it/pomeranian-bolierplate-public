@@ -1,0 +1,17 @@
+.css-filter-1 {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+}
+
+.css-filter-2 {
+    filter: blur(1px) saturate(258%) contrast(401%) invert(27%);
+    -webkit-filter: blur(1px) saturate(258%) contrast(401%) invert(27%);
+    -moz-filter: blur(1px) saturate(258%) contrast(401%) invert(27%);
+}
+
+.css-filter-3 {
+    filter: opacity(38%);
+    -webkit-filter: opacity(38%);
+    -moz-filter: opacity(38%);
+}

@@ -38,11 +38,11 @@ a:visited  {
 }
 
 .icon {
-  margin-right: 1rem;
+  margin-right: 16px;
 }
 
 .icon path {
-  stroke: var(--secondary-secondary, #23213D);
+  stroke: var(--secondary-secondary, #ac0f0f);
 }
 
 

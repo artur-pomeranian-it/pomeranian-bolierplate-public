@@ -1,0 +1,5 @@
+.round-image {
+    background-color: yellow;
+    background-image: url('../../Images/snow-wolf.png');
+    background-size: cover;
+}
