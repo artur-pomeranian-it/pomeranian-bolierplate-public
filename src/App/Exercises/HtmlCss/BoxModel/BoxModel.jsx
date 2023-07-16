@@ -132,6 +132,43 @@ export const BoxModel = () => {
           odit, quae officiis minima.
         </div>
       </section>
+      <section className="section-css-units">
+        <h2>Jednostki CSS</h2>
+        <h3>px</h3>
+        <div className="css-units-px">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci rem
+          magni tenetur, modi quibusdam dolore dolores quisquam! Ab, dolorem
+          assumenda aut cupiditate et necessitatibus ullam? Quidem vitae dicta
+          ipsum recusandae.
+        </div>
+        <h3>em</h3>
+        <div className="css-units-em">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci rem
+          magni tenetur, modi quibusdam dolore dolores quisquam! Ab, dolorem
+          assumenda aut cupiditate et necessitatibus ullam? Quidem vitae dicta
+          ipsum recusandae.
+        </div>
+        <h3>rem</h3>
+        <div className="css-units-rem">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci rem
+          magni tenetur, modi quibusdam dolore dolores quisquam! Ab, dolorem
+          assumenda aut cupiditate et necessitatibus ullam? Quidem vitae dicta
+          ipsum recusandae.
+        </div>
+        <h3>%</h3>
+        <div className="css-units-percent">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci rem
+          magni tenetur, modi quibusdam dolore dolores quisquam! Ab, dolorem
+          assumenda aut cupiditate et necessitatibus ullam? Quidem vitae dicta
+          ipsum recusandae.
+        </div>
+        <h3>other...</h3>
+        <h3>Final comments</h3>
+        <div>
+          jakie zachowanie jednostek jest prawidłowe i warto to doprecyzować z
+          UX
+        </div>
+      </section>
     </article>
   );
 };
