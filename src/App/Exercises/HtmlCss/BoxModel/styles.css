@@ -1,0 +1,63 @@
+.testin-box-model {
+    margin: 32px;
+    border: 8px dashed black;    
+    padding: 16px;    
+    background-color: aquamarine;    
+}
+
+.testin-box-model > div {
+    background-color: white;
+    color: white;
+}
+
+.display-inline span {
+    /* domyślnie span ma display = inline więc to nic nie zmienia */
+    display: inline; 
+    background-color: yellow;
+    margin: 16px;
+}
+
+.display-block span {
+    display: block;
+    background-color: green;
+    margin: 16px;
+}
+
+.display-inline-block span {
+    display: inline-block;
+    background-color: plum;
+    margin: 16px;
+}
+
+.display-none {
+    display: none;
+}
+
+.box-sizing-border-box {
+    box-sizing: border-box;
+
+    margin: 16px;
+    padding: 16px;
+    border: 10px solid black;
+
+    width: 300px;
+    height: 200px;
+}
+
+.box-sizing-content-box {
+    box-sizing: content-box;
+    
+    margin: 16px;
+    padding: 16px;
+    border: 10px solid black;
+
+    width: 300px;
+    height: 200px;
+}
+
+.testing-overflow {
+    border: 10px solid black;
+    max-height: 150px;
+    /* overflow-y: hidden; */
+    overflow-y: scroll;
+}
