@@ -1,7 +1,7 @@
 import { Backgrounds } from './Backgrounds';
 
 export const blockRouterMetaData = {
-  path: 'some-path-that-you-wants',
+  path: 'css-background',
   date: '15-07-2023',
   linkLabel: 'Tła',
   blockNo: 12,
