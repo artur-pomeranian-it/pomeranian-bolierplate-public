@@ -41,18 +41,31 @@ export const ArrayRenderToTable = () => {
     },
   ];
 
+  function bandsToTable({ band, yearFormed, albums, mostFamousSong }) {
+    return (
+      <tr key={band}>
+        <td>{band}</td>
+        <td>{yearFormed}</td>
+        <td>{albums}</td>
+        <td>{mostFamousSong}</td>
+      </tr>
+    );
+  }
+
   return (
-    <div>
+    <article>
       <MasterHeader value="Music bands" />
-      <table>
-        <tr>
-          <th>Band</th>
-          <th>Year formed</th>
-          <th>Albums</th>
-          <th>Most famous song</th>
-        </tr>
-        {/* to do  */}
+      <table className="bands-table">
+        <thead>
+          <tr>
+            <th>Band</th>
+            <th>Year formed</th>
+            <th>Albums</th>
+            <th>Most famous song</th>
+          </tr>
+        </thead>
+        <tbody>{bands.map(bandsToTable)}</tbody>
       </table>
-    </div>
+    </article>
   );
 };
