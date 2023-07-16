@@ -61,3 +61,30 @@
     /* overflow-y: hidden; */
     overflow-y: scroll;
 }
+
+.section-css-units > div {
+    border: 5px solid black;
+    width: 350px;
+}
+
+.css-units-px {
+    padding: 32px;
+}
+
+.section-css-units {
+    font-size: 24px;
+}
+
+
+/* M */
+.css-units-em {
+    padding: 2em;
+}
+
+.css-units-rem {
+    padding: 2rem;
+}
+
+.css-units-percent {
+    padding: 2%;
+}
