@@ -1,11 +1,11 @@
 import './styles.css';
 import { StarIcon } from '../../../Components/Icons/StarIcon';
-import { MainHeader } from '../../../Components/MainHeader/MainHeader';
+import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 
 export const TablesTennis = () => {
   return (
     <article>
-      <MainHeader value="Rating" />
+      <MasterHeader value="Rating" />
       <p>Ćwiczenie z tworzenia tabel</p>
       <table className="table-tenis-table">
         <tr>
