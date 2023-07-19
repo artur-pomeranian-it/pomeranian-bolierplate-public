@@ -26,6 +26,7 @@ export const ArrayRendering = () => {
 
   // {React.createElement('div', {}, ['hello'])}
   // {React.createElement('div', { className: 'moja-klasa' }, ['Z klasą'])}
+
   return (
     <div>
       <h1>Renderowanie w Reakcie z tablicy i obiektu </h1>
