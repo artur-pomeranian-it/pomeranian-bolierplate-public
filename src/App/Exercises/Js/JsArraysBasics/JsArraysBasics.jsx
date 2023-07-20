@@ -140,6 +140,114 @@ export const JsArraysBasics = () => {
     console.timeEnd('array-concat-flat');
   }
 
+  function exampleForLoop() {
+    const wynik = [];
+    const tablica = Array(10).fill(2);
+    for (let index = 0; index < tablica.length; index++) {
+      wynik[index] = tablica.at(index);
+      wynik[index] = tablica.at(index) + index;
+      wynik[index] = tablica.at(index) * index;
+    }
+    return wynik;
+  }
+
+  function exampleWhileLoop() {
+    const tablica = Array(10).fill(2);
+    const wynik = [];
+    let index = 0;
+    while (index < tablica.length) {
+      wynik[index] = (tablica[index] + index) * 100;
+      index++;
+    }
+    return wynik;
+  }
+
+  function exampleContinueBreakReturn() {
+    const tablica = Array(10).fill(0); // fill === 0
+    const wynik = [];
+    for (let index = 0; index < tablica.length; index++) {
+      if (index === 4) continue;
+      if (index === 8) break;
+      if (index === 6) return wynik;
+      wynik.push(tablica.at(index) + index);
+    }
+    // jeszcze sortowanie wtedy break;
+    // jak nie ma nic więcej do zrobienia to może być return;
+    return wynik;
+  }
+
+  function exampleForOfLoop() {
+    const tablica = Array(10).fill(2);
+    const wynik = [];
+    for (const element of tablica) {
+      wynik.push(element * 2);
+    }
+    return wynik;
+  }
+
+  // infinity loop
+  // arrays vs objects
+  function exampleLoopsIssues() {
+    const tablica = Array(10).fill(2);
+    const wynik = [];
+    // infinite loop
+    // while (true) {
+    //   console.log('Never ending');
+    // }
+    // let i = 1;
+    // while (i < 100) {
+    //   console.log('Never ending');
+    // }
+
+    // array vs object
+    // const obj = { jeden: 1, dwa: 2, trzy: 3 };
+    for (const item of tablica) {
+      wynik.push(item);
+    }
+    return wynik;
+  }
+
+  function exampleFind() {
+    const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+    const wynik = tablica.find((miasto) => miasto === 'Mexico');
+    return wynik;
+  }
+
+  function exampleFilter() {
+    const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+    const wynik = tablica.filter((city) => city.includes('an'));
+    return wynik;
+  }
+
+  function exampleSort() {
+    const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+    function porownaj(pierwsza, druga) {
+      if (pierwsza === 'Poland') return -10000;
+      if (druga === 'Poland') return +10000;
+      return pierwsza.localeCompare(druga);
+    }
+    // const wynik = tablica.sort(
+    //   (pierwsza, druga) => -pierwsza.localeCompare(druga)
+    // );
+    const wynik = tablica.sort(porownaj);
+    return wynik;
+  }
+
+  function exampleJoin() {
+    const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+    const wynik = tablica.join(', ');
+    return wynik;
+  }
+
+  function exampleReduce() {
+    const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+    function reduceCallback(prev, current) {
+      return (prev += current.length);
+    }
+    const wynik = tablica.reduce(reduceCallback, 0);
+    return wynik;
+  }
+
   // function exampleArraySyntax() {}
   // function exampleAddingValuesToArrays() {
   //   const wynik = [];
@@ -171,6 +279,58 @@ export const JsArraysBasics = () => {
   //   return wynik;
   // }
   // function examplePerformance() {
+  // }
+  // function exampleForLoop() {
+  //   const tablica = Array(10).fill(2);
+  //   const wynik = [];
+  //   return wynik;
+  // }
+  // function exampleWhileLoop() {
+  //   const tablica = Array(10).fill(2);
+  //   const wynik = [];
+  //   return wynik;
+  // }
+  // function exampleContinueBreakReturn() {
+  //   const tablica = Array(10).fill(2);
+  //   const wynik = [];
+  //   return wynik;
+  // }
+  // function exampleForOfLoop() {
+  //   const tablica = Array(10).fill(2);
+  //   const wynik = [];
+  //   return wynik;
+  // }
+  // infinity loop
+  // arrays vs objects
+  // function exampleLoopsIssues() {
+  //   const tablica = Array(10).fill(2);
+  //   const wynik = [];
+  //   return wynik;
+  // }
+  // function exampleFind() {
+  //   const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+  //   const wynik = {};
+  //   return wynik;
+  // }
+  // function exampleFilter() {
+  //   const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+  //   const wynik = {};
+  //   return wynik;
+  // }
+  // function exampleSort() {
+  //   const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+  //   const wynik = {};
+  //   return wynik;
+  // }
+  // function exampleJoin() {
+  //   const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+  //   const wynik = {};
+  //   return wynik;
+  // }
+  // function exampleReduce() {
+  //   const tablica = ['Poland', 'Mexico', 'USA', 'Kanada', 'Italy'];
+  //   const wynik = {};
+  //   return wynik;
   // }
 
   return (
@@ -287,6 +447,101 @@ export const JsArraysBasics = () => {
         </p>
         <p>
           <code>values.forEach(console.log)</code>
+        </p>
+      </section>
+      <section>
+        <h2>Iterowanie po tablicy</h2>
+        <h3>for</h3>
+        <p>
+          Zobacz zawartość <code>function exampleForLoop()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleForLoop())}</code>
+        </p>
+        <h3>while</h3>
+        <p>
+          Zobacz zawartość <code>function exampleWhileLoop()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleWhileLoop())}</code>
+        </p>
+        <h3>continue, break, return</h3>
+        <p>
+          Zobacz zawartość <code>function exampleContinueBreakReturn()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleContinueBreakReturn())}</code>
+        </p>
+        <h3>for...of loop</h3>
+        <p>
+          Zobacz zawartość <code>function exampleForOfLoop()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleForOfLoop())}</code>
+        </p>
+        <h3>issues with loops</h3>
+        <ul>
+          <li>infinity loop</li>
+          <li>arrays vs objects</li>
+        </ul>
+        <p>
+          Zobacz zawartość <code>function exampleLoopsIssues()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleLoopsIssues())}</code>
+        </p>
+      </section>
+      <section>
+        <h2>Array.API</h2>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">
+          Dokumentacja
+        </a>
+        <br />
+        <a href="https://www.w3schools.com/js/js_arrays.asp">
+          Ćwiczenia dodatkowe
+        </a>
+        <p>
+          Wizualizacja <br />
+          <img
+            src="https://i.stack.imgur.com/rPjLb.jpg"
+            alt="funkcje array"
+            width="600"
+          />
+        </p>
+        <h3>find</h3>
+        <p>
+          Zobacz zawartość <code>function exampleFind()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleFind())}</code>
+        </p>
+        <h3>filter</h3>
+        <p>
+          Zobacz zawartość <code>function exampleFilter()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleFilter())}</code>
+        </p>
+        <h3>sort</h3>
+        <p>
+          Zobacz zawartość <code>function exampleSort()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleSort())}</code>
+        </p>
+        <h3>join</h3>
+        <p>
+          Zobacz zawartość <code>function exampleJoin()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleJoin())}</code>
+        </p>
+        <h3>reduce</h3>
+        <p>
+          Zobacz zawartość <code>function exampleReduce()</code>
+        </p>
+        <p>
+          Wynik: <code>{JSON.stringify(exampleReduce())}</code>
         </p>
       </section>
     </article>
