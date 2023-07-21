@@ -71,6 +71,7 @@ export const JsObjectsBasics = () => {
     return {
       obj1,
       obj2,
+      test,
       isObj1Frozen: Object.isFrozen(obj1),
       isObj2Frozen: Object.isSealed(obj2),
     };
