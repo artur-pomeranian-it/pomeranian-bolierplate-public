@@ -6,5 +6,5 @@ export const blockRouterMetaData = {
   linkLabel: 'Blok 20 - Stringi jako tablice',
   blockNo: 20,
   element: <JsStringsAsArrays />,
-  tags: [['arrays', 'strings', 'javascript']],
+  tags: ['arrays', 'strings', 'javascript'],
 };
