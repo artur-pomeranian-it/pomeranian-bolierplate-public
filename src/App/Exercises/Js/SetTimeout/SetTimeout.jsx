@@ -14,26 +14,20 @@ export const SetTimeout = () => {
   const [intervalId, setIntervalId] = useState();
 
   function handleOnClickToggle() {
-    const intId = setInterval(() => {
-      setOtherValue((currentValue) => currentValue + 1);
-    }, 1000);
+    const intId = setInterval(
+      () => setOtherValue((currentValue) => currentValue + 1),
+      1000
+    );
     setIntervalId(intId);
   }
 
   useEffect(() => {
-    return () => {
-      clearInterval(intervalId);
-    };
+    return () => clearInterval(intervalId);
   }, [intervalId]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setProgress(value);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
+    const timeoutId = setTimeout(() => setProgress(value), 3000);
+    return () => clearTimeout(timeoutId);
   }, [value, setProgress]);
 
   return (
