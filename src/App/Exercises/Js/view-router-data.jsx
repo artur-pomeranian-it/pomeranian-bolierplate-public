@@ -9,6 +9,7 @@ import { blockRouterMetaData as JsStringsAsArrays } from './JsStringsAsArrays/ro
 import { blockRouterMetaData as JsObjectsBasics } from './JsObjectsBasics/router-data';
 import { blockRouterMetaData as JsDateTime } from './JsDateTime/router-data';
 import { blockRouterMetaData as Blok22Warmup } from './Blok22Warmup/router-data';
+import { blockRouterMetaData as SetTimeout } from './SetTimeout/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -20,5 +21,6 @@ export const blockRouterMetaData = [
   JsObjectsBasics,
   JsDateTime,
   Blok22Warmup,
+  SetTimeout,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
