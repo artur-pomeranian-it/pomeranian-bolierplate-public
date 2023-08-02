@@ -1,17 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-function getNewMolePosition(currentPosition, tilesNo) {
-  while (true) {
-    const newPosition = getRandomInt(tilesNo - 1);
-    if (currentPosition !== newPosition) {
-      return newPosition;
-    }
-  }
-}
+import { getNewMolePosition } from '../Utils';
 
 export const useMolePosition = (moleOption) => {
   const [molePosition, setMolePosition] = useState();
