@@ -1,0 +1,29 @@
+.mole__tile {
+    width: 104px;
+    height: 104px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 200ms ease-out;
+}
+
+.mole__tile:hover {
+    opacity: 0.9;
+}
+
+.mole__tile--is-mole {
+    background-image: url('./mole.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mole__tile--neutral {
+    background-color: var(--gray-200, #EBEBEB);
+}
+
+.mole__tile--correct {
+    background-color: var(--colors-actions-success-light, #E2FBD7);
+}
+
+.mole__tile--incorrect {
+    background-color: var(--colors-actions-danger-light, #F3AEA8);
+}

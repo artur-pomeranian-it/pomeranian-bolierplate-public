@@ -1,0 +1,17 @@
+.mole__output {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    padding-inline: 36px;   
+    width: 163px;
+
+    border-radius: 8px;
+    border: 1px solid var(--gray-200, #EBEBEB);
+    background: var(--gray-200, #EBEBEB);
+
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: uppercase;    
+}
+
