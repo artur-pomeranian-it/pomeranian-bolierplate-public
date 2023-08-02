@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import { Button, Output, Label, GameResults } from './Components';
-import { GameBoard } from './GameBoard';
+import { GameBoard } from './Features/GameBoard';
 import { formatTime } from './Utils';
+import { MoleTimer } from './Features/MoleTimer';
 import './styles.css';
-import { MoleTimer } from './MoleTimer';
 
 const MINUTA = 10000;
 const DURATIONS = [
@@ -16,7 +16,7 @@ const DURATIONS = [
 const MOLES = [
   { label: '1 kret', molesNo: 1, tiles: 10, timeVisible: 2000 },
   { label: '2 krety', molesNo: 2, tiles: 15, timeVisible: 1000 },
-  { label: '3 krety', molesNo: 3, tiles: 20, timeVisible: 500 },
+  { label: '3 krety', molesNo: 3, tiles: 20, timeVisible: 1000 },
 ];
 
 function getInitialTiles(tilesNo) {

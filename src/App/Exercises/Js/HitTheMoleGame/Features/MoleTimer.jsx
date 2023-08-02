@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Label, Output } from './Components';
-import { formatTime } from './Utils';
+import { Label, Output } from '../Components';
+import { formatTime } from '../Utils';
 
 export const MoleTimer = ({ finish, duration }) => {
   const [timeLeft, setTimeLeft] = useState(duration);
