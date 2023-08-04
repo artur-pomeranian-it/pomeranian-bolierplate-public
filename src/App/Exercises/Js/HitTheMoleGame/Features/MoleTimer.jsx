@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Label, Output } from '../Components';
 import { formatTime } from '../Utils';
 
 export const MoleTimer = ({ finish, duration }) => {
@@ -25,10 +24,5 @@ export const MoleTimer = ({ finish, duration }) => {
     };
   }, []);
 
-  return (
-    <div className="mole__row-container">
-      <Label>CZAS DO KOŃCA</Label>
-      <Output value={formatTime(timeLeft)} />
-    </div>
-  );
+  return formatTime(timeLeft);
 };

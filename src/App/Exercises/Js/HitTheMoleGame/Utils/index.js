@@ -1,7 +1,7 @@
 export function formatTime(time) {
   const timeInSeconds = Math.ceil(time / 1000);
 
-  const m = Math.round(timeInSeconds / 60)
+  const m = Math.floor(timeInSeconds / 60)
     .toString()
     .padStart(2, '0');
 
@@ -9,6 +9,7 @@ export function formatTime(time) {
     .toString()
     .padStart(2, '0');
 
+  // console.log(time, timeInSeconds, m, s);
   return `${m}:${s}`;
 }
 

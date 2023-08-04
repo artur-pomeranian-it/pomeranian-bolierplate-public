@@ -3,7 +3,7 @@ import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import { Button, Output, Label, GameResults, Tile } from './Components';
 import './styles.css';
 
-const MINUTA = 60000;
+const MINUTA = 10000;
 const DURATIONS = [
   { label: '1 minuta', duration: MINUTA },
   { label: '2 minuty', duration: MINUTA * 2 },
@@ -52,6 +52,7 @@ function getNewMolePosition(currentPosition, tilesNo) {
 export const HitTheMoleGame = () => {
   const [status, setStatus] = useState('notStarted');
   const [duration, setDuration] = useState();
+  const [prevDuration, setPrevDuration] = useState();
   const [moleOption, setMoleOption] = useState();
   const [timeLeft, setTimeLeft] = useState();
   const [score, setScore] = useState();
@@ -68,6 +69,7 @@ export const HitTheMoleGame = () => {
       setShowWarning(false);
       setTiles(getInitialTiles(moleOption.tiles));
       setMolePosition(getNewMolePosition(molePosition, moleOption.tiles));
+      setPrevDuration(duration);
       setScore(0);
     } else {
       setShowWarning(true);
@@ -104,6 +106,8 @@ export const HitTheMoleGame = () => {
   useEffect(() => {
     if (status === 'started' && timeLeft <= 0) {
       setStatus('finished');
+      setDuration(undefined);
+      setMoleOption(undefined);
     }
   }, [timeLeft, status]);
 
@@ -124,6 +128,7 @@ export const HitTheMoleGame = () => {
   }, [incorrect]);
 
   useEffect(() => {
+    if (moleOption === undefined) return;
     let timeoutId;
     console.timeEnd(`mole-position`);
     console.time(`mole-position`);
@@ -139,6 +144,12 @@ export const HitTheMoleGame = () => {
     if (index === correct) return 'correct';
     if (index === incorrect) return 'incorrect';
     return 'neutral';
+  }
+
+  function handleStopped() {
+    setStatus('notStarted');
+    setDuration(undefined);
+    setMoleOption(undefined);
   }
 
   return (
@@ -159,7 +170,7 @@ export const HitTheMoleGame = () => {
         {molePosition}
       </div>
       {status === 'finished' && (
-        <GameResults score={score} duration={formatTime(duration)} />
+        <GameResults score={score} duration={formatTime(prevDuration)} />
       )}
 
       {status !== 'started' && (
@@ -203,19 +214,15 @@ export const HitTheMoleGame = () => {
         <>
           <div className="mole__row-container">
             <Label>CZAS DO KOŃCA</Label>
-            <Output value={formatTime(timeLeft)} />
+            <Output>{formatTime(timeLeft)}</Output>
           </div>
           <div className="mole__row-container">
             <Label>WYNIK</Label>
-            <Output value={score} />
+            <Output>{score}</Output>
           </div>
           <div className="mole__row-container">
             <Label>PRZYCISKI STERUJĄCE</Label>
-            <Button
-              value="STOP"
-              variant="tertiary"
-              onClick={() => setStatus('notStarted')}
-            />
+            <Button value="STOP" variant="tertiary" onClick={handleStopped} />
           </div>
         </>
       )}

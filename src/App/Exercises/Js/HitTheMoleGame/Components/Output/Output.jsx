@@ -1,5 +1,5 @@
 import './styles.css';
 
-export const Output = ({ value = 'empty' }) => {
-  return <span className="mole__output">{value}</span>;
+export const Output = ({ children }) => {
+  return <span className="mole__output">{children}</span>;
 };
