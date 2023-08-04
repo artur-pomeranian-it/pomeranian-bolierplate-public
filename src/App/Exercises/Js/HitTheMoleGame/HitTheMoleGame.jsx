@@ -26,8 +26,8 @@ function getInitialTiles(tilesNo) {
 export const HitTheMoleGame = () => {
   const [status, setStatus] = useState('notStarted');
   const [duration, setDuration] = useState();
+  const [prevDuration, setPrevDuration] = useState();
   const [moleOption, setMoleOption] = useState();
-
   const [score, setScore] = useState();
   const [tiles, setTiles] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
@@ -38,6 +38,7 @@ export const HitTheMoleGame = () => {
       setShowWarning(false);
       setTiles(getInitialTiles(moleOption.tiles));
       setScore(0);
+      setPrevDuration(duration);
     } else {
       setShowWarning(true);
     }
@@ -45,6 +46,14 @@ export const HitTheMoleGame = () => {
 
   function finish() {
     setStatus('finished');
+    setMoleOption(undefined);
+    setDuration(undefined);
+  }
+
+  function handleStopped() {
+    setStatus('notStarted');
+    setMoleOption(undefined);
+    setDuration(undefined);
   }
 
   return (
@@ -60,7 +69,7 @@ export const HitTheMoleGame = () => {
         </p>
       )}
       {status === 'finished' && (
-        <GameResults score={score} duration={formatTime(duration)} />
+        <GameResults score={score} duration={formatTime(prevDuration)} />
       )}
 
       {status !== 'started' && (
@@ -109,11 +118,7 @@ export const HitTheMoleGame = () => {
           </div>
           <div className="mole__row-container">
             <Label>PRZYCISKI STERUJĄCE</Label>
-            <Button
-              value="STOP"
-              variant="tertiary"
-              onClick={() => setStatus('notStarted')}
-            />
+            <Button value="STOP" variant="tertiary" onClick={handleStopped} />
           </div>
         </>
       )}
