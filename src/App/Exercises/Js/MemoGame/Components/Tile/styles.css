@@ -1,0 +1,43 @@
+.memo__tile {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid grey;
+    /* background-color: var(--gray-200, #EBEBEB); */
+}
+
+.memo__tile:hover {
+    opacity: 0.9;
+}
+
+
+.memo__letter {    
+    font-family: Poppins;
+    font-size: 5rem;
+    font-weight: 500;
+    line-height: 6rem;
+    text-align: center;
+    transform: scaleX(0);
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    transition: 300ms ease-in ; 
+}
+
+.memo__letter--is-visible {
+    transform: scaleX(1);
+}
+
+.memo__letter--neutral {
+    background-color: var(--gray-200, #EBEBEB);
+}
+
+.memo__letter--correct {
+    background-color: var(--colors-actions-success-light, #E2FBD7);
+}
+
+.memo__letter--incorrect {
+    background-color: var(--colors-actions-danger-light, #F3AEA8);
+}

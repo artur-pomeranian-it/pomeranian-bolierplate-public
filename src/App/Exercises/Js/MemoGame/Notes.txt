@@ -1,0 +1,53 @@
+1) nowy komponent
+    ścieżka: src/App/Exercises/Js/MemoGame
+    nazwa folderu i pliku: MemoGame
+    nazwa linku: 'Gra Memo'
+    route: 'memo'
+    tags: ['gra', 'game', 'memo']
+
+2) kopiujemy z poprzedniego projektu komponenty z folderu Components
+    Button
+    Label
+    Output
+    Reulsts
+    Title
+
+3) przerabiamy class selektory tak żeby było "memeo" zamianst "mole" w nazwach
+
+4) tworzymy stronę z elementami (obecnymi na makietach 1, 2, 3)
+*** js generate aplphabet array ( wszystkie elementy planszy są widoczne)
+
+5) implementujemy
+ - na kliknięcie w start plansza oraz przycisk pass się pojawiają zaś start znika
+ - na kliknięcie w pass przycisk start się pojawiają zaś pass oraz plansza znika
+ - nie można wystartować gry bez wyboru wielkości planszy
+
+6) algorytm tasujący
+
+7) funkcjonalności (Najpierw wersja z domyślnymi 8 elementami, dopiero z wyborem elementów)
+ - przed startem każdej gry (w momencie kliknięcia start) plansza polega tasowaniu aby każda gra była unikatowa
+ - domyślnie ukrywamy wszystkie elementy planszy
+ - w ciągu jednego ruchu gracz może wykonać 2 kliknięcia
+ - pierwsze kliknięcie po prostu odkrywa pole
+ - drugie kliknięcie odrywa pole następnie sprawdza czy poprzednie pole zawierało taki sam znak
+ - jeśli zawierało pozostaje odkryte do końca gry
+ - jeśli nie zawierało markuje się na czerwono na 500ms następnie zakrywa
+ - dodajemy logikę do licznika ruchów jak na makiecie_2 (każdy ruch gracza to 2 kliknięcia)
+ - dodajemy logikę do czas gry (timer) liczony od startu
+ - jeśli użytkownik zgadnie wszystkie pola wyświetlamy informacje: "Gratulacje! Twój wynik to X odsłon w czasie MM:SS"
+ - (pozostawiamy plansze odkrytą, ale pass zmienił się w start)
+ - jeśli użytkownik się poddaj wyświetlamy informacje jak z makiety_4_version_1 tzn ukrywamy planszę i
+ - piszemy informacje "Zgadłeś XX na YY par w czasie MM:SS, w ZZ odsłonach. Powodzenia następnym razem!"
+ - zarówno czas jak i ruchy resetują się podczas końca gry jak i kliknięcie w pass
+ - jeśli gracz wygrał poprzednia rozgrywkę, po kliknięciu w przycisk plansza sie ukrywa az do momentu kliknięcia start
+
+8) wydzielamy komponent Timer
+9) wydzielamy komponent GameBoard
+
+10) Dla chętnych High Score:
+ - dodajemy w momencie ukończenia gry sprawdzenie czy dla aktualnie skończonego zestawu elementów (8/16/20) pobiliśmy rekord
+ - rekord wyliczamy jako ilość ruchów na minutę (60 * ruchy / czasGry W sekundach)
+ - jeśli pobiliśmy rekord dodajemy informacje do wyniku - gratulacje pobiłeś rekord twoje punkty XX poprzedni rekord YY
+ - zapisujemy w zmiennej tylko najlepszy wynik (czas, ruchy oraz rekord) dla danej sekcji
+ - dodajemy przycisk highscore a po jego naciśnięciu wyświetlamy wyniki (forma dowolna zbieżna ze stylem aplikacji)
+ - przycisk znika jeśli gra sie toczy

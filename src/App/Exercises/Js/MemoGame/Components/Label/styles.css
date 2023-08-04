@@ -1,0 +1,10 @@
+.memo__label {
+    color: var(--text-text-primary, #222);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 34px; /* 188.889% */
+    /* Dodać text transform ręcznie */
+    text-transform: uppercase;
+    /* To na sam koniec */
+    flex-basis: 12rem;
+}

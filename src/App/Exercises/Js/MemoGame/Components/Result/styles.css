@@ -1,0 +1,8 @@
+.memo__result {
+    color: var(--text-text-primary, #222);
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 48px; 
+    /* margin-block: 64px; */
+}
