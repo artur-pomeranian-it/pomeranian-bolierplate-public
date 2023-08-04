@@ -214,11 +214,11 @@ export const HitTheMoleGame = () => {
         <>
           <div className="mole__row-container">
             <Label>CZAS DO KOŃCA</Label>
-            <Output value={formatTime(timeLeft)} />
+            <Output>{formatTime(timeLeft)}</Output>
           </div>
           <div className="mole__row-container">
             <Label>WYNIK</Label>
-            <Output value={score} />
+            <Output>{score}</Output>
           </div>
           <div className="mole__row-container">
             <Label>PRZYCISKI STERUJĄCE</Label>

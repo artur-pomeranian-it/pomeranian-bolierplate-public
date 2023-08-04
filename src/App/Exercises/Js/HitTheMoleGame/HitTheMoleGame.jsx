@@ -111,10 +111,15 @@ export const HitTheMoleGame = () => {
 
       {status === 'started' && (
         <>
-          <MoleTimer duration={duration} finish={finish} />
+          <div className="mole__row-container">
+            <Label>CZAS DO KOŃCA</Label>
+            <Output>
+              <MoleTimer duration={duration} finish={finish} />
+            </Output>
+          </div>
           <div className="mole__row-container">
             <Label>WYNIK</Label>
-            <Output value={score} />
+            <Output>{score}</Output>
           </div>
           <div className="mole__row-container">
             <Label>PRZYCISKI STERUJĄCE</Label>
