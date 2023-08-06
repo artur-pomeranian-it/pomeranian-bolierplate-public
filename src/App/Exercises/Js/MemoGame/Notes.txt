@@ -47,7 +47,7 @@
 10) Dla chętnych High Score:
  - dodajemy w momencie ukończenia gry sprawdzenie czy dla aktualnie skończonego zestawu elementów (8/16/20) pobiliśmy rekord
  - rekord wyliczamy jako ilość ruchów na minutę (60 * ruchy / czasGry W sekundach)
- - jeśli pobiliśmy rekord dodajemy informacje do wyniku - gratulacje pobiłeś rekord twoje punkty XX poprzedni rekord YY
+ - jeśli pobiliśmy rekord dodajemy informacje do wyniku - Gratulacje pobiłeś rekord twoje punkty to 60 x Score / czasGry = XX poprzedni rekord to YY
  - zapisujemy w zmiennej tylko najlepszy wynik (czas, ruchy oraz rekord) dla danej sekcji
  - dodajemy przycisk highscore a po jego naciśnięciu wyświetlamy wyniki (forma dowolna zbieżna ze stylem aplikacji)
  - przycisk znika jeśli gra sie toczy

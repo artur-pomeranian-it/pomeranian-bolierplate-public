@@ -10,7 +10,6 @@ export const Timer = ({
 }) => {
   const [time, setTime] = useState(inheritedTime);
   const [intervalId, setIntervalId] = useState();
-  // console.log('Timer rendered');
 
   useEffect(() => {
     setTime(inheritedTime);
@@ -40,9 +39,9 @@ export const Timer = ({
   }, [updateTime, time, shouldUpdateTime]);
 
   return status === 'started' ? (
-    <div className="memo__row-container">
+    <>
       <Label>Czas gry</Label>
-      <Output value={formatTime(time)} />
-    </div>
+      <Output>{formatTime(time)}</Output>
+    </>
   ) : null;
 };

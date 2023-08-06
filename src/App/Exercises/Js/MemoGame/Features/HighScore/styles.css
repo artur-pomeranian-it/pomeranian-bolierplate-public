@@ -1,0 +1,16 @@
+.memo__high-score {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.memo__high-score-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.memo__high-score-table td,
+.memo__high-score-table th{
+    border: 1px solid black;
+    padding: 0.25rem 0.5rem;
+}

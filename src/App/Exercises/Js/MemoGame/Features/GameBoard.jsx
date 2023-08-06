@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Tile } from '../Components';
+import { Tile } from '../Features';
 
 export const GameBoard = ({
   initialTiles,

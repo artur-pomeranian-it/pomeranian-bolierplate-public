@@ -1,23 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import { Button, Output, Label, Result } from './Components';
 import { formatTime, getAlphabet, shuffle } from './Utils';
 import './styles.css';
 import { GameBoard } from './Features/GameBoard';
 import { Timer } from './Features/Timer';
-import { HighScoreMessage } from './Features/HighScoreMessage';
-import { ShowHighScore } from './Features/ShowHighScore';
+import { HighScore } from './Features/HighScore/HighScore';
 
 const ELEMENTS = [2, 16, 20];
 // const CHARACTERS = [...'ABCDEFGHIJ'];
 const characters = getAlphabet(10);
-
-const getFinishedResult = (score, time) =>
-  `Gratulacje! Twój wynik to ${score} odsłon w czasie ${formatTime(time)}!`;
-const getPassedResult = (score, time, found, noOfElements) =>
-  `Zgadłeś ${found / 2} na ${noOfElements / 2} par w czasie ${formatTime(
-    time
-  )}, w ${score} odsłonach. Powodzenia następnym razem!`;
 
 function getInitialTiles(size) {
   const charactersSubSet = characters.slice(0, size / 2);
@@ -31,7 +23,8 @@ function getInitialTiles(size) {
 }
 
 export const MemoGame = () => {
-  const [status, setStatus] = useState('notStarted'); // notStarted || started || passed || finished
+  // notStarted || started || passed || finished
+  const [status, setStatus] = useState('notStarted');
   const [tiles, setTiles] = useState([]);
   const [noOfElements, setNoOfElements] = useState();
   const [prevNoOfElements, setPrevNoOfElements] = useState();
@@ -40,43 +33,30 @@ export const MemoGame = () => {
   const [shouldUpdateTime, setShouldUpdateTime] = useState(false);
   const [score, setScore] = useState(0);
   const [found, setFound] = useState(0);
-  const [resultMessage, setResultMessage] = useState();
 
   function handleStart() {
     if (noOfElements !== undefined) {
       setStatus('started');
       setTiles(getInitialTiles(noOfElements));
       setShowWarning(false);
+      setPrevNoOfElements(noOfElements);
       setTime(0);
       setScore(0);
     } else {
       setShowWarning(true);
     }
   }
+
   function handlePassed() {
     setStatus('passed');
-    setPrevNoOfElements(noOfElements);
     setShouldUpdateTime(true);
+    setNoOfElements(undefined);
   }
-
-  useEffect(() => {
-    if (status === 'finished' || status === 'passed') {
-      setNoOfElements(undefined);
-    }
-  }, [status]);
-
-  useEffect(() => {
-    if (status === 'finished') {
-      setResultMessage(getFinishedResult(score, time));
-    }
-    if (status === 'passed') {
-      setResultMessage(getPassedResult(score, time, found, prevNoOfElements));
-    }
-  }, [found, prevNoOfElements, score, status, tiles, time]);
 
   const setFinished = useCallback(() => {
     setStatus('finished');
     setShouldUpdateTime(true);
+    setNoOfElements(undefined);
   }, []);
 
   const updateTime = useCallback((time) => {
@@ -90,20 +70,32 @@ export const MemoGame = () => {
       <p>
         Gra polegająca na zapamiętywaniu odkrytych kafli i łączeniu ich w pary
       </p>
+
       {showWarning && (
         <p className="memo__warning">
           Wybierz liczbę elementów, żeby zacząć grę
         </p>
       )}
-      {(status === 'finished' || status === 'passed') && (
-        <Result value={resultMessage} />
+
+      {status === 'finished' && (
+        <Result>
+          Gratulacje! Twój wynik to {score} odsłon w czasie {formatTime(time)}!
+        </Result>
+      )}
+
+      {status === 'passed' && (
+        <Result>
+          Zgadłeś {found / 2} na {prevNoOfElements / 2} par w czasie{' '}
+          {formatTime(time)}, w {score} odsłonach. Powodzenia następnym razem!
+        </Result>
       )}
 
       {status === 'finished' && (
-        <HighScoreMessage
-          initialNoOfElements={noOfElements}
-          initialScore={score}
-          initialTime={time}
+        <HighScore
+          noOfElements={prevNoOfElements}
+          gameScore={score}
+          gameTime={time}
+          elements={ELEMENTS}
         />
       )}
 
@@ -127,17 +119,19 @@ export const MemoGame = () => {
         </>
       )}
 
-      <Timer
-        inheritedTime={time}
-        updateTime={updateTime}
-        status={status}
-        shouldUpdateTime={shouldUpdateTime}
-      />
+      <div className="memo__row-container">
+        <Timer
+          inheritedTime={time}
+          updateTime={updateTime}
+          status={status}
+          shouldUpdateTime={shouldUpdateTime}
+        />
+      </div>
       {status === 'started' && (
         <>
           <div className="memo__row-container">
             <Label>Liczba ruchów</Label>
-            <Output value={score} />
+            <Output>{score}</Output>
           </div>
           <div className="memo__row-container">
             <Label>Przyciski sterujące</Label>
@@ -153,7 +147,6 @@ export const MemoGame = () => {
           setFound={setFound}
         />
       )}
-      {status === 'finished' && <ShowHighScore elements={ELEMENTS} />}
     </div>
   );
 };

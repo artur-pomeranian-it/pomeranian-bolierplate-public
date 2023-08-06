@@ -48,8 +48,9 @@ export function shuffle(array) {
 }
 
 export function getPoints(score, time) {
+  const nonZeroTime = time > 1000 ? time : 1000;
   if (score > 0 && time > 0) {
-    const seconds = Math.floor(time / 1000);
+    const seconds = Math.floor(nonZeroTime / 1000);
     return Math.round((60 * score) / seconds);
   }
   return NaN;
