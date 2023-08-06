@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Tile } from '../Features';
+import { Tile } from '../';
 
 export const GameBoard = ({
   initialTiles,
   setScore,
-  setFinished,
+  handleFinished,
   setFound,
 }) => {
   const [tiles, setTiles] = useState(initialTiles);
   const [fisrtClick, setFirstClick] = useState();
   const [secondClick, setSecondClick] = useState();
-  // console.log('Game Board rendered');
+
   function resetIncorrect(index) {
-    setTiles((current) => {
-      const newTiles = [...current];
-      const toBeUpdated = newTiles[index];
-      newTiles[index] = {
-        ...toBeUpdated,
-        isVisible: false,
-        variant: 'neutral',
-      };
-      return newTiles;
-    });
+    setTiles((oldTiles) =>
+      oldTiles.map((tile) =>
+        tile.index === index
+          ? { ...tile, isVisible: false, variant: 'neutral' }
+          : tile
+      )
+    );
   }
 
   useEffect(() => {
@@ -30,26 +27,34 @@ export const GameBoard = ({
 
   useEffect(() => {
     if (fisrtClick !== undefined && secondClick !== undefined) {
-      // console.log(fisrtClick, secondClick);
       setScore((current) => current + 1);
-      setTiles((currentTiles) => {
-        const newTiles = [...currentTiles];
+
+      setTiles((olfTiles) => {
+        const newTiles = [...olfTiles];
         const first = newTiles[fisrtClick];
         const second = newTiles[secondClick];
-        let variant = 'incorrect';
-        if (first.value === second.value) {
-          variant = 'correct';
-        }
+        let variant = first.value === second.value ? 'correct' : 'incorrect';
         newTiles[fisrtClick] = { ...first, variant };
         newTiles[secondClick] = { ...second, variant };
         return newTiles;
       });
+
       setFirstClick(undefined);
       setSecondClick(undefined);
     }
   }, [fisrtClick, secondClick, setScore]);
 
   useEffect(() => {
+    const noOfCorrectElements = tiles.filter(
+      ({ variant }) => variant === 'correct'
+    ).length;
+
+    setFound(noOfCorrectElements / 2);
+
+    if (tiles.length > 0 && noOfCorrectElements === tiles.length) {
+      handleFinished();
+    }
+
     let timeoutIds = [];
     tiles
       .filter(({ variant }) => variant === 'incorrect')
@@ -57,47 +62,25 @@ export const GameBoard = ({
         const timeoutId = setTimeout(resetIncorrect, 500, index);
         timeoutIds.push(timeoutId);
       });
-
-    setFound(tiles.filter(({ variant }) => variant === 'correct').length);
-    if (
-      tiles.length > 0 &&
-      tiles.filter(({ variant }) => variant === 'correct').length ===
-        tiles.length
-    ) {
-      setFinished();
-    }
     return () => timeoutIds.forEach((id) => clearTimeout(id));
-  }, [setFinished, setFound, tiles]);
+  }, [handleFinished, setFound, tiles]);
 
   function handleTileClicked(index) {
     if (tiles.some((tile) => tile.index === index && tile.isVisible)) {
       return;
     }
 
-    if (fisrtClick !== undefined && secondClick !== undefined) {
-      console.log(
-        'Error, both first and scond click are defined',
-        fisrtClick,
-        secondClick
-      );
-    } else if (fisrtClick !== undefined) {
-      if (fisrtClick === index) return;
+    setTiles((oldTiles) =>
+      oldTiles.map((tile) =>
+        tile.index === index ? { ...tile, isVisible: true } : tile
+      )
+    );
+
+    if (fisrtClick !== undefined) {
       setSecondClick(index);
     } else {
       setFirstClick(index);
     }
-
-    setTiles((currentTiles) => {
-      const newTiles = [...currentTiles];
-      const toBeUpdated = newTiles[index];
-
-      newTiles[index] = {
-        ...toBeUpdated,
-        isVisible: true,
-      };
-      // console.log(JSON.stringify(newTiles[index]), fisrtClick, secondClick);
-      return newTiles;
-    });
   }
 
   return (

@@ -3,9 +3,7 @@ import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import { Button, Output, Label, Result } from './Components';
 import { formatTime, getAlphabet, shuffle } from './Utils';
 import './styles.css';
-import { GameBoard } from './Features/GameBoard';
-import { Timer } from './Features/Timer';
-import { HighScore } from './Features/HighScore/HighScore';
+import { GameBoard, Timer, HighScore } from './Features';
 
 const ELEMENTS = [2, 16, 20];
 // const CHARACTERS = [...'ABCDEFGHIJ'];
@@ -53,7 +51,7 @@ export const MemoGame = () => {
     setNoOfElements(undefined);
   }
 
-  const setFinished = useCallback(() => {
+  const handleFinished = useCallback(() => {
     setStatus('finished');
     setShouldUpdateTime(true);
     setNoOfElements(undefined);
@@ -143,7 +141,7 @@ export const MemoGame = () => {
         <GameBoard
           initialTiles={tiles}
           setScore={setScore}
-          setFinished={setFinished}
+          handleFinished={handleFinished}
           setFound={setFound}
         />
       )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
-import { Button, Output, Label, Result, Tile } from './Components';
+import { Button, Output, Label, Result } from './Components';
+import { Tile } from './Features';
 import { formatTime, getAlphabet, shuffle } from './Utils';
 import './styles.css';
 
@@ -8,12 +9,16 @@ const ELEMENTS = [8, 16, 20];
 // const CHARACTERS = [...'ABCDEFGHIJ'];
 const characters = getAlphabet(10);
 
-const getFinishedResult = (score, time) =>
-  `Gratulacje! Twój wynik to ${score} odsłon w czasie ${formatTime(time)}!`;
-const getPassedResult = (score, time, found, noOfElements) =>
-  `Zgadłeś ${found / 2} na ${noOfElements / 2} par w czasie ${formatTime(
-    time
-  )}, w ${score} odsłonach. Powodzenia następnym razem!`;
+function getInitialTiles(size) {
+  const charactersSubSet = characters.slice(0, size / 2);
+  const shuffled = shuffle([...charactersSubSet, ...charactersSubSet]);
+  return shuffled.map((character, index) => ({
+    index,
+    value: character,
+    variant: 'neutral',
+    isVisible: false,
+  }));
+}
 
 export const MemoGame = () => {
   const [status, setStatus] = useState('notStarted'); // notStarted || started || passed || finished
@@ -24,20 +29,8 @@ export const MemoGame = () => {
   const [time, setTime] = useState(0);
   const [score, setScore] = useState(0);
   const [found, setFound] = useState(0);
-  const [resultMessage, setResultMessage] = useState();
   const [fisrtClick, setFirstClick] = useState();
   const [secondClick, setSecondClick] = useState();
-
-  function getInitialTiles(size) {
-    const charactersSubSet = characters.slice(0, size / 2);
-    const shuffled = shuffle([...charactersSubSet, ...charactersSubSet]);
-    return shuffled.map((character, index) => ({
-      index,
-      value: character,
-      variant: 'neutral',
-      isVisible: false,
-    }));
-  }
 
   function handleStart() {
     if (noOfElements !== undefined) {
@@ -56,22 +49,19 @@ export const MemoGame = () => {
   function handlePassed() {
     setStatus('passed');
     setPrevNoOfElements(noOfElements);
+    setNoOfElements(undefined);
   }
+
+  const handleFinished = () => {
+    setStatus('finished');
+    setNoOfElements(undefined);
+  };
 
   useEffect(() => {
     if (status === 'finished' || status === 'passed') {
       setNoOfElements(undefined);
     }
   }, [status]);
-
-  useEffect(() => {
-    if (status === 'finished') {
-      setResultMessage(getFinishedResult(score, time));
-    }
-    if (status === 'passed') {
-      setResultMessage(getPassedResult(score, time, found, prevNoOfElements));
-    }
-  }, [found, prevNoOfElements, score, status, tiles, time]);
 
   useEffect(() => {
     let intervalId;
@@ -85,53 +75,50 @@ export const MemoGame = () => {
   }, [status]);
 
   function resetIncorrect(index) {
-    setTiles((current) => {
-      const newTiles = [...current];
-      const toBeUpdated = newTiles[index];
-      newTiles[index] = {
-        ...toBeUpdated,
-        isVisible: false,
-        variant: 'neutral',
-      };
-      return newTiles;
-    });
+    setTiles((oldTiles) =>
+      oldTiles.map((tile) =>
+        tile.index === index
+          ? { ...tile, isVisible: false, variant: 'neutral' }
+          : tile
+      )
+    );
   }
 
   useEffect(() => {
+    const noOfCorrectElements = tiles.filter(
+      ({ variant }) => variant === 'correct'
+    ).length;
+
+    setFound(noOfCorrectElements / 2);
+
+    if (tiles.length > 0 && noOfCorrectElements === tiles.length) {
+      handleFinished();
+    }
+
     let timeoutIds = [];
     tiles
       .filter(({ variant }) => variant === 'incorrect')
       .forEach(({ index }) => {
-        const timeoutId = setTimeout(resetIncorrect, 1000, index);
+        const timeoutId = setTimeout(resetIncorrect, 500, index);
         timeoutIds.push(timeoutId);
       });
-    setFound(tiles.filter(({ variant }) => variant === 'correct').length);
-    if (
-      tiles.length > 0 &&
-      tiles.filter(({ variant }) => variant === 'correct').length ===
-        tiles.length
-    ) {
-      setStatus('finished');
-    }
     return () => timeoutIds.forEach((id) => clearTimeout(id));
   }, [tiles]);
 
   useEffect(() => {
     if (fisrtClick !== undefined && secondClick !== undefined) {
-      // console.log(fisrtClick, secondClick);
       setScore((current) => current + 1);
-      setTiles((currentTiles) => {
-        const newTiles = [...currentTiles];
+
+      setTiles((olfTiles) => {
+        const newTiles = [...olfTiles];
         const first = newTiles[fisrtClick];
         const second = newTiles[secondClick];
-        let variant = 'incorrect';
-        if (first.value === second.value) {
-          variant = 'correct';
-        }
+        let variant = first.value === second.value ? 'correct' : 'incorrect';
         newTiles[fisrtClick] = { ...first, variant };
         newTiles[secondClick] = { ...second, variant };
         return newTiles;
       });
+
       setFirstClick(undefined);
       setSecondClick(undefined);
     }
@@ -142,30 +129,17 @@ export const MemoGame = () => {
       return;
     }
 
-    if (fisrtClick !== undefined && secondClick !== undefined) {
-      console.log(
-        'Error, both first and scond click are defined',
-        fisrtClick,
-        secondClick
-      );
-    } else if (fisrtClick !== undefined) {
-      if (fisrtClick === index) return;
+    setTiles((oldTiles) =>
+      oldTiles.map((tile) =>
+        tile.index === index ? { ...tile, isVisible: true } : tile
+      )
+    );
+
+    if (fisrtClick !== undefined) {
       setSecondClick(index);
     } else {
       setFirstClick(index);
     }
-
-    setTiles((currentTiles) => {
-      const newTiles = [...currentTiles];
-      const toBeUpdated = newTiles[index];
-
-      newTiles[index] = {
-        ...toBeUpdated,
-        isVisible: true,
-      };
-      // console.log(JSON.stringify(newTiles[index]), fisrtClick, secondClick);
-      return newTiles;
-    });
   }
 
   return (
@@ -179,8 +153,18 @@ export const MemoGame = () => {
           Wybierz liczbę elementów, żeby zacząć grę
         </p>
       )}
-      {(status === 'finished' || status === 'passed') && (
-        <Result value={resultMessage} />
+
+      {status === 'finished' && (
+        <Result>
+          Gratulacje! Twój wynik to {score} odsłon w czasie {formatTime(time)}!
+        </Result>
+      )}
+
+      {status === 'passed' && (
+        <Result>
+          Zgadłeś {found / 2} na {prevNoOfElements / 2} par w czasie{' '}
+          {formatTime(time)}, w {score} odsłonach. Powodzenia następnym razem!
+        </Result>
       )}
 
       {status !== 'started' && (
@@ -207,11 +191,11 @@ export const MemoGame = () => {
         <>
           <div className="memo__row-container">
             <Label>Czas gry</Label>
-            <Output value={formatTime(time)} />
+            <Output>{formatTime(time)}</Output>
           </div>
           <div className="memo__row-container">
             <Label>Liczba ruchów</Label>
-            <Output value={score} />
+            <Output>{score}</Output>
           </div>
           <div className="memo__row-container">
             <Label>Przyciski sterujące</Label>

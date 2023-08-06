@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    background-color: hsla(0, 0%, 50%, 0.144);
+    border-radius: 0.5rem;
 }
 
 .memo__high-score-table {
