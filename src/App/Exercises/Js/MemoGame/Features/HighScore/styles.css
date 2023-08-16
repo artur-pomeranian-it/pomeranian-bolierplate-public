@@ -8,13 +8,25 @@
     border-radius: 0.5rem;
 }
 
+
+.memo__high-score--hide {
+    display: none;
+}
+
+.memo__high-score--show {
+    display: flex;
+}
+
 .memo__high-score-table {
     border-collapse: collapse;
-    border-spacing: 0;
+    border-spacing: 0;    
+    width: 100%;
+    table-layout: fixed;
 }
 
 .memo__high-score-table td,
 .memo__high-score-table th{
     border: 1px solid black;
     padding: 0.25rem 0.5rem;
+    text-align: center;
 }

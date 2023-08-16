@@ -29,7 +29,7 @@ export const MemoGame = () => {
   const [time, setTime] = useState(0);
   const [score, setScore] = useState(0);
   const [found, setFound] = useState(0);
-  const [fisrtClick, setFirstClick] = useState();
+  const [firstClick, setFirstClick] = useState();
   const [secondClick, setSecondClick] = useState();
 
   function handleStart() {
@@ -106,15 +106,15 @@ export const MemoGame = () => {
   }, [tiles]);
 
   useEffect(() => {
-    if (fisrtClick !== undefined && secondClick !== undefined) {
+    if (firstClick !== undefined && secondClick !== undefined) {
       setScore((current) => current + 1);
 
       setTiles((olfTiles) => {
         const newTiles = [...olfTiles];
-        const first = newTiles[fisrtClick];
+        const first = newTiles[firstClick];
         const second = newTiles[secondClick];
         let variant = first.value === second.value ? 'correct' : 'incorrect';
-        newTiles[fisrtClick] = { ...first, variant };
+        newTiles[firstClick] = { ...first, variant };
         newTiles[secondClick] = { ...second, variant };
         return newTiles;
       });
@@ -122,7 +122,7 @@ export const MemoGame = () => {
       setFirstClick(undefined);
       setSecondClick(undefined);
     }
-  }, [fisrtClick, secondClick]);
+  }, [firstClick, secondClick]);
 
   function handleTileClicked(index) {
     if (tiles.some((tile) => tile.index === index && tile.isVisible)) {
@@ -135,7 +135,7 @@ export const MemoGame = () => {
       )
     );
 
-    if (fisrtClick !== undefined) {
+    if (firstClick !== undefined) {
       setSecondClick(index);
     } else {
       setFirstClick(index);

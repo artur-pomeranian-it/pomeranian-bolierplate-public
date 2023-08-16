@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { formatTime, getHighScore, getPoints, setHighScore } from '../../Utils';
 import './styles.css';
-import { Button } from '../../Components';
+
 import { HighScoreTable } from './HighScoreTable';
 
 export const HighScore = ({
@@ -9,8 +9,8 @@ export const HighScore = ({
   gameScore,
   gameTime: time,
   elements,
+  isVisible,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [score] = useState(gameScore);
   const [prevHighScore, setPrevHighScore] = useState();
   const [isNewHighScore, setIsNewHighScore] = useState(false);
@@ -35,13 +35,12 @@ export const HighScore = ({
   }, [noOfElements, score, time]);
 
   return (
-    <div className="memo__high-score">
-      <Button
-        value={isVisible ? 'Hide High Score' : 'Show High Score'}
-        variant={isVisible ? 'secondary' : 'primary'}
-        onClick={() => setIsVisible((current) => !current)}
-      />
-
+    <div
+      className={`memo__high-score memo__high-score--${
+        isVisible ? 'show' : 'hide'
+      }`}
+    >
+      <h3>High score</h3>
       {isVisible && (
         <HighScoreTable
           values={elements.map((el) => {

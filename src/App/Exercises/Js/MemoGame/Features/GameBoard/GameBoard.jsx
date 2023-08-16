@@ -8,7 +8,7 @@ export const GameBoard = ({
   setFound,
 }) => {
   const [tiles, setTiles] = useState(initialTiles);
-  const [fisrtClick, setFirstClick] = useState();
+  const [firstClick, setFirstClick] = useState();
   const [secondClick, setSecondClick] = useState();
 
   function resetIncorrect(index) {
@@ -26,15 +26,15 @@ export const GameBoard = ({
   }, [initialTiles]);
 
   useEffect(() => {
-    if (fisrtClick !== undefined && secondClick !== undefined) {
+    if (firstClick !== undefined && secondClick !== undefined) {
       setScore((current) => current + 1);
 
       setTiles((olfTiles) => {
         const newTiles = [...olfTiles];
-        const first = newTiles[fisrtClick];
+        const first = newTiles[firstClick];
         const second = newTiles[secondClick];
         let variant = first.value === second.value ? 'correct' : 'incorrect';
-        newTiles[fisrtClick] = { ...first, variant };
+        newTiles[firstClick] = { ...first, variant };
         newTiles[secondClick] = { ...second, variant };
         return newTiles;
       });
@@ -42,7 +42,7 @@ export const GameBoard = ({
       setFirstClick(undefined);
       setSecondClick(undefined);
     }
-  }, [fisrtClick, secondClick, setScore]);
+  }, [firstClick, secondClick, setScore]);
 
   useEffect(() => {
     const noOfCorrectElements = tiles.filter(
@@ -76,7 +76,7 @@ export const GameBoard = ({
       )
     );
 
-    if (fisrtClick !== undefined) {
+    if (firstClick !== undefined) {
       setSecondClick(index);
     } else {
       setFirstClick(index);

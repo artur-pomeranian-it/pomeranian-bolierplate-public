@@ -4,6 +4,7 @@ import { Button, Output, Label, Result } from './Components';
 import { formatTime, getAlphabet, shuffle } from './Utils';
 import './styles.css';
 import { GameBoard, Timer, HighScore } from './Features';
+import HighScoreToggle from './Features/HighScore/HighScoreToggle';
 
 const ELEMENTS = [2, 16, 20];
 // const CHARACTERS = [...'ABCDEFGHIJ'];
@@ -31,6 +32,7 @@ export const MemoGame = () => {
   const [shouldUpdateTime, setShouldUpdateTime] = useState(false);
   const [score, setScore] = useState(0);
   const [found, setFound] = useState(0);
+  const [isHighScoreVisible, setIsHighScoreVisible] = useState(false);
 
   function handleStart() {
     if (noOfElements !== undefined) {
@@ -88,15 +90,6 @@ export const MemoGame = () => {
         </Result>
       )}
 
-      {status === 'finished' && (
-        <HighScore
-          noOfElements={prevNoOfElements}
-          gameScore={score}
-          gameTime={time}
-          elements={ELEMENTS}
-        />
-      )}
-
       {status !== 'started' && (
         <>
           <div className="memo__row-container">
@@ -113,6 +106,10 @@ export const MemoGame = () => {
           <div className="memo__row-container">
             <Label>Przyciski sterujące</Label>
             <Button value="START" variant="primary" onClick={handleStart} />
+            <HighScoreToggle
+              isVisible={isHighScoreVisible}
+              setIsVisible={setIsHighScoreVisible}
+            />
           </div>
         </>
       )}
@@ -137,6 +134,15 @@ export const MemoGame = () => {
           </div>
         </>
       )}
+
+      <HighScore
+        noOfElements={prevNoOfElements}
+        gameScore={score}
+        gameTime={time}
+        elements={ELEMENTS}
+        isVisible={isHighScoreVisible}
+      />
+
       {(status === 'started' || status === 'finished') && (
         <GameBoard
           initialTiles={tiles}
