@@ -24,6 +24,7 @@ import { blockRouterMetaData as JsonXMLStorage } from './JsonXMLStorage/router-d
 import { blockRouterMetaData as MemoGame } from './MemoGame/router-data';
 import { blockRouterMetaData as PromiseAndMe } from './promiseAndMe/router-data';
 import { blockRouterMetaData as UseEffectAndPromiseExercise } from './useEffectAndPromiseExercise/router-data';
+import { blockRouterMetaData as AsyncAwait } from './AsyncAwait/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -50,5 +51,6 @@ export const blockRouterMetaData = [
   MemoGame,
   PromiseAndMe,
   UseEffectAndPromiseExercise,
+  AsyncAwait,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
