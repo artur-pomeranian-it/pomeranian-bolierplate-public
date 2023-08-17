@@ -1,0 +1,21 @@
+.async-await button {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    padding: 0.5rem;
+}
+
+.async-await :is(h1, h2, h3) {
+    margin: 0.25rem;
+}
+.async-await h3 {
+    border-top: 1px solid black;
+}
+
+.async-await table {
+    width: 100%;    
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.async-await :is(td, th) {    
+    border: 1px solid black;
+}

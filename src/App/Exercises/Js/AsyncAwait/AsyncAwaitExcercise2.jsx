@@ -15,30 +15,28 @@ function loadUser() {
 function loadUserDetails(userId) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const success = Math.random() > 0.9;
+      const success = Math.random() > 0.5;
       if (success) resolve({ id: userId, age: 30, country: 'Poland' });
-      reject('błąd server: nieudane wyszukanie dla userId: xxx');
+      reject('błąd server: nieudane wyszukanie dla userId: ' + userId);
     }, DELAY);
   });
 }
 
-function loadAllUserData(setValue) {
-  loadUser()
-    .then((user) => [user.name, loadUserDetails(user.id)])
-    .then(([name, detailsPromise]) =>
-      detailsPromise
-        .then((details) =>
-          setValue(`name: ${name}, ${JSON.stringify(details)}`)
-        )
-        .catch(setValue)
-    );
+async function loadAllUserData(setValue) {
+  try {
+    const user = await loadUser();
+    const userData = await loadUserDetails(user.id);
+    setValue(`name: ${user.name}, ${JSON.stringify(userData)}`);
+  } catch (err) {
+    setValue(err);
+  }
 }
-export const UseEffectAndPromiseExercise = () => {
+export const AsyncAwaitExcercise2 = () => {
   const [promiseResult, setPromiseResult] = useState('empty');
 
   return (
     <div className="promise-excercise">
-      <h1>Zadanie useEffect i Promise</h1>
+      <h3>Zadanie useEffect i Promise</h3>
       <button type="button" onClick={() => loadAllUserData(setPromiseResult)}>
         {(2 * DELAY) / SECOND} seconds delay
       </button>
