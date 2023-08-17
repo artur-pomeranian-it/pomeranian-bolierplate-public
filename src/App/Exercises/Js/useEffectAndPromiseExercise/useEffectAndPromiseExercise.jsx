@@ -1,36 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './styles.css';
 
 const SECOND = 1000;
-const DELAY = SECOND * 5;
+const DELAY = SECOND * 1;
 
-const promiseFunction = (abort) => (resolve, reject) => {
-  setTimeout(
-    (abort) => {
-      console.log('Running after timeout with abort:', abort.shouldAbort);
-      abort.shouldAbort ? reject('aborted') : resolve('sukces');
-    },
-    DELAY,
-    abort
-  );
-};
+function loadUser() {
+  return new Promise((resolve, _) => {
+    setTimeout(() => {
+      resolve({ id: 1, name: 'John Doe' });
+    }, DELAY);
+  });
+}
 
+function loadUserDetails(userId) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const success = Math.random() > 0.9;
+      if (success) resolve({ id: userId, age: 30, country: 'Poland' });
+      reject('błąd server: nieudane wyszukanie dla userId: xxx');
+    }, DELAY);
+  });
+}
+
+function loadAllUserData(setValue) {
+  return loadUser()
+    .then((user) => [user.name, loadUserDetails(user.id)])
+    .then(([name, detailsPromise]) =>
+      detailsPromise
+        .then((details) =>
+          setValue(`name: ${name}, ${JSON.stringify(details)}`)
+        )
+        .catch(setValue)
+    );
+}
 export const UseEffectAndPromiseExercise = () => {
   const [promiseResult, setPromiseResult] = useState('empty');
 
-  useEffect(() => {
-    let abort = { shouldAbort: false };
-    const promise = new Promise(promiseFunction(abort));
-    promise.then((message) => setPromiseResult(message)).catch(console.warn);
-
-    return () => (abort.shouldAbort = true);
-  }, []);
-
   return (
-    <div>
+    <div className="promise-excercise">
       <h1>Zadanie useEffect i Promise</h1>
-      <div>5 seconds delay</div>
-      <div>result:{promiseResult}</div>
+      <button type="button" onClick={() => loadAllUserData(setPromiseResult)}>
+        {(2 * DELAY) / SECOND} seconds delay
+      </button>
+      <button type="button" onClick={() => setPromiseResult('cleared')}>
+        Clear
+      </button>
+      <div>result: {promiseResult}</div>
     </div>
   );
 };
