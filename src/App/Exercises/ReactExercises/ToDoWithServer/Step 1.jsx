@@ -12,16 +12,34 @@ import './style.css';
   struktury i je po prostu wyświetlmy
 */
 
+const TODOS = [
+  {
+    id: 1,
+    title: 'Todo 1',
+    createdAt: '2021-05-22T11:20:22.935Z',
+    author: 'Anonymous',
+    isDone: false,
+    note: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, adipisci delectus commodi dolor, nulla a quidem quia ipsa voluptatibus tempore incidunt repudiandae minima. Maiores, deleniti voluptatibus aspernatur facilis quidem voluptate?',
+  },
+  {
+    id: 2,
+    title: 'Todo 2',
+    createdAt: '2022-05-22T11:20:22.935Z',
+    doneDate: '2022-05-22T11:20:22.935Z',
+    author: 'Anonymous',
+    isDone: true,
+    note: 'Register to course',
+  },
+];
+
 const ERROR_FADE_DELAY = 1000; // 1s;
 const ZERO_TASKS_MESSAGE =
   'Brawo! Nie masz aktualnie żadnych zadań do zrealizowania.';
 const GETLIST_ERROR_MESSAGE = 'Przepraszamy. Nie udało się pobrać listy zadań.';
 
-const BASE_URL = 'http://localhost:3333';
-
 export function ToDoWithServer() {
   const [message, setMessage] = useState('');
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(TODOS);
   const [deleteErrors, setDeleteErrors] = useState([]);
   const [completeErrors, setCompleteErrors] = useState([]);
 
@@ -62,25 +80,19 @@ export function ToDoWithServer() {
     return () => clearTimeout(timeoutId);
   }, [deleteErrors]);
 
-  async function handleOnDelete(id) {
-    const requestPath = '/api/todo/' + id;
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    const options = { method: 'DELETE', headers };
-    try {
-      const response = await fetch(BASE_URL + requestPath, options);
-      if (!response.ok) throw new Error(response.status);
+  function handleOnDelete(id) {
+    const success = Math.random() > 0.5;
+    if (success) {
       setTodos((oldToDos) => {
         return oldToDos.filter((todo) => todo.id !== id);
       });
-    } catch (err) {
+    } else {
       setDeleteErrors((errs) => [...errs, id]);
     }
   }
 
   useEffect(() => {
-    if (todos.length === 0 && message !== GETLIST_ERROR_MESSAGE) {
+    if (todos.length === 0) {
       setMessage(ZERO_TASKS_MESSAGE);
     } else {
       if (message === ZERO_TASKS_MESSAGE) {
@@ -90,19 +102,13 @@ export function ToDoWithServer() {
   }, [todos, message]);
 
   function handleRefresh() {
-    const requestPath = '/api/todo';
-    fetch(BASE_URL + requestPath)
-      .then((response) => {
-        if (!response.ok) throw new Error(response.status);
-        setMessage('');
-        return response.json();
-      })
-      .then((data) => {
-        setTodos(data);
-      })
-      .catch((err) => {
-        setMessage(GETLIST_ERROR_MESSAGE);
-      });
+    const success = Math.random() > 0.5;
+    if (success) {
+      setTodos(TODOS);
+      setMessage('');
+    } else {
+      setMessage(GETLIST_ERROR_MESSAGE);
+    }
   }
 
   return (
