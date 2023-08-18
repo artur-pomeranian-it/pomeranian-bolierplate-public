@@ -18,7 +18,8 @@ export class LocalDevAPIClient {
     let error = undefined;
     try {
       const response = await fetch(fullPath, options);
-      if (!response.ok) throw new Error(response.status);
+      if (!response.ok)
+        throw new Error(`${response.status} (${response.statusText})`);
       data = await response.json();
     } catch (err) {
       error = err;
@@ -27,11 +28,11 @@ export class LocalDevAPIClient {
     return [data, error];
   }
 
-  async getAllToDos() {
+  async getAllToDos(signal = undefined) {
     const requestPath = '/api/todo';
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
-    const options = { method: 'GET', headers };
+    const options = { method: 'GET', headers, signal };
     return await this.myFetch(fullPath, options);
   }
 

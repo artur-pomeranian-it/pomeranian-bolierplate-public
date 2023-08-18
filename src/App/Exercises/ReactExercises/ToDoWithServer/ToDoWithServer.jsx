@@ -65,18 +65,29 @@ export function ToDoWithServer() {
     }
   }
 
-  async function getAllToDos() {
-    const [data, error] = await localAPI.getAllToDos();
+  function updateToDos(data, error) {
     if (!error) {
       setTodos(data);
       setIsGetListError(false);
     } else {
+      console.error(error.message);
       setIsGetListError(true);
     }
   }
 
+  async function getAllToDos() {
+    const [data, error] = await localAPI.getAllToDos();
+    updateToDos(data, error);
+  }
+
   useEffect(() => {
-    getAllToDos();
+    let controller = new AbortController();
+    const getAllToDosAsync = (async () => {
+      const [data, error] = await localAPI.getAllToDos(controller.signal);
+      updateToDos(data, error);
+    })();
+    getAllToDosAsync();
+    return () => controller.abort();
   }, []);
 
   function handleRefresh() {
