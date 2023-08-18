@@ -38,8 +38,8 @@ const ZERO_TASKS_MESSAGE =
 const GETLIST_ERROR_MESSAGE = 'Przepraszamy. Nie udało się pobrać listy zadań.';
 
 export function ToDoWithServer() {
-  const [message, setMessage] = useState('');
-  const [todos, setTodos] = useState(TODOS);
+  const [todos, setTodos] = useState([]);
+  const [isGetListError, setIsGetListError] = useState(false);
   const [deleteErrors, setDeleteErrors] = useState([]);
   const [completeErrors, setCompleteErrors] = useState([]);
 
@@ -91,24 +91,22 @@ export function ToDoWithServer() {
     }
   }
 
-  useEffect(() => {
-    if (todos.length === 0) {
-      setMessage(ZERO_TASKS_MESSAGE);
-    } else {
-      if (message === ZERO_TASKS_MESSAGE) {
-        setMessage('');
-      }
-    }
-  }, [todos, message]);
-
-  function handleRefresh() {
+  function getAllToDos() {
     const success = Math.random() > 0.5;
     if (success) {
       setTodos(TODOS);
-      setMessage('');
+      setIsGetListError(false);
     } else {
-      setMessage(GETLIST_ERROR_MESSAGE);
+      setIsGetListError(true);
     }
+  }
+
+  useEffect(() => {
+    getAllToDos();
+  }, []);
+
+  function handleRefresh() {
+    getAllToDos();
   }
 
   return (
@@ -128,7 +126,12 @@ export function ToDoWithServer() {
         ))}
       </div>
       <div className="todo__controls">
-        <div className="todo_message">{message}</div>
+        {isGetListError && (
+          <div className="todo_message">{GETLIST_ERROR_MESSAGE}</div>
+        )}
+        {!isGetListError && todos.length === 0 && (
+          <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
+        )}
         <Button onClick={handleRefresh}>Odśwież widok</Button>
       </div>
       <br />

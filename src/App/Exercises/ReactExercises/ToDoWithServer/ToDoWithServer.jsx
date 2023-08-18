@@ -5,23 +5,20 @@ import { Card } from './Features/Card/Card';
 import './style.css';
 
 /* 
-  Step 1 
-  na podstawie makiet 1A-1C zrobić wygląd listy
-  NIE pobierajmy jeszcze danych w tym ćwiczeniu
-  dodajmy 1-2 rekordy testowe na podstawie ww
-  struktury i je po prostu wyświetlmy
+  Step 2
+  Dodaj GET list
+  Dodaj DELETE item
 */
 
 const ERROR_FADE_DELAY = 1000; // 1s;
 const ZERO_TASKS_MESSAGE =
   'Brawo! Nie masz aktualnie żadnych zadań do zrealizowania.';
 const GETLIST_ERROR_MESSAGE = 'Przepraszamy. Nie udało się pobrać listy zadań.';
-
 const BASE_URL = 'http://localhost:3333';
 
 export function ToDoWithServer() {
-  const [message, setMessage] = useState('');
   const [todos, setTodos] = useState([]);
+  const [isGetListError, setIsGetListError] = useState(false);
   const [deleteErrors, setDeleteErrors] = useState([]);
   const [completeErrors, setCompleteErrors] = useState([]);
 
@@ -79,30 +76,25 @@ export function ToDoWithServer() {
     }
   }
 
-  useEffect(() => {
-    if (todos.length === 0 && message !== GETLIST_ERROR_MESSAGE) {
-      setMessage(ZERO_TASKS_MESSAGE);
-    } else {
-      if (message === ZERO_TASKS_MESSAGE) {
-        setMessage('');
-      }
+  async function getAllToDos() {
+    const requestPath = '/api/todo';
+    try {
+      const response = await fetch(BASE_URL + requestPath);
+      if (!response.ok) throw new Error(response.status);
+      const data = await response.json();
+      setTodos(data);
+      setIsGetListError(false);
+    } catch (err) {
+      setIsGetListError(true);
     }
-  }, [todos, message]);
+  }
+
+  useEffect(() => {
+    getAllToDos();
+  }, []);
 
   function handleRefresh() {
-    const requestPath = '/api/todo';
-    fetch(BASE_URL + requestPath)
-      .then((response) => {
-        if (!response.ok) throw new Error(response.status);
-        setMessage('');
-        return response.json();
-      })
-      .then((data) => {
-        setTodos(data);
-      })
-      .catch((err) => {
-        setMessage(GETLIST_ERROR_MESSAGE);
-      });
+    getAllToDos();
   }
 
   return (
@@ -122,7 +114,12 @@ export function ToDoWithServer() {
         ))}
       </div>
       <div className="todo__controls">
-        <div className="todo_message">{message}</div>
+        {isGetListError && (
+          <div className="todo_message">{GETLIST_ERROR_MESSAGE}</div>
+        )}
+        {!isGetListError && todos.length === 0 && (
+          <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
+        )}
         <Button onClick={handleRefresh}>Odśwież widok</Button>
       </div>
       <br />
