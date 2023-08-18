@@ -1,0 +1,29 @@
+.todo__button {
+    display: inline-block;    
+    height: 56px;
+    padding: 0 36px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+
+    min-width: 163px;
+}
+
+.todo__button:hover {
+    opacity: 0.85;    
+    transition: 200ms;
+}
+
+.todo__button--primary {
+    border: 1px solid var(--primary-primary, #FE3756);
+    background: var(--primary-primary, #FE3756);
+}
+
+.todo__button--secondary {
+    border: 1px solid var(--secondary-secondary, #23213D);
+    background: var(--secondary-secondary, #23213D);
+}

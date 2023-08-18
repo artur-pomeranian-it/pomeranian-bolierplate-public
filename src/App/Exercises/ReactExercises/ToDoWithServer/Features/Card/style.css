@@ -1,0 +1,93 @@
+.todo__card {
+    width: 100%;
+    max-width: 40rem;
+    padding: 1.12rem 1.5rem;    
+
+    border-radius: 0.5rem;
+    border-left: 5px solid var(--gray-300, #C8CBD1);
+    background: var(--background-bg-primary, #FFF);
+    box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.15), 0px 2px 28px 0px rgba(0, 0, 0, 0.12);    
+}
+
+.todo__card {
+    display: grid;
+    grid-template-columns: auto 8.5rem;
+    column-gap: 2rem;
+}
+
+.todo__card--completed {
+    background: var(--gray-300, #C8CBD1);
+    border-left: 5px solid var(--gray-700, #6B7280);
+}
+
+.todo__card * {
+    margin: 0;
+}
+
+.todo__card-header{
+    color: var(--secondary-secondary, #23213D);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 2.125rem;
+}
+
+.todo_card-note {
+    margin-top: 0.75rem;
+}
+
+.todo__card-aside {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;    
+}
+.todo__card-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.todo__card-controls > * {
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+
+.todo__delete{
+    width: 1.625rem;
+    height: 1.625rem;
+}
+.todo__delete--neutral {
+    stroke: #6B7280;
+}
+.todo__delete--error {
+    stroke: #E12B1B;
+}
+
+.todo__complete {
+    width: 1.9;
+    height: 1.5rem;
+}
+.todo__complete--neutral {
+    fill: #6B7280;
+}
+.todo__complete--error {
+    fill: #E12B1B;
+}
+
+.todo__card-message {
+    color: #E12B1B;
+}
+
+.todo__complete--completed {
+    width: 2.7rem;
+    height: 1.9rem;
+    fill: #07C23B;
+}
+
+.todo__card-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.25rem;
+    min-height: 3.25rem;
+}

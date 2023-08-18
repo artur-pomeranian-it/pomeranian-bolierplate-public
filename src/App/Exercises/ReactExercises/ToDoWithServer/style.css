@@ -1,0 +1,28 @@
+.todo {    
+    font-family: 'Poppins', sans-serif;    
+}
+.todo__list {
+    color: var(--gray-700, #6B7280); 
+    font-size: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.62rem;
+}
+
+.todo__controls {
+    margin: 1rem 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todo_message {
+    max-width: 25rem;
+    color: var(--black-black, #000);
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 2.125rem;
+    margin: 2.25rem 0;
+}
