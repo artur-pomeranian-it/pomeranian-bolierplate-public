@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import { Button } from './Components';
 import { Card } from './Features/Card/Card';
-import { LocalDevAPIClient } from '../../../ApiClients/LocalDevApiClient';
 import './style.css';
 
 /* 
@@ -16,8 +15,6 @@ const ZERO_TASKS_MESSAGE =
   'Brawo! Nie masz aktualnie żadnych zadań do zrealizowania.';
 const GETLIST_ERROR_MESSAGE = 'Przepraszamy. Nie udało się pobrać listy zadań.';
 const BASE_URL = 'http://localhost:3333';
-
-const localAPI = new LocalDevAPIClient({ baseURL: BASE_URL });
 
 export function ToDoWithServer() {
   const [todos, setTodos] = useState([]);
@@ -33,14 +30,23 @@ export function ToDoWithServer() {
     return () => clearTimeout(timeoutId);
   }, [completeErrors]);
 
-  async function handleOnComplete(id) {
-    const [newTodo, error] = await localAPI.markAsDone(id);
-    if (!error) {
-      setTodos((oldToDos) =>
-        oldToDos.map((todo) => (todo.id === id ? newTodo : todo))
-      );
+  function handleOnComplete(id) {
+    const success = true || Math.random() > 0.5;
+    if (success) {
+      setTodos((oldToDos) => {
+        return oldToDos.map((todo) => {
+          if (todo.id === id) {
+            return {
+              ...todo,
+              isDone: true,
+              doneDate: new Date().toISOString(),
+            };
+          } else {
+            return todo;
+          }
+        });
+      });
     } else {
-      console.error(error.message);
       setCompleteErrors((errs) => [...errs, id]);
     }
   }
@@ -54,23 +60,31 @@ export function ToDoWithServer() {
   }, [deleteErrors]);
 
   async function handleOnDelete(id) {
-    const [, error] = await localAPI.deleteToDo(id);
-    if (!error) {
+    const requestPath = '/api/todo/' + id;
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    const options = { method: 'DELETE', headers };
+    try {
+      const response = await fetch(BASE_URL + requestPath, options);
+      if (!response.ok) throw new Error(response.status);
       setTodos((oldToDos) => {
         return oldToDos.filter((todo) => todo.id !== id);
       });
-    } else {
-      console.error(error.message);
+    } catch (err) {
       setDeleteErrors((errs) => [...errs, id]);
     }
   }
 
   async function getAllToDos() {
-    const [data, error] = await localAPI.getAllToDos();
-    if (!error) {
+    const requestPath = '/api/todo';
+    try {
+      const response = await fetch(BASE_URL + requestPath);
+      if (!response.ok) throw new Error(response.status);
+      const data = await response.json();
       setTodos(data);
       setIsGetListError(false);
-    } else {
+    } catch (err) {
       setIsGetListError(true);
     }
   }
@@ -101,14 +115,12 @@ export function ToDoWithServer() {
       </div>
       <div className="todo__controls">
         {isGetListError && (
-          <>
-            <div className="todo_message">{GETLIST_ERROR_MESSAGE}</div>
-            <Button onClick={handleRefresh}>Odśwież widok</Button>
-          </>
+          <div className="todo_message">{GETLIST_ERROR_MESSAGE}</div>
         )}
         {!isGetListError && todos.length === 0 && (
           <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
         )}
+        <Button onClick={handleRefresh}>Odśwież widok</Button>
       </div>
       <br />
     </div>
