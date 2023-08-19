@@ -1,8 +1,6 @@
 .todo__card {
     width: 100%;
-
     padding: 1.12rem 1.5rem;    
-
     border-radius: 0.5rem;
     border-left: 5px solid var(--gray-300, #C8CBD1);
     background: var(--background-bg-primary, #FFF);
@@ -15,7 +13,7 @@
     column-gap: 2rem;
 }
 
-.todo__card--completed {
+.todo__card--done {
     background: var(--gray-300, #C8CBD1);
     border-left: 5px solid var(--gray-700, #6B7280);
 }
@@ -31,7 +29,7 @@
     line-height: 2.125rem;
 }
 
-.todo_card-note {
+.todo__card-note {
     margin-top: 0.75rem;
 }
 
@@ -51,26 +49,28 @@
     cursor: pointer;
 }
 
-
+.todo__edit,
 .todo__delete{
     width: 1.625rem;
     height: 1.625rem;
 }
+
+.todo__edit,
 .todo__delete--neutral {
-    stroke: #6B7280;
+    stroke: #23213D;
 }
 .todo__delete--error {
     stroke: #E12B1B;
 }
 
-.todo__complete {
+.todo__mark-as-done {
     width: 1.9;
     height: 1.5rem;
 }
-.todo__complete--neutral {
-    fill: #6B7280;
+.todo__mark-as-done--neutral {
+    fill: #23213D;
 }
-.todo__complete--error {
+.todo__mark-as-done--error {
     fill: #E12B1B;
 }
 
@@ -78,7 +78,7 @@
     color: #E12B1B;
 }
 
-.todo__complete--completed {
+.todo__mark-as-done--done {
     width: 2.7rem;
     height: 1.9rem;
     fill: #07C23B;

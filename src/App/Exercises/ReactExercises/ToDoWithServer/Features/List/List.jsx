@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LocalDevAPIClient } from '../../../../../ApiClients/LocalDevApiClient';
 import { Card } from '../Card/Card';
-import { Button } from '../../Components';
+import { Button, PlusButton } from '../../Components';
 import './style.css';
 
 const ZERO_TASKS_MESSAGE =
@@ -93,9 +93,7 @@ export function List({ addToDo }) {
       <div className="toto__description">
         Tutaj znajdziesz listę swoich zadań.
         {!isGetListError && todos.length > 0 && (
-          <button type="button" className="todo__plus-button" onClick={addToDo}>
-            <span className="sr-only">Dodaj zadanie</span>
-          </button>
+          <PlusButton onClick={addToDo} />
         )}
       </div>
       <div className="todo__list">

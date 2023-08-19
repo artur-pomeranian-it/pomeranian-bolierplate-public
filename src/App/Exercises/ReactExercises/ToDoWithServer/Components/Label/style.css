@@ -1,0 +1,9 @@
+.todo-form__label {    
+    display: block;
+    margin-left: 0.19rem;
+    margin-bottom: 0.38rem;
+
+    color: var(--text-text-primary, #222);
+    font-weight: 700;
+    line-height: 1.6875rem;
+}
