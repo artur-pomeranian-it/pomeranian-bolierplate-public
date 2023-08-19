@@ -6,9 +6,9 @@ import { LocalDevAPIClient } from '../../../ApiClients/LocalDevApiClient';
 import './style.css';
 
 /* 
-  Step 2
-  Dodaj GET list
-  Dodaj DELETE item
+  Step 3
+  Dodaj ApiClient
+  i refactoring  
 */
 
 const ERROR_FADE_DELAY = 1000; // 1s;
@@ -118,10 +118,12 @@ export function ToDoWithServer() {
           </>
         )}
         {!isGetListError && todos.length === 0 && (
-          <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
+          <>
+            <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
+            <Button onClick={handleRefresh}>Dodaj zadanie</Button>
+          </>
         )}
       </div>
-      <br />
     </div>
   );
 }
