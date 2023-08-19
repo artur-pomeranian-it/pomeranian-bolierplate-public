@@ -2,40 +2,24 @@ import { useEffect, useState } from 'react';
 import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import { Button } from './Components';
 import { Card } from './Features/Card/Card';
+import { LocalDevAPIClient } from '../../../ApiClients/LocalDevApiClient';
 import './style.css';
 
 /* 
-  Step 1 
-  na podstawie makiet 1A-1C zrobić wygląd listy
-  NIE pobierajmy jeszcze danych w tym ćwiczeniu
-  dodajmy 1-2 rekordy testowe na podstawie ww
-  struktury i je po prostu wyświetlmy
+  Step 3
+  Dodaj ApiClient
+  i refactoring  
+  + abort
+  + przycisk dodaj
 */
-
-const TODOS = [
-  {
-    id: 1,
-    title: 'Todo 1',
-    createdAt: '2021-05-22T11:20:22.935Z',
-    author: 'Anonymous',
-    isDone: false,
-    note: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, adipisci delectus commodi dolor, nulla a quidem quia ipsa voluptatibus tempore incidunt repudiandae minima. Maiores, deleniti voluptatibus aspernatur facilis quidem voluptate?',
-  },
-  {
-    id: 2,
-    title: 'Todo 2',
-    createdAt: '2022-05-22T11:20:22.935Z',
-    doneDate: '2022-05-22T11:20:22.935Z',
-    author: 'Anonymous',
-    isDone: true,
-    note: 'Register to course',
-  },
-];
 
 const ERROR_FADE_DELAY = 1000; // 1s;
 const ZERO_TASKS_MESSAGE =
   'Brawo! Nie masz aktualnie żadnych zadań do zrealizowania.';
 const GETLIST_ERROR_MESSAGE = 'Przepraszamy. Nie udało się pobrać listy zadań.';
+const BASE_URL = 'http://localhost:3333';
+
+const localAPI = new LocalDevAPIClient({ baseURL: BASE_URL });
 
 export function ToDoWithServer() {
   const [todos, setTodos] = useState([]);
@@ -51,23 +35,14 @@ export function ToDoWithServer() {
     return () => clearTimeout(timeoutId);
   }, [markAsDoneErrors]);
 
-  function handleOnMarkAsDone(id) {
-    const success = true || Math.random() > 0.5;
-    if (success) {
-      setTodos((oldToDos) => {
-        return oldToDos.map((todo) => {
-          if (todo.id === id) {
-            return {
-              ...todo,
-              isDone: true,
-              doneDate: new Date().toISOString(),
-            };
-          } else {
-            return todo;
-          }
-        });
-      });
+  async function handleOnMarkAsDone(id) {
+    const [newTodo, error] = await localAPI.markAsDone(id);
+    if (!error) {
+      setTodos((oldToDos) =>
+        oldToDos.map((todo) => (todo.id === id ? newTodo : todo))
+      );
     } else {
+      console.error(error.message);
       setMarkAsDoneErrors((errs) => [...errs, id]);
     }
   }
@@ -80,29 +55,41 @@ export function ToDoWithServer() {
     return () => clearTimeout(timeoutId);
   }, [deleteErrors]);
 
-  function handleOnDelete(id) {
-    const success = Math.random() > 0.5;
-    if (success) {
+  async function handleOnDelete(id) {
+    const [, error] = await localAPI.deleteToDo(id);
+    if (!error) {
       setTodos((oldToDos) => {
         return oldToDos.filter((todo) => todo.id !== id);
       });
     } else {
+      console.error(error.message);
       setDeleteErrors((errs) => [...errs, id]);
     }
   }
 
-  function getAllToDos() {
-    const success = Math.random() > 0.5;
-    if (success) {
-      setTodos(TODOS);
+  function updateToDos(data, error) {
+    if (!error) {
+      setTodos(data);
       setIsGetListError(false);
     } else {
+      console.error(error.message);
       setIsGetListError(true);
     }
   }
 
+  async function getAllToDos() {
+    const [data, error] = await localAPI.getAllToDos();
+    updateToDos(data, error);
+  }
+
   useEffect(() => {
-    getAllToDos();
+    let controller = new AbortController();
+    const getAllToDosAsync = async () => {
+      const [data, error] = await localAPI.getAllToDos(controller.signal);
+      updateToDos(data, error);
+    };
+    getAllToDosAsync();
+    return () => controller.abort();
   }, []);
 
   function handleRefresh() {
@@ -112,7 +99,18 @@ export function ToDoWithServer() {
   return (
     <div className="todo">
       <MasterHeader value="TODO" />
-      <p>Tutaj znajdziesz listę swoich zadań.</p>
+      <div className="toto__description">
+        Tutaj znajdziesz listę swoich zadań.
+        {!isGetListError && todos.length > 0 && (
+          <button
+            type="button"
+            className="todo__plus-button"
+            onClick={handleRefresh}
+          >
+            <span className="sr-only">Dodaj zadanie</span>
+          </button>
+        )}
+      </div>
       <div className="todo__list">
         {todos.map((todo) => (
           <Card
@@ -129,14 +127,23 @@ export function ToDoWithServer() {
       </div>
       <div className="todo__controls">
         {isGetListError && (
-          <div className="todo_message">{GETLIST_ERROR_MESSAGE}</div>
+          <>
+            <div className="todo_message">{GETLIST_ERROR_MESSAGE}</div>
+            <Button onClick={handleRefresh}>Odśwież widok</Button>
+          </>
         )}
         {!isGetListError && todos.length === 0 && (
-          <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
+          <>
+            <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
+            <Button onClick={handleRefresh}>Dodaj zadanie</Button>
+          </>
         )}
-        <Button onClick={handleRefresh}>Odśwież widok</Button>
+        {!isGetListError && todos.length > 0 && (
+          <div className="todo__bottom-add-wrapper">
+            <Button onClick={handleRefresh}>Dodaj</Button>
+          </div>
+        )}
       </div>
-      <br />
     </div>
   );
 }

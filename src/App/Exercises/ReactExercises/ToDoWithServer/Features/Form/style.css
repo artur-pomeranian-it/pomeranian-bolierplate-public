@@ -1,0 +1,50 @@
+.todo-form {
+    width: 100%;
+    max-width: 30.5rem;
+}
+.todo-form__label {    
+    display: block;
+    margin-left: 0.19rem;
+    margin-bottom: 0.38rem;
+
+    color: var(--text-text-primary, #222);
+    font-weight: 700;
+    line-height: 1.6875rem; /* 168.75% */
+
+}
+
+.todo-form__input {
+    width: 100%;
+    padding: 0.81rem 1rem;
+    border-radius: 0.3125rem;
+    margin-bottom: 1.75rem;
+    border: 1px solid var(--grey-300, #C8CBD1);
+
+    font-size: 1.125rem;
+    /* font-style: normal; */
+    font-weight: 400;
+    line-height: 2rem; /* 177.778% */
+}
+
+
+.todo-form__textarea {
+    min-height: 8rem;
+    resize: none;
+}
+
+.todo-form__controls {
+    display: flex;
+    column-gap: 1.81rem;
+    justify-content: flex-end;
+}
+
+.todo-form__error-message {
+    color: var(--colors-actions-danger, #E12B1B);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-weight: 600;
+    line-height: 1.6875rem;
+    margin-top: -1.5rem;
+    margin-bottom: 1rem;
+    /* prevents jumping */
+    min-height: 1.6875rem;;
+}

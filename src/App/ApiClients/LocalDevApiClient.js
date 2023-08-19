@@ -1,3 +1,14 @@
+/*
+
+  API client for the Local Server ToDo List application
+
+  Swagger documentation under this location
+  http://localhost:3333/api-docs/#/Todos/get_api_todo__id_
+
+  Local server's source is here:
+  https://github.com/pomeranianstartit-pl/pomeranian-local-dev-server
+
+ */
 export class LocalDevAPIClient {
   baseURL = '';
   #headers = {
@@ -40,7 +51,7 @@ export class LocalDevAPIClient {
 
   #validateId(id) {
     if (!id || id < 1) {
-      return [undefined, new Error('deleteToDO param missing or less than 1')];
+      return new Error('deleteToDO param missing or less than 1');
     }
     return undefined;
   }
@@ -83,20 +94,21 @@ export class LocalDevAPIClient {
     const { title, note, author } = todo;
 
     const hasRequiredFields = !title || !note || !author;
-    if (hasRequiredFields) return;
-    new Error('addToDo: title, note and author are mandatory');
+    if (hasRequiredFields)
+      return new Error('addToDo: title, note and author are mandatory');
 
-    const requiredFieldsAreStrings =
+    const requiredFieldsAreStrings = !(
       typeof title === 'string' &&
       typeof note === 'string' &&
-      typeof author === 'string';
-    if (requiredFieldsAreStrings) return;
-    new Error('addToDo: title, note and author are mandatory');
+      typeof author === 'string'
+    );
+    if (requiredFieldsAreStrings)
+      return new Error('addToDo: title, note and author must be strings');
 
     const requiredFieldsAreNotEmpty =
       title.length === 0 || note.length === 0 || author.length === 0;
-    if (requiredFieldsAreNotEmpty) return;
-    new Error("addToDo: title, note and author can't be empty");
+    if (requiredFieldsAreNotEmpty)
+      return new Error("addToDo: title, note and author can't be empty");
     return undefined;
   }
 

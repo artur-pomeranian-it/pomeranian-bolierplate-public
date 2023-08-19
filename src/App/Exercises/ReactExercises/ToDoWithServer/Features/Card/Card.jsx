@@ -7,13 +7,13 @@ const ERROR_MESSAGE = 'nie udało się ukończyć';
 
 export function Card({
   todo,
-  onComplete,
+  onMarkAsDone,
   onDelete,
-  isCompleteError,
+  isMarkAsDoneError,
   isDeleteError,
 }) {
   const { title, createdAt, doneDate, author, isDone, note } = todo;
-  const isError = isCompleteError || isDeleteError;
+  const isError = isMarkAsDoneError || isDeleteError;
   return (
     <section className={`todo__card ${isDone ? 'todo__card--completed' : ''}`}>
       <div className="todo_card-details">
@@ -27,9 +27,9 @@ export function Card({
           {!isDone && (
             <CompleteIcon
               className={`todo__complete todo__complete--${
-                isCompleteError ? 'error' : 'neutral'
+                isMarkAsDoneError ? 'error' : 'neutral'
               }`}
-              onClick={onComplete}
+              onClick={onMarkAsDone}
             />
           )}
           <DeleteIcon
