@@ -129,11 +129,11 @@ export class LocalDevAPIClient {
     return await this.#internalFetch(fullPath, options);
   }
 
-  async updateToDo(todo) {
+  async updateToDo(id, todo) {
     const validationError = this.#validateToDoInput(todo);
     if (validationError) return [undefined, validationError];
 
-    const { id, title, note, author } = todo;
+    const { title, note, author } = todo;
 
     const idValidationError = this.#validateId(id);
     if (idValidationError) return [undefined, idValidationError];

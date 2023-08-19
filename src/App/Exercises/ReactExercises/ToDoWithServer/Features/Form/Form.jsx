@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LocalDevAPIClient } from '../../../../../ApiClients/LocalDevApiClient';
 import { Button, Input, Label, Textarea } from '../../Components';
 import './style.css';
@@ -8,16 +8,44 @@ const BASE_URL = 'http://localhost:3333';
 const SUBMIT_ERROR_MESSAGE = 'Wystąpił błąd, spróbuj ponownie.';
 const localAPI = new LocalDevAPIClient({ baseURL: BASE_URL });
 
-export function Form({ showList }) {
+export function Form({ showList, isAddForm, id }) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [note, setNote] = useState('');
   const [isError, setIsError] = useState(false);
 
+  useEffect(() => {
+    if (!isAddForm && id) {
+      let controller = new AbortController();
+      const getToDoAsync = async () => {
+        const [data, error] = await localAPI.getToDo(id, controller.signal);
+        if (!error) {
+          const { title, note, author } = data;
+          setTitle(title);
+          setAuthor(author);
+          setNote(note);
+          setIsError(false);
+        } else {
+          console.error(error.message);
+          setIsError(true);
+        }
+      };
+      getToDoAsync();
+      return () => controller.abort();
+    }
+  }, [id, isAddForm]);
+
+  const getApiPromise4FormSubmit = () => {
+    if (isAddForm) {
+      return localAPI.addToDo({ title, author, note });
+    } else {
+      return localAPI.updateToDo(id, { title, author, note });
+    }
+  };
+
   async function handleOnSubmit(event) {
     event.preventDefault();
-    console.log(title, author, note);
-    const [data, error] = await localAPI.addToDo({ title, author, note });
+    let [data, error] = await getApiPromise4FormSubmit();
     if (!error) {
       console.log(data);
       showList();
@@ -31,9 +59,20 @@ export function Form({ showList }) {
     showList();
   }
 
+  if (!isAddForm && !id)
+    return (
+      <div>
+        W przypadku edycji wymagane jest ID elementu
+        <br />
+        <Button type="button" variant="secondary" onClick={handleReset}>
+          Cofnij
+        </Button>
+      </div>
+    );
+
   return (
     <>
-      <p>Dodawanie zadania</p>
+      <p>{isAddForm ? 'Dodawanie' : 'Edycja'} zadania</p>
       <form className="todo-form" onSubmit={handleOnSubmit}>
         <Label htmlFor="title">Tytuł</Label>
         <Input
@@ -42,14 +81,19 @@ export function Form({ showList }) {
           placeholder="Kupić parasol na balkon"
           onChange={(el) => setTitle(el.target.value)}
         />
-        <Label htmlFor="author">Autor</Label>
-        <Input
-          id="author"
-          placeholder="Wojtek"
-          value={author}
-          onChange={(el) => setAuthor(el.target.value)}
-        />
-        <Label htmlFor="note">Autor</Label>
+        {isAddForm && (
+          <>
+            <Label htmlFor="author">Autor</Label>
+            <Input
+              id="author"
+              placeholder="Wojtek"
+              value={author}
+              onChange={(el) => setAuthor(el.target.value)}
+            />
+          </>
+        )}
+
+        <Label htmlFor="note">Treść</Label>
         <Textarea
           id="note"
           value={note}
@@ -63,7 +107,7 @@ export function Form({ showList }) {
           <Button type="reset" variant="secondary" onClick={handleReset}>
             Cofnij
           </Button>
-          <Button type="submit">Dodaj</Button>
+          <Button type="submit">{isAddForm ? 'Dodaj' : 'Zapisz'}</Button>
         </div>
       </form>
     </>

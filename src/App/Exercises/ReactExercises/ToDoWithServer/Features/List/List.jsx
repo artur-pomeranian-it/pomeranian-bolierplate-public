@@ -13,7 +13,7 @@ const BASE_URL = 'http://localhost:3333';
 
 const localAPI = new LocalDevAPIClient({ baseURL: BASE_URL });
 
-export function List({ addToDo }) {
+export function List({ addToDo, editToDo }) {
   const [todos, setTodos] = useState([]);
   const [isGetListError, setIsGetListError] = useState(false);
   const [deleteErrors, setDeleteErrors] = useState([]);
@@ -101,6 +101,7 @@ export function List({ addToDo }) {
           <Card
             key={todo.id}
             todo={todo}
+            onEdit={() => editToDo(todo.id)}
             onMarkAsDone={() => handleOnMarkAsDone(todo.id)}
             onDelete={() => handleOnDelete(todo.id)}
             isMarkAsDoneError={markAsDoneErrors.some(

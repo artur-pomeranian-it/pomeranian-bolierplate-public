@@ -1,8 +1,5 @@
 .todo-form__textarea {
     min-height: 8rem;
     resize: none;
-}
-
-.todo-form__textarea::placeholder {
     font-family: 'Poppins', sans-serif;
 }
