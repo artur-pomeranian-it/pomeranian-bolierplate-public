@@ -9,6 +9,7 @@ import './style.css';
   Step 3
   Dodaj ApiClient
   i refactoring  
+  + abort
 */
 
 const ERROR_FADE_DELAY = 1000; // 1s;
@@ -82,10 +83,10 @@ export function ToDoWithServer() {
 
   useEffect(() => {
     let controller = new AbortController();
-    const getAllToDosAsync = (async () => {
+    const getAllToDosAsync = async () => {
       const [data, error] = await localAPI.getAllToDos(controller.signal);
       updateToDos(data, error);
-    })();
+    };
     getAllToDosAsync();
     return () => controller.abort();
   }, []);
@@ -97,7 +98,14 @@ export function ToDoWithServer() {
   return (
     <div className="todo">
       <MasterHeader value="TODO" />
-      <p>Tutaj znajdziesz listę swoich zadań.</p>
+      <div className="toto__description">
+        Tutaj znajdziesz listę swoich zadań.
+        {!isGetListError && todos.length > 0 && (
+          <button className="todo__plus-button" onClick={handleRefresh}>
+            <span className="sr-only">Dodaj zadanie</span>
+          </button>
+        )}
+      </div>
       <div className="todo__list">
         {todos.map((todo) => (
           <Card
@@ -122,6 +130,11 @@ export function ToDoWithServer() {
             <div className="todo_message">{ZERO_TASKS_MESSAGE}</div>
             <Button onClick={handleRefresh}>Dodaj zadanie</Button>
           </>
+        )}
+        {!isGetListError && todos.length > 0 && (
+          <div className="todo__bottom-add-wrapper">
+            <Button onClick={handleRefresh}>Dodaj</Button>
+          </div>
         )}
       </div>
     </div>
