@@ -26,27 +26,23 @@ export class LocalDevAPIClient {
     }
   }
 
-  async #internalFetch(fullPath, options) {
-    let data = undefined;
-    let error = undefined;
+  async #useFetch(fullPath, options) {
     try {
       const response = await fetch(fullPath, options);
       if (!response.ok)
         throw new Error(`${response.status} (${response.statusText})`);
-      data = await response.json();
+      return response.json();
     } catch (err) {
-      error = err;
-      //   if (!(err instanceof Error)) error = new Error(err);
+      return Promise.reject(err);
     }
-    return [data, error];
   }
 
-  async getAllToDos(signal = undefined) {
+  getAllToDos(signal = undefined) {
     const requestPath = '/api/todo';
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
     const options = { method: 'GET', headers, signal };
-    return await this.#internalFetch(fullPath, options);
+    return this.#useFetch(fullPath, options);
   }
 
   #validateId(id) {
@@ -56,37 +52,37 @@ export class LocalDevAPIClient {
     return undefined;
   }
 
-  async getToDo(id, signal = undefined) {
+  getToDo(id, signal = undefined) {
     const validationError = this.#validateId(id);
-    if (validationError) return [undefined, validationError];
+    if (validationError) return Promise.reject(validationError);
 
     const requestPath = '/api/todo/' + id;
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
     const options = { method: 'GET', headers, signal };
-    return await this.#internalFetch(fullPath, options);
+    return this.#useFetch(fullPath, options);
   }
 
   async deleteToDo(id) {
     const validationError = this.#validateId(id);
-    if (validationError) return [undefined, validationError];
+    if (validationError) return Promise.reject(validationError);
 
     const requestPath = '/api/todo/' + id;
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
     const options = { method: 'DELETE', headers };
-    return await this.#internalFetch(fullPath, options);
+    return await this.#useFetch(fullPath, options);
   }
 
   async markAsDone(id) {
     const validationError = this.#validateId(id);
-    if (validationError) return [undefined, validationError];
+    if (validationError) return Promise.reject(validationError);
 
     const requestPath = `/api/todo/${id}/markAsDone`;
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
     const options = { method: 'PUT', headers };
-    return await this.#internalFetch(fullPath, options);
+    return await this.#useFetch(fullPath, options);
   }
 
   #validateToDoInput(todo) {
@@ -112,9 +108,9 @@ export class LocalDevAPIClient {
     return undefined;
   }
 
-  async addToDo(todo) {
+  addToDo(todo) {
     const validationError = this.#validateToDoInput(todo);
-    if (validationError) return [undefined, validationError];
+    if (validationError) return Promise.reject(validationError);
 
     const requestPath = '/api/todo';
     const fullPath = this.baseURL + requestPath;
@@ -126,17 +122,17 @@ export class LocalDevAPIClient {
     const body = JSON.stringify({ title, note, author });
 
     const options = { method: 'POST', headers, body };
-    return await this.#internalFetch(fullPath, options);
+    return this.#useFetch(fullPath, options);
   }
 
-  async updateToDo(id, todo) {
+  updateToDo(id, todo) {
     const validationError = this.#validateToDoInput(todo);
-    if (validationError) return [undefined, validationError];
+    if (validationError) return Promise.reject(validationError);
 
     const { title, note, author } = todo;
 
     const idValidationError = this.#validateId(id);
-    if (idValidationError) return [undefined, idValidationError];
+    if (idValidationError) return Promise.reject(idValidationError);
 
     const requestPath = '/api/todo/' + id;
     const fullPath = this.baseURL + requestPath;
@@ -147,6 +143,6 @@ export class LocalDevAPIClient {
     const body = JSON.stringify({ title, note, author });
 
     const options = { method: 'PUT', headers, body };
-    return await this.#internalFetch(fullPath, options);
+    return this.#useFetch(fullPath, options);
   }
 }

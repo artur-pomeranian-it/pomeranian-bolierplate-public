@@ -28,15 +28,17 @@ export function List({ addToDo, editToDo }) {
   }, [markAsDoneErrors]);
 
   async function handleOnMarkAsDone(id) {
-    const [newTodo, error] = await localAPI.markAsDone(id);
-    if (!error) {
-      setTodos((oldToDos) =>
-        oldToDos.map((todo) => (todo.id === id ? newTodo : todo))
-      );
-    } else {
-      console.error(error.message);
-      setMarkAsDoneErrors((errs) => [...errs, id]);
-    }
+    localAPI
+      .markAsDone(id)
+      .then((newTodo) => {
+        setTodos((oldToDos) =>
+          oldToDos.map((todo) => (todo.id === id ? newTodo : todo))
+        );
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setMarkAsDoneErrors((errs) => [...errs, id]);
+      });
   }
 
   useEffect(() => {
@@ -48,37 +50,41 @@ export function List({ addToDo, editToDo }) {
   }, [deleteErrors]);
 
   async function handleOnDelete(id) {
-    const [, error] = await localAPI.deleteToDo(id);
-    if (!error) {
-      setTodos((oldToDos) => {
-        return oldToDos.filter((todo) => todo.id !== id);
+    localAPI
+      .deleteToDo(id)
+      .then(() => {
+        setTodos((oldToDos) => {
+          return oldToDos.filter((todo) => todo.id !== id);
+        });
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setDeleteErrors((errs) => [...errs, id]);
       });
-    } else {
-      console.error(error.message);
-      setDeleteErrors((errs) => [...errs, id]);
-    }
   }
 
-  function updateToDos(data, error) {
-    if (!error) {
-      setTodos(data);
-      setIsGetListError(false);
-    } else {
-      console.error(error.message);
-      setIsGetListError(true);
-    }
+  function updateToDos(promise) {
+    promise
+      .then((data) => {
+        setTodos(data);
+        setIsGetListError(false);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setIsGetListError(true);
+      });
   }
 
   async function getAllToDos() {
-    const [data, error] = await localAPI.getAllToDos();
-    updateToDos(data, error);
+    const promise = localAPI.getAllToDos();
+    updateToDos(promise);
   }
 
   useEffect(() => {
     let controller = new AbortController();
     const getAllToDosAsync = async () => {
-      const [data, error] = await localAPI.getAllToDos(controller.signal);
-      updateToDos(data, error);
+      const promise = localAPI.getAllToDos(controller.signal);
+      updateToDos(promise);
     };
     getAllToDosAsync();
     return () => controller.abort();
