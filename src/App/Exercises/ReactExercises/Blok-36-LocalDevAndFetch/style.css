@@ -1,0 +1,6 @@
+.rest-server abbr::after{
+    content: ' '  attr(title);  
+}
+.rest-server abbr{    
+    text-decoration: none;
+}
