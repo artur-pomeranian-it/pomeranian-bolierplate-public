@@ -19,7 +19,7 @@ export function Form({ showList, isAddForm, id }) {
       let controller = new AbortController();
       const getToDoAsync = async () => {
         try {
-          const { title, note, author } = localAPI.getToDo(
+          const { title, note, author } = await localAPI.getToDo(
             id,
             controller.signal
           );
