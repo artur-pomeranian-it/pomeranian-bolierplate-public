@@ -18,18 +18,19 @@ export function Form({ showList, isAddForm, id }) {
     if (!isAddForm && id) {
       let controller = new AbortController();
       const getToDoAsync = async () => {
-        localAPI
-          .getToDo(id, controller.signal)
-          .then(({ title, note, author }) => {
-            setTitle(title);
-            setAuthor(author);
-            setNote(note);
-            setIsError(false);
-          })
-          .catch((error) => {
-            console.error(error.message);
-            setIsError(true);
-          });
+        try {
+          const { title, note, author } = localAPI.getToDo(
+            id,
+            controller.signal
+          );
+          setTitle(title);
+          setAuthor(author);
+          setNote(note);
+          setIsError(false);
+        } catch (error) {
+          console.error(error.message);
+          setIsError(true);
+        }
       };
       getToDoAsync();
       return () => controller.abort();
@@ -46,15 +47,13 @@ export function Form({ showList, isAddForm, id }) {
 
   async function handleOnSubmit(event) {
     event.preventDefault();
-    getApiPromise4FormSubmit()
-      .then((data) => {
-        console.log(data);
-        showList();
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsError(true);
-      });
+    try {
+      await getApiPromise4FormSubmit();
+      showList();
+    } catch (error) {
+      console.error(error);
+      setIsError(true);
+    }
   }
 
   function handleReset() {

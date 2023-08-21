@@ -12,7 +12,7 @@
 export class LocalDevAPIClient {
   baseURL = '';
   #headers = {
-    'Content-Type': 'application/json',
+    accept: 'application/json',
   };
 
   constructor({ baseURL, headers }) {
@@ -63,7 +63,7 @@ export class LocalDevAPIClient {
     return this.#useFetch(fullPath, options);
   }
 
-  async deleteToDo(id) {
+  deleteToDo(id) {
     const validationError = this.#validateId(id);
     if (validationError) return Promise.reject(validationError);
 
@@ -71,10 +71,10 @@ export class LocalDevAPIClient {
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
     const options = { method: 'DELETE', headers };
-    return await this.#useFetch(fullPath, options);
+    return this.#useFetch(fullPath, options);
   }
 
-  async markAsDone(id) {
+  markAsDone(id) {
     const validationError = this.#validateId(id);
     if (validationError) return Promise.reject(validationError);
 
@@ -82,7 +82,7 @@ export class LocalDevAPIClient {
     const fullPath = this.baseURL + requestPath;
     const headers = this.#headers;
     const options = { method: 'PUT', headers };
-    return await this.#useFetch(fullPath, options);
+    return this.#useFetch(fullPath, options);
   }
 
   #validateToDoInput(todo) {
@@ -115,8 +115,7 @@ export class LocalDevAPIClient {
     const requestPath = '/api/todo';
     const fullPath = this.baseURL + requestPath;
 
-    const headers = this.#headers;
-    headers.accept = 'application/json';
+    const headers = { ...this.#headers, 'Content-Type': 'application/json' };
 
     const { title, note, author } = todo;
     const body = JSON.stringify({ title, note, author });
@@ -136,12 +135,8 @@ export class LocalDevAPIClient {
 
     const requestPath = '/api/todo/' + id;
     const fullPath = this.baseURL + requestPath;
-
-    const headers = this.#headers;
-    headers.accept = 'application/json';
-
+    const headers = { ...this.#headers, 'Content-Type': 'application/json' };
     const body = JSON.stringify({ title, note, author });
-
     const options = { method: 'PUT', headers, body };
     return this.#useFetch(fullPath, options);
   }
