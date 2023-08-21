@@ -1,11 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './style.css';
 
 export function LocalDevAndFetch() {
+  const [data, setData] = useState([]);
+
+  const handleDownload = async () => {
+    try {
+      const resp = await fetch('http://localhost:3333/api/todo');
+      if (!resp.ok) throw new Error(resp.status);
+      const data = await resp.json();
+      setData(data);
+    } catch (error) {
+      setData('Błąd:' + error.message);
+    }
+  };
+
+  const handleAdd = async () => {
+    try {
+      const options = {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: 'test',
+          note: 'abc',
+          author: 'Artur',
+        }),
+      };
+      const resp = await fetch('http://localhost:3333/api/todo', options);
+      if (!resp.ok) throw new Error(resp.status);
+      const newToDo = await resp.json();
+      setData((curr) => [...curr, newToDo]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="rest-server">
       <h1>REST + Swagger + lokalny serwer</h1>
+      <section>
+        <h2>Testing Local Server</h2>
+        <button onClick={handleDownload}>Pobierz wszystkie</button>
+        <div>{JSON.stringify(data)}</div>
+        <button onClick={handleAdd}>Dodaj</button>
+      </section>
       <section>
         <h2>HTTP protocol</h2>
         <p>google HTTP go to Wikipedia, try search and use HTTP</p>
