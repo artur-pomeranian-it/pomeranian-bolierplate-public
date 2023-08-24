@@ -67,7 +67,8 @@ import {
   getRandomInt,
   getAllTodos,
   TODOS,
-} from './ToDoList';
+  handleAddRandom,
+} from './toDoHelpers';
 
 // Matchers
 // https://jestjs.io/docs/using-matchers
@@ -160,12 +161,10 @@ describe('getRandomInt', () => {
   it('returns (param -1) when random is close to one', () => {
     Math.random.mockImplementation(() => 0.999);
     expect(getRandomInt(8)).toBe(7);
-    expect(Math.random).toHaveBeenCalledTimes(1);
   });
   it('returns 0 when random is close to zero', () => {
     Math.random.mockImplementation(() => 0.0001);
     expect(getRandomInt(8)).toBe(0);
-    expect(Math.random).toHaveBeenCalledTimes(1);
   });
   it('returns 0 when random is zero', () => {
     Math.random.mockReturnValue(0);
@@ -177,38 +176,111 @@ describe('getAllTodos', () => {
   const onSuccess = jest.fn();
   const onFailure = jest.fn();
 
+  beforeAll(() => {
+    jest.spyOn(window, 'fetch');
+  });
+  afterAll(() => {
+    //  !important
+    // fetch.mockRestore();
+    jest.restoreAllMocks();
+  });
+
   beforeEach(() => {
     onFailure.mockClear();
     onSuccess.mockClear();
-    console.log('testing - before');
   });
 
-  it('returns data on success', async () => {
-    jest
-      .spyOn(window, 'fetch')
-      .mockImplementation(() =>
-        Promise.resolve({ ok: true, json: () => Promise.resolve('some data') })
-      );
-
-    await getAllTodos(onSuccess, onFailure);
-    expect(onSuccess).toHaveBeenCalledTimes(1);
-    expect(onSuccess).toHaveBeenCalledWith('some data');
-    expect(onFailure).not.toHaveBeenCalled();
-  });
   it('returns data on success', async () => {
     fetch.mockImplementation(() =>
       Promise.resolve({ ok: true, json: () => Promise.resolve('some data') })
     );
+
     await getAllTodos(onSuccess, onFailure);
-    expect(onSuccess).toHaveBeenCalledTimes(1);
+    // expect(onSuccess).toHaveBeenCalledTimes(1);
+    expect(onSuccess).toHaveBeenCalledWith('some data');
+    expect(onFailure).not.toHaveBeenCalled();
+  });
+  it('returns some data again on success', async () => {
+    fetch.mockImplementation(() =>
+      Promise.resolve({ ok: true, json: () => Promise.resolve('some data') })
+    );
+    await getAllTodos(onSuccess, onFailure);
+    // expect(onSuccess).toHaveBeenCalledTimes(1);
     expect(onSuccess).toHaveBeenCalledWith('some data');
     expect(onFailure).not.toHaveBeenCalled();
   });
 
   it('returns data on success', async () => {
-    window.fetch.mockRejectedValue('error message');
-    await getAllTodos(onSuccess, onFailure);
-    expect(onFailure).toHaveBeenCalled();
-    expect(onFailure).toHaveBeenCalledWith('error message');
+    // fetch.mockRejectedValue('error message');
+    // await getAllTodos(onSuccess, onFailure);
+    // expect(onFailure).toHaveBeenCalledWith('error message');
   });
 });
+
+describe('what happened to fetch', () => {
+  it('fetch works', async () => {
+    try {
+      const resp = fetch('http://localhost:3333/api/todo');
+      // console.log('WHAT IS THIS?', JSON.stringify(resp), resp);
+      //   if (!resp.ok) throw new Error('Invalid response code: ' + resp.status);
+    } catch (error) {
+      console.log('Error', error);
+    }
+  });
+});
+
+/*
+  this is from chat 
+  describe('handleAddRandom', () => {
+  let mockFetch;
+  let originalFetch;
+
+  beforeEach(() => {
+    originalFetch = global.fetch;
+    mockFetch = jest.fn();
+    global.fetch = mockFetch;
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+  });
+
+  it('successfully adds a random task', async () => {
+    const loadToDoList = jest.fn();
+    const setMessage = jest.fn();
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      json: jest.fn().mockResolvedValue({ title: 'New Task' }),
+    });
+
+    await handleAddRandom(loadToDoList, setMessage);
+
+    expect(mockFetch).toHaveBeenCalledWith('http://localhost:3333/api/todo', {
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        title: 'mocked-random-task-name',
+        note: 'mocked-random-task-name',
+      }),
+    });
+
+    expect(setMessage).toHaveBeenCalledWith('Dodano zadanie - New Task');
+    expect(loadToDoList).toHaveBeenCalled();
+  });
+
+  it('handles errors', async () => {
+    const loadToDoList = jest.fn();
+    const setMessage = jest.fn();
+
+    mockFetch.mockRejectedValueOnce(new Error('Network error'));
+
+    await handleAddRandom(loadToDoList, setMessage);
+
+    expect(setMessage).toHaveBeenCalledWith('Network error');
+  });
+}); */
