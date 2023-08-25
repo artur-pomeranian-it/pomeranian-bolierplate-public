@@ -1,4 +1,4 @@
-import { ToDoList } from './ToDoList';
+import { ToDoList } from './BaseToDo';
 
 export const blockRouterMetaData = {
   path: 'testing',

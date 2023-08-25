@@ -50,19 +50,6 @@ export async function getAllTodos(onSuccess, onFailure) {
   }
 }
 
-export const handleMarkAsCompleted = async (id, loadToDoList, setMessage) => {
-  const path = `http://localhost:3333/api/todo/${id}/markAsDone`;
-  const headers = { accept: 'application/json' };
-  const method = 'PUT';
-  try {
-    const resp = await fetch(path, { headers, method });
-    if (!resp.ok) throw new Error('Invalid response code:' + resp.status);
-    loadToDoList();
-  } catch (error) {
-    setMessage(error.message);
-  }
-};
-
 export const handleDelete = async (id, loadToDoList, setMessage) => {
   const path = `http://localhost:3333/api/todo/${id}`;
   const headers = { accept: 'application/json' };

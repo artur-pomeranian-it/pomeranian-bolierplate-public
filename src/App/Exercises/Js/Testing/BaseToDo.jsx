@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import './styles.css';
 
 const TODOS = [
   'Grocery Shopping',
@@ -65,19 +64,6 @@ export const ToDoList = () => {
     getAllTodos();
   }, []);
 
-  const handleMarkAsCompleted = async (id) => {
-    const path = `http://localhost:3333/api/todo/${id}/markAsDone`;
-    const headers = { accept: 'application/json' };
-    const method = 'PUT';
-    try {
-      const resp = await fetch(path, { headers, method });
-      if (!resp.ok) throw new Error('Invalid response code:' + resp.status);
-      getAllTodos();
-    } catch (error) {
-      setMessage(error.message);
-    }
-  };
-
   const handleDelete = async (id) => {
     const path = `http://localhost:3333/api/todo/${id}`;
     const headers = { accept: 'application/json' };
@@ -85,8 +71,9 @@ export const ToDoList = () => {
     try {
       const resp = await fetch(path, { headers, method });
       if (!resp.ok) throw new Error('Invalid response code:' + resp.status);
+      const { id: newId } = await resp.json();
       getAllTodos();
-      setMessage('Usunięto zadanie: ' + id);
+      setMessage('Usunięto zadanie: ' + newId);
     } catch (error) {
       setMessage(error.message);
     }
@@ -129,7 +116,8 @@ export const ToDoList = () => {
     <section>
       <h1>Todo List</h1>
       <div>
-        Liczba zadań:<span data-testId>{getNumberOfTasks}</span>
+        Liczba zadań:
+        <span data-testid="number-of-tasks">{getNumberOfTasks(todos)}</span>
       </div>
       <p>
         <button onClick={handleAddRandom}>Add random</button>
@@ -145,18 +133,10 @@ export const ToDoList = () => {
         </thead>
         <tbody>
           {todos.map(({ id, title, createdAt, isDone }) => (
-            <tr
-              key={id}
-              className={`todo-task-row ${isDone && 'todo-task-row--done'}`}
-            >
+            <tr key={id}>
               <td>{title}</td>
               <td>{formatDate(createdAt)}</td>
               <td>
-                {!isDone && (
-                  <button onClick={() => handleMarkAsCompleted(id)}>
-                    Mark as Completed
-                  </button>
-                )}
                 <button onClick={() => handleDelete(id)}>Delete</button>
               </td>
             </tr>
@@ -164,7 +144,9 @@ export const ToDoList = () => {
         </tbody>
       </table>
       <br />
-      <div className="message">{message}</div>
+      <div className="message" data-testid="todo-error-message">
+        {message}
+      </div>
     </section>
   );
 };

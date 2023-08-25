@@ -1,14 +1,12 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import {
   formatDate,
   getAllTodos,
-  handleMarkAsCompleted,
   handleDelete,
   handleAddRandom,
   getNumberOfTasks,
 } from './toDoHelpers';
-import './styles.css';
 
 const TIMEOUT = 2000; // 2s
 
@@ -16,12 +14,16 @@ export const ToDoList = () => {
   const [todos, setTodos] = useState([]);
   const [message, setMessage] = useState('');
 
-  const loadToDoList = getAllTodos(
-    (data) => setTodos(data),
-    (error) => {
-      setTodos([]);
-      setMessage(error.message);
-    }
+  const loadToDoList = useCallback(
+    () =>
+      getAllTodos(
+        (data) => setTodos(data),
+        (error) => {
+          setTodos([]);
+          setMessage(error.message);
+        }
+      ),
+    []
   );
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export const ToDoList = () => {
     <section>
       <h1>Todo List</h1>
       <div>
-        Liczba zadań:<span data-testId>{getNumberOfTasks}</span>
+        Liczba zadań:<span>{getNumberOfTasks(todos)}</span>
       </div>
       <p>
         <button onClick={() => handleAddRandom(loadToDoList, setMessage)}>
@@ -60,22 +62,10 @@ export const ToDoList = () => {
         </thead>
         <tbody>
           {todos.map(({ id, title, createdAt, isDone }) => (
-            <tr
-              key={id}
-              className={`todo-task-row ${isDone && 'todo-task-row--done'}`}
-            >
+            <tr key={id}>
               <td>{title}</td>
               <td>{formatDate(createdAt)}</td>
               <td>
-                {!isDone && (
-                  <button
-                    onClick={() =>
-                      handleMarkAsCompleted(id, loadToDoList, setMessage)
-                    }
-                  >
-                    Mark as Completed
-                  </button>
-                )}
                 <button
                   onClick={() => handleDelete(id, loadToDoList, setMessage)}
                 >
@@ -87,7 +77,9 @@ export const ToDoList = () => {
         </tbody>
       </table>
       <br />
-      <div className="message">{message}</div>
+      <div className="message" data-testid="todo-error-message">
+        {message}
+      </div>
     </section>
   );
 };

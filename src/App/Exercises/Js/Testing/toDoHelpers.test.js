@@ -67,7 +67,7 @@ import {
   getRandomInt,
   getAllTodos,
   TODOS,
-  handleAddRandom,
+  // handleAddRandom,
 } from './toDoHelpers';
 
 // Matchers
@@ -179,11 +179,6 @@ describe('getAllTodos', () => {
   beforeAll(() => {
     jest.spyOn(window, 'fetch');
   });
-  afterAll(() => {
-    //  !important
-    // fetch.mockRestore();
-    jest.restoreAllMocks();
-  });
 
   beforeEach(() => {
     onFailure.mockClear();
@@ -210,24 +205,41 @@ describe('getAllTodos', () => {
     expect(onFailure).not.toHaveBeenCalled();
   });
 
-  it('returns data on success', async () => {
-    // fetch.mockRejectedValue('error message');
-    // await getAllTodos(onSuccess, onFailure);
-    // expect(onFailure).toHaveBeenCalledWith('error message');
+  it('returns error message on failure', async () => {
+    fetch.mockRejectedValue('error message');
+    await getAllTodos(onSuccess, onFailure);
+    expect(onFailure).toHaveBeenCalledWith('error message');
+  });
+  it('throws Error when response NOK', async () => {
+    fetch.mockImplementation(() =>
+      Promise.resolve({
+        ok: false,
+        status: 500,
+        json: Promise.resolve('Client Error'),
+      })
+    );
+    await getAllTodos(onSuccess, onFailure);
+    expect(onFailure).toHaveBeenCalledWith(Error('Invalid response code: 500'));
   });
 });
 
-describe('what happened to fetch', () => {
-  it('fetch works', async () => {
-    try {
-      const resp = fetch('http://localhost:3333/api/todo');
-      // console.log('WHAT IS THIS?', JSON.stringify(resp), resp);
-      //   if (!resp.ok) throw new Error('Invalid response code: ' + resp.status);
-    } catch (error) {
-      console.log('Error', error);
-    }
-  });
+afterAll(() => {
+  //  !important
+  // fetch.mockRestore();
+  jest.restoreAllMocks();
 });
+
+// describe('what happened to fetch', () => {
+//   it('fetch works', async () => {
+//     try {
+//       const resp = fetch('http://localhost:3333/api/todo');
+//       // console.log('WHAT IS THIS?', JSON.stringify(resp), resp);
+//       //   if (!resp.ok) throw new Error('Invalid response code: ' + resp.status);
+//     } catch (error) {
+//       console.log('Error', error);
+//     }
+//   });
+// });
 
 /*
   this is from chat 
