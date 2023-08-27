@@ -1,5 +1,10 @@
 /* 
-    Co to są testy? 
+
+Co to są testy? 
+  -> Anslysis, Design, Build, Test
+  -> Od wymagań do akceptacji wymagań
+    -> Test Case
+
     Rodzaje Testów: 
     >    jednostkowe(Unit Testy),
     >    integracyjne (Integration),

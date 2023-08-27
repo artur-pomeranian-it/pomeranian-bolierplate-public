@@ -1,5 +1,4 @@
 import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { ToDoList } from './BaseToDo';
 import {
   fireEvent,
@@ -8,7 +7,10 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
-import { TODOS } from './toDoHelpers';
+import { setupServer } from 'msw/lib/node';
+// import { server } from '../../../../setupTests';
+// import { basePath } from '../../../Mocks/ToDo/handlers';
+// import { testData } from '../../../Mocks/ToDo/testData';
 
 const baseURL = 'http://localhost:3333';
 const basePath = `${baseURL}/api/todo`;
@@ -32,7 +34,7 @@ const testData = [
   },
 ];
 
-const DELAY = 10;
+const DELAY = 100;
 const server = setupServer(
   rest.get(basePath, (_req, res, ctx) => {
     return res(ctx.delay(DELAY), ctx.json(testData));
@@ -50,15 +52,15 @@ beforeAll(() => {
   server.listen();
 });
 
+afterEach(() => {
+  server.resetHandlers();
+});
+
 afterAll(() => {
   server.close();
 });
 
 describe('BaseToDo', () => {
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
   it('has proper header', () => {
     render(<ToDoList />);
     const heading = screen.getByRole('heading', {
