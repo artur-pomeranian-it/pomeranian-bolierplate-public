@@ -5,6 +5,7 @@ import {
   selectProfile,
 } from '../../../Store/testSlice';
 import './styles.css';
+import { ReduxStealer } from '../Blok-46-ReduxCounter/ReduxStealer';
 
 export const CardDetails = () => {
   const profile = useSelector(selectProfile);
@@ -56,6 +57,7 @@ export const ReduxTest = () => {
     <div className="test-redux">
       Main Page
       <Dashboard />
+      <ReduxStealer />
     </div>
   );
 };

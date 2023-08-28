@@ -1,0 +1,51 @@
+.redux-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;    
+    max-width: 50rem;    
+    column-gap: 2rem;
+}
+
+.redux-container > * {
+    border: 1px solid black;
+    width: 100%;
+    padding: 1rem;
+}
+
+.redux-component {
+    display: inline-block;    
+}
+.redux-component > * {
+    margin-right: 0.5rem;
+    margin-block: 0.5rem;
+}
+
+.redux-output {
+    padding: 0.7rem 1rem;
+    border-radius: 0.3125rem;
+    border: 1px solid var(--grey-300, #C8CBD1);
+    height: 3.5rem;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 2rem; /* 177.778% */
+}
+
+.redux-button {
+    height: 3.5rem;    
+
+    padding: 0 2.25rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 500;
+    
+    color: #FFF;
+    border: 1px solid var(--primary-primary, #FE3756);
+    background: var(--primary-primary, #FE3756);
+}
+
+.redux-button:hover {
+    opacity: 0.85;    
+    transition: 200ms;
+}
