@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './styles.css';
+import { ToDoList } from './TodoList';
 
 export function sum(a, b) {
   return a + b;
@@ -8,13 +9,9 @@ export function sum(a, b) {
 export const handleOnClick = (isVisible, setIsVisible) => {
   setIsVisible(!isVisible);
 };
-
+//  npm run test -- --coverage
 export const Testing = () => {
   const [isVisible, setIsVisible] = useState(false);
-
-  // console.log('jeden');
-
-  // console.log('trzy');
   return (
     <div>
       <h1>Testing Jest </h1>
@@ -23,6 +20,7 @@ export const Testing = () => {
         Kliknij
       </button>
       <p>Visible or Not {isVisible && <span>Widać</span>}</p>
+      <ToDoList />
     </div>
   );
 };
