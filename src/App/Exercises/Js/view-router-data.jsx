@@ -19,6 +19,7 @@ import { blockRouterMetaData as MemoGame } from './MemoGame/router-data';
 import { blockRouterMetaData as PromiseAndMe } from './promiseAndMe/router-data';
 import { blockRouterMetaData as UseEffectAndPromiseExercise } from './useEffectAndPromiseExercise/router-data';
 import { blockRouterMetaData as AsyncAwait } from './AsyncAwait/router-data';
+import { blockRouterMetaData as Testing } from './Testing/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -40,5 +41,6 @@ export const blockRouterMetaData = [
   PromiseAndMe,
   UseEffectAndPromiseExercise,
   AsyncAwait,
+  Testing,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
