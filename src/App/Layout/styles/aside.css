@@ -32,6 +32,10 @@ aside li a {
   
 }
 
+aside ul {
+  padding: 0;
+}
+
 aside li a,
 a:visited  {
   color: var(--secondary-secondary, #23213D);
@@ -46,10 +50,12 @@ a:visited  {
 }
 
 
+aside a:hover,
 aside a.active {
   color: var(--primary-primary, #FE3756);
 }
 
+aside a:hover .icon path,
 aside a.active .icon path {
   stroke: var(--primary-primary, #FE3756);
 }
