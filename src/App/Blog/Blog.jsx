@@ -34,7 +34,8 @@ export const Blog = () => {
             out of control and at times hard to handle. But if you can’t handle
             me at my worst, then you sure as hell don’t deserve me at my best.
           </q>
-          <div className="quote-author">Marilyn Monroe</div>
+          <br />
+          <span className="quote-author">Marilyn Monroe</span>
         </p>
         <Author />
       </section>
