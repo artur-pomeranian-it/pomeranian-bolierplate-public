@@ -104,7 +104,7 @@ export const BoxModel = () => {
           nisl sit amet facilisis. Nullam cursus fermentum velit sed laoreet.{' '}
         </div>
         <h3>display vs conditional rendering</h3>
-        {2 === 2 && <div>Conditional rendering</div>}
+        {true && <div>Conditional rendering</div>}
       </section>
       <section>
         <h2>box-sizing</h2>
