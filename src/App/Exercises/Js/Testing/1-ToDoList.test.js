@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { ToDoList } from './BaseToDo';
+import { ToDoList, getNumberOfTasks } from './ToDoList';
 import {
   fireEvent,
   render,
@@ -8,6 +8,7 @@ import {
   within,
 } from '@testing-library/react';
 import { setupServer } from 'msw/lib/node';
+import { formatDate, getRandomInt } from './toDoHelpers.outdated';
 // import { server } from '../../../../setupTests';
 // import { basePath } from '../../../Mocks/ToDo/handlers';
 // import { testData } from '../../../Mocks/ToDo/testData';
@@ -34,30 +35,73 @@ const testData = [
   },
 ];
 
-const DELAY = 100;
-const server = setupServer(
-  rest.get(basePath, (_req, res, ctx) => {
-    return res(ctx.delay(DELAY), ctx.json(testData));
-  }),
-  rest.post(basePath, (req, res, ctx) => {
-    return res(ctx.delay(DELAY), ctx.json({ title: 'TEST' }));
-  }),
-  rest.delete(`${basePath}/:id`, (req, res, ctx) => {
-    const { id } = req.params;
-    return res(ctx.delay(DELAY), ctx.json({ id }));
-  })
-);
+const DELAY = 10;
 
 beforeAll(() => {
-  server.listen();
+  // server.listen();
 });
 
 afterEach(() => {
-  server.resetHandlers();
+  // server.resetHandlers();
 });
 
 afterAll(() => {
-  server.close();
+  // server.close();
+});
+
+describe('getNumberOfTasks', () => {
+  test('returns 0 for empty array', () => {
+    const size = getNumberOfTasks([]);
+    expect(size).toBe(0);
+  });
+
+  it('returns undefined if parameter is not an array obj', () => {
+    expect(getNumberOfTasks({ first: 1 })).toBeUndefined();
+    expect(getNumberOfTasks(1)).toBeUndefined();
+    expect(getNumberOfTasks('Alfa')).toBeUndefined();
+  });
+
+  it('returns number equal to array length', () => {
+    expect(getNumberOfTasks([1, 2])).toBe(2);
+  });
+
+  it('throws Error if parameter is undefined', () => {
+    expect(() => getNumberOfTasks()).toThrow(/missing/);
+  });
+});
+
+// ćwiczenie napisać testy dla formatDate
+describe('formatDate', () => {
+  it('formats a valid date string', () => {
+    const inputDate = '2023-08-24T12:34:56.789Z';
+    const formattedDate = formatDate(inputDate);
+    expect(formattedDate).toMatch(/^\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}$/);
+  });
+
+  it('returns "Invalid Date" for an invalid date string', () => {
+    const invalidDate = 'invalid-date';
+    const formattedDate = formatDate(invalidDate);
+    expect(formattedDate).toBe('Invalid Date');
+  });
+});
+
+describe('getRandomInt', () => {
+  beforeAll(() => {
+    jest.spyOn(Math, 'random');
+  });
+  beforeEach(() => Math.random.mockClear());
+  it('returns (param -1) when random is close to one', () => {
+    Math.random.mockImplementation(() => 0.999);
+    expect(getRandomInt(8)).toBe(7);
+  });
+  it('returns 0 when random is close to zero', () => {
+    Math.random.mockImplementation(() => 0.0001);
+    expect(getRandomInt(8)).toBe(0);
+  });
+  it('returns 0 when random is zero', () => {
+    Math.random.mockReturnValue(0);
+    expect(getRandomInt(8)).toBe(0);
+  });
 });
 
 describe('BaseToDo', () => {
@@ -103,11 +147,11 @@ describe('BaseToDo', () => {
   });
 
   it('it shows error when GET todo fails', async () => {
-    server.use(
-      rest.get(basePath, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    // server.use(
+    //   rest.get(basePath, (req, res, ctx) => {
+    //     return res(ctx.status(500));
+    //   })
+    // );
     render(<ToDoList />);
     // await waitFor(() => screen.getByText(/Invalid response/i));
     const message = await screen.findByText(/Invalid response/i);
@@ -115,11 +159,11 @@ describe('BaseToDo', () => {
   });
 
   it('it hides error after 2 seconds', async () => {
-    server.use(
-      rest.get(basePath, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    // server.use(
+    //   rest.get(basePath, (req, res, ctx) => {
+    //     return res(ctx.status(500));
+    //   })
+    // );
     render(<ToDoList />);
     const message = await screen.findByText(/Invalid response/i);
     await waitFor(() => expect(message).toBeEmptyDOMElement(), {
@@ -145,11 +189,11 @@ describe('BaseToDo', () => {
   });
 
   it('it shows error when DELETE todo fails', async () => {
-    server.use(
-      rest.delete(`${basePath}/:id`, (_req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    // server.use(
+    //   rest.delete(`${basePath}/:id`, (_req, res, ctx) => {
+    //     return res(ctx.status(500));
+    //   })
+    // );
     render(<ToDoList />);
     const row = await screen.findByRole('row', {
       name: /grocery shopping 25\.08\.2023, 12:36 delete/i,
@@ -173,11 +217,11 @@ describe('BaseToDo', () => {
     expect(message).toHaveTextContent('TEST');
   });
   it('it shows error when POST todo fails', async () => {
-    server.use(
-      rest.post(basePath, (_req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    // server.use(
+    //   rest.post(basePath, (_req, res, ctx) => {
+    //     return res(ctx.status(500));
+    //   })
+    // );
     render(<ToDoList />);
     const addButton = screen.getByRole('button', {
       name: /add random/i,
