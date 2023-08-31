@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-const TODOS = [
+export const TODO_NAMES = [
   'Grocery Shopping',
   'Dentist Appointment',
   'Exercise Routine',
@@ -16,16 +16,16 @@ const TODOS = [
 
 const TIMEOUT = 2000; // 2s
 
-const getRandomInt = (id) => {
+export const getRandomInt = (id) => {
   return Math.floor(Math.random() * id);
 };
 
-const getRandomTaskName = () => {
-  return TODOS.at(getRandomInt(TODOS.length));
+export const getRandomTaskName = (getRandom = getRandomInt) => {
+  return TODO_NAMES.at(getRandom(TODO_NAMES.length));
 };
 
-const formatDate = (text) => {
-  if (!text) return 'Date missing input';
+export const formatDate = (text) => {
+  if (!text) return 'formatDate missing pram';
   const date = new Date(text);
   const formatter = new Intl.DateTimeFormat('pl', {
     dateStyle: 'short',
