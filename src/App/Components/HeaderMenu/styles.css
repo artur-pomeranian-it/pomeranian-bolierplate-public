@@ -1,0 +1,23 @@
+.header-menu {
+    display: flex;
+    align-items: center;
+}
+
+
+
+header :is(h4, h5) {
+    margin: 0;
+}
+
+.header-menu__settings {
+    margin-right: 3.3rem; 
+    width: 1.625rem;
+}
+
+.header-menu__text {
+    margin-left: 1rem;
+}
+
+.header-menu .header-menu__arrow {
+    margin-left: 1.5rem;
+}
