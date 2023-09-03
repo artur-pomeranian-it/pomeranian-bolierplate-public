@@ -22,4 +22,5 @@ header :is(h4, h5) {
 .header-menu .header-menu__arrow {
     margin-left: 1.5rem;
     cursor: pointer;
+    user-select: none;
 }
