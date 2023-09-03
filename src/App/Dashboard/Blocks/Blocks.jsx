@@ -10,7 +10,7 @@ import './styles.css';
 
 export const Blocks = () => {
   const SeeMoreLink = ({ to }) => {
-    return <Link to={to}>Zobacz więcej</Link>;
+    return <Link to={to}>zobacz więcej &gt;</Link>;
   };
 
   return (
@@ -29,34 +29,34 @@ export const Blocks = () => {
       <div className="dashboard-tiles">
         <div>
           <h3>Moje CV</h3>
-          <PersonalCardIcon />
+          <PersonalCardIcon className="dashboard-icon" />
           <p className="dashboard-tile-description">
             podgląd cv wraz z doświadczeniem
           </p>
-          <SeeMoreLink to="tech-stack" />
+          <SeeMoreLink to="/cv" />
         </div>
 
         <div>
           <h3>Ćwiczenia</h3>
-          <EditIcon />
+          <EditIcon className="dashboard-icon" />
           <p className="dashboard-tile-description">
             Wszystkie wykonane ćwiczenia
           </p>
-          <SeeMoreLink to="tech-stack" />
+          <SeeMoreLink to="/exercises" />
         </div>
 
         <div>
           <h3>Blog</h3>
-          <BookIcon />
+          <BookIcon className="dashboard-icon" />
           <p className="dashboard-tile-description">
             wpisy blogowe o technologii front-end
           </p>
-          <SeeMoreLink to="tech-stack" />
+          <SeeMoreLink to="/blog" />
         </div>
 
         <div>
           <h3>Tech stack</h3>
-          <TechStackIcon />
+          <TechStackIcon className="dashboard-icon" />
           <p className="dashboard-tile-description">
             stack technologiczny realizowany na kursie
           </p>
@@ -65,11 +65,11 @@ export const Blocks = () => {
 
         <div>
           <h3>FAQ</h3>
-          <MessageIcon />
+          <MessageIcon className="dashboard-icon" />
           <p className="dashboard-tile-description">
             odpowiedzi na najczęstrze pytania
           </p>
-          <SeeMoreLink to="tech-stack" />
+          <SeeMoreLink to="/faq" />
         </div>
       </div>
     </div>
