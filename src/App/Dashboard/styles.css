@@ -1,7 +1,7 @@
 @import './styles/dashboard-about-me.css';
-@import './styles/dashboard-tiles.css';
 
 .dashboard {
     display: flex;
     justify-content: space-between;
+    font-family: 'Poppins', sans-serif;    
 }
