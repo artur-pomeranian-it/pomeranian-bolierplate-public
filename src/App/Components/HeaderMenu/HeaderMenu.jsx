@@ -2,8 +2,12 @@ import './styles.css';
 import { SettingIcon } from '../Icons/SettingIcon';
 import { MenuArrow } from '../Icons/MenuArrow';
 import { RoundImage } from '../../Components/RoundImage/RoundImage';
+import { RightCornerMenuPopup } from '../RightCornerMenuPopup/RightCornerMenuPopup';
+import { useState } from 'react';
 
 export const HeaderMenu = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <div className="header-menu">
       <SettingIcon className="header-menu__settings" />
@@ -12,7 +16,13 @@ export const HeaderMenu = () => {
         <h4>Artur Trener</h4>
         <h5>Kursant</h5>
       </div>
-      <MenuArrow className="header-menu__arrow" />
+      <MenuArrow
+        onClick={() => setShowMenu(true)}
+        className="header-menu__arrow"
+      />
+      {showMenu && (
+        <RightCornerMenuPopup handleClose={() => setShowMenu(false)} />
+      )}
     </div>
   );
 };
