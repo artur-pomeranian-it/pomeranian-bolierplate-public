@@ -15,13 +15,12 @@ import vscPng from '../Images/tech-stack/vscode-alt 1.png';
 import discordSvg from '../Images/tech-stack/discord.svg';
 import jiraPng from '../Images/tech-stack/jira 1.png';
 import readminePng from '../Images/tech-stack/redmine.png';
+import { MasterHeader } from '../Components/MasterHeader/MasterHeader';
 
 export const TechStack = () => {
   return (
     <div className="tech-stack">
-      <Link to=".." relative="path">
-        {'< Tech stack'}
-      </Link>
+      <MasterHeader value="Tech stack" />
 
       <p>
         Poniżej znajdziesz tech stack oraz narzędzia jakie nauczysz sie podczas
