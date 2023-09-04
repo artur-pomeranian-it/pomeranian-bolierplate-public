@@ -10,6 +10,7 @@ import { BookIcon } from '../Components/Icons/BookIcon';
 import { MessageIcon } from '../Components/Icons/MessageIcon';
 
 import './styles/aside.css';
+import { TechStackIcon } from '../Components/Icons/TechStackIcon';
 
 export function AppAside() {
   return (
@@ -24,6 +25,11 @@ export function AppAside() {
           <li>
             <NavLink to="cv">
               <PersonalCardIcon className="icon" /> Moje cv
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="tech-stack">
+              <TechStackIcon className="icon" /> Tech stack
             </NavLink>
           </li>
           <li>
