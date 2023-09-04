@@ -1,3 +1,4 @@
+import { CookieBanner } from '../Components/CookieBanner/CookieBanner';
 import './styles/footer.css';
 
 const email = 'twoj-email@pomeranian.it';
@@ -6,6 +7,7 @@ const phone = '+48-999-999-999';
 export function AppFooter() {
   return (
     <footer>
+      <CookieBanner />
       <div>
         Projekt uzyskał dofinansowanie ze środków Unii Europejskiej z
         Europejskiego Funduszu Rozwoju
