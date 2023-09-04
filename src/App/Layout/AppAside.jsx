@@ -58,7 +58,6 @@ export function AppAside() {
           </li>
         </ul>
       </nav>
-      <p style={{ padding: '1rem 0' }}>Sidebar items, widgets, etc</p>
     </aside>
   );
 }
