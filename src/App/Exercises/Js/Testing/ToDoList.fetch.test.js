@@ -1,5 +1,12 @@
 import { rest } from 'msw';
-import { ToDoList } from './BaseToDo';
+import {
+  TODO_NAMES,
+  ToDoList,
+  formatDate,
+  getNumberOfTasks,
+  getRandomInt,
+  getRandomTaskName,
+} from './ToDoList';
 import {
   fireEvent,
   render,
@@ -34,19 +41,31 @@ const testData = [
   },
 ];
 
-const DELAY = 100;
-const server = setupServer(
-  rest.get(basePath, (_req, res, ctx) => {
-    return res(ctx.delay(DELAY), ctx.json(testData));
-  }),
-  rest.post(basePath, (req, res, ctx) => {
-    return res(ctx.delay(DELAY), ctx.json({ title: 'TEST' }));
-  }),
-  rest.delete(`${basePath}/:id`, (req, res, ctx) => {
-    const { id } = req.params;
-    return res(ctx.delay(DELAY), ctx.json({ id }));
-  })
-);
+const DELAY = 0;
+
+const mockGet = rest.get(basePath, (_req, res, ctx) => {
+  return res(ctx.delay(DELAY), ctx.json(testData));
+});
+const mockPost = rest.post(basePath, (req, res, ctx) => {
+  return res(ctx.delay(DELAY), ctx.json({ title: 'TEST' }));
+});
+const mockDelete = rest.delete(`${basePath}/:id`, (req, res, ctx) => {
+  const { id } = req.params;
+  return res(ctx.delay(DELAY), ctx.json({ id }));
+});
+
+const server = setupServer(mockGet, mockPost, mockDelete);
+
+// additional mocks
+const failedGet = rest.get(basePath, (req, res, ctx) => {
+  return res(ctx.status(500));
+});
+const failedDelete = rest.delete(`${basePath}/:id`, (req, res, ctx) => {
+  return res(ctx.status(500));
+});
+const failedPost = rest.post(basePath, (_req, res, ctx) => {
+  return res(ctx.status(500));
+});
 
 beforeAll(() => {
   server.listen();
@@ -60,7 +79,81 @@ afterAll(() => {
   server.close();
 });
 
-describe('BaseToDo', () => {
+describe('getNumberOfTasks', () => {
+  test('returns 0 for empty array', () => {
+    const size = getNumberOfTasks([]);
+    expect(size).toBe(0);
+  });
+
+  it('returns undefined if parameter is not an array obj', () => {
+    expect(getNumberOfTasks({ first: 1 })).toBeUndefined();
+    expect(getNumberOfTasks(1)).toBeUndefined();
+    expect(getNumberOfTasks('Alfa')).toBeUndefined();
+  });
+
+  it('returns number equal to array length', () => {
+    expect(getNumberOfTasks([1, 2])).toBe(2);
+  });
+
+  it('throws Error if parameter is undefined', () => {
+    expect(() => getNumberOfTasks()).toThrow(/missing/);
+  });
+});
+
+// Exercise testy dla formatDate
+describe('formatDate', () => {
+  it('formats a valid date string', () => {
+    const inputDate = '2023-08-24T12:34:56.789Z';
+    const formattedDate = formatDate(inputDate);
+    expect(formattedDate).toMatch(/^\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}$/);
+  });
+
+  it('returns "formatDate missing pram" if parameter undefined', () => {
+    const invalidDate = undefined;
+    const formattedDate = formatDate(invalidDate);
+    expect(formattedDate).toBe('formatDate missing pram');
+  });
+});
+
+describe('getRandomTaskName', () => {
+  it('returns first element from test data', () => {
+    const getRandomMock = jest.fn().mockReturnValue(0);
+    expect(getRandomTaskName(getRandomMock)).toEqual(TODO_NAMES.at(0));
+  });
+
+  it('returns last element from test data', () => {
+    const lastIndex = TODO_NAMES.length - 1;
+    const getRandomMock = jest.fn().mockImplementation((number) => number - 1);
+    expect(getRandomTaskName(getRandomMock)).toEqual(TODO_NAMES.at(lastIndex));
+  });
+});
+
+describe('getRandomInt', () => {
+  beforeAll(() => {
+    jest.spyOn(Math, 'random');
+  });
+  afterAll(() => {
+    //  !important
+    // Math.random.mockRestore();
+    jest.restoreAllMocks();
+  });
+  beforeEach(() => Math.random.mockClear());
+
+  it('returns (param -1) when random is close to one', () => {
+    Math.random.mockImplementation(() => 0.999);
+    expect(getRandomInt(8)).toBe(7);
+  });
+  it('returns 0 when random is close to zero', () => {
+    Math.random.mockImplementation(() => 0.0001);
+    expect(getRandomInt(8)).toBe(0);
+  });
+  it('returns 0 when random is zero', () => {
+    Math.random.mockReturnValue(0);
+    expect(getRandomInt(8)).toBe(0);
+  });
+});
+
+describe('ToDoList component', () => {
   it('has proper header', () => {
     render(<ToDoList />);
     const heading = screen.getByRole('heading', {
@@ -103,11 +196,7 @@ describe('BaseToDo', () => {
   });
 
   it('it shows error when GET todo fails', async () => {
-    server.use(
-      rest.get(basePath, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    server.use(failedGet);
     render(<ToDoList />);
     // await waitFor(() => screen.getByText(/Invalid response/i));
     const message = await screen.findByText(/Invalid response/i);
@@ -115,11 +204,7 @@ describe('BaseToDo', () => {
   });
 
   it('it hides error after 2 seconds', async () => {
-    server.use(
-      rest.get(basePath, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    server.use(failedGet);
     render(<ToDoList />);
     const message = await screen.findByText(/Invalid response/i);
     await waitFor(() => expect(message).toBeEmptyDOMElement(), {
@@ -145,16 +230,12 @@ describe('BaseToDo', () => {
   });
 
   it('it shows error when DELETE todo fails', async () => {
-    server.use(
-      rest.delete(`${basePath}/:id`, (_req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    // in this case mock can be define at the top of the test
+    server.use(failedDelete);
     render(<ToDoList />);
     const row = await screen.findByRole('row', {
       name: /grocery shopping 25\.08\.2023, 12:36 delete/i,
     });
-
     const deleteButton = within(row).getByRole('button', {
       name: /delete/i,
     });
@@ -173,11 +254,7 @@ describe('BaseToDo', () => {
     expect(message).toHaveTextContent('TEST');
   });
   it('it shows error when POST todo fails', async () => {
-    server.use(
-      rest.post(basePath, (_req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    server.use(failedPost);
     render(<ToDoList />);
     const addButton = screen.getByRole('button', {
       name: /add random/i,
