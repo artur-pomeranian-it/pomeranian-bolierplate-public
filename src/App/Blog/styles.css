@@ -38,7 +38,10 @@
 }
 
 .blog-post .quote-author {
+    display: inline-block;
     font-weight: 700;
+    width: 100%;    
+    text-align: end;
 }
 
 .blog-post .author {

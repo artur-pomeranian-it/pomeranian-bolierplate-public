@@ -1,2 +1,7 @@
+@import './styles/dashboard-about-me.css';
+
 .dashboard {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;    
 }

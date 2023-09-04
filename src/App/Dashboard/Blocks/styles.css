@@ -1,0 +1,80 @@
+.dashboard__waving-hand {
+    margin-right: 0.62rem;
+}
+.dashboard-tiles-container :is(h2, h3, p) {
+  margin:0;
+}
+
+.dashboard-tiles-container h2 {
+  color: var(--primary-primary, #FE3756);
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.375rem; /* 172.727% */
+}
+.dashboard-tiles-container > p:first-of-type {
+  margin-bottom: 1.75rem;
+}
+
+.dashboard-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 50rem;
+  gap: 2.19rem;
+  font-size: 0.75rem;
+  text-align: center;
+  line-height: 1.25rem; /* 166.667% */
+  padding: 1rem;
+}
+
+/* tiles has to be wrapped by a div element */
+.dashboard-tiles > div {
+  display: inline-flex;
+  padding: 1.25rem 1.75rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.15), 0px 2px 28px 0px rgba(0, 0, 0, 0.12);
+  border: 0.66px solid var(--gray-300, #C8CBD1);
+}
+
+.dashboard-tiles a {
+  color: var(--primary-primary-medium, #FF4D69);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5rem; /* 171.429% */
+  text-decoration: none;
+}
+
+.dashboard-tiles h3 {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.125rem; /* 188.889% */
+  margin-bottom: -0.5rem;
+}
+
+.dashboard-tiles > div:hover .dashboard-icon {
+  stroke: var(--primary-primary, #FE3756);
+}
+
+.dashboard-tiles > div:hover h3 {
+  color: var(--primary-primary, #FE3756);
+}
+
+.dashboard-tiles > div:hover {
+  border: 0.66px solid var(--primary-primary, #FE3756);
+  box-shadow: 0px 2px 26px 0px rgba(254, 55, 86, 0.54);
+}
+
+
+.dashboard-tile-description {
+  max-width: 9.125rem;
+  text-transform: lowercase;
+}
+.dashboard-icon {
+  width: 2.7rem;
+  height: 2.7rem;
+  stroke: #292D32;
+}

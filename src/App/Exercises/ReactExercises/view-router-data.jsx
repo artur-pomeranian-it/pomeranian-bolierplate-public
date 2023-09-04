@@ -10,6 +10,7 @@ import { excerciseMetaData as B9E3 } from './Blok-9-moreOrLess/router-data';
 import { excerciseMetaData as B9E4 } from './Blok-9-moreOrLessAdvanced/router-data';
 import { excerciseMetaData as B9E5 } from './Blok-9-moreOrLessGame/router-data';
 import { excerciseMetaData as ToDoWithServer } from './ToDoWithServer/router-data';
+import { excerciseMetaData as REST } from './Blok-36-LocalDevAndFetch/router-data';
 
 export const blockRouterMetaData = [
   SubRouteExampleMetaData,
@@ -22,5 +23,6 @@ export const blockRouterMetaData = [
   B9E4,
   B9E5,
   ToDoWithServer,
+  REST,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
