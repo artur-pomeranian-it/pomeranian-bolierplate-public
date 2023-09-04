@@ -1,0 +1,28 @@
+.dashboard-about {
+    padding: 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;    
+}
+
+.dashboard-about * {
+    margin: 0;    
+}
+
+.dashboard-about__group p {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.dashboard-about__group h2 {
+    color: var(--secondary-secondary, #23213D);
+    font-size: 1.375rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.dashboard-about__group a {
+    color: inherit;    
+    text-decoration: none;
+} 
