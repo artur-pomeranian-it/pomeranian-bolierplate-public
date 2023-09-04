@@ -1,0 +1,35 @@
+
+.tech-stack * {
+    /* outline: 1px solid rgba(255, 0, 0, 25%); */
+}
+
+.tech-stack > p {
+    margin-bottom: 3rem;
+}
+
+
+.tech-stack-list {
+    list-style: none;
+    padding: 0;
+    max-width: 50rem;
+    row-gap: 2.37rem;
+    column-gap: 3.73rem;
+}
+
+.tech-stack-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1.38rem;
+    min-width: 4.63rem;
+}
+
+.tech-stack-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+.tech-stack-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
