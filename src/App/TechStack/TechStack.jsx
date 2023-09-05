@@ -1,5 +1,4 @@
 import './styles.css';
-import { Link } from 'react-router-dom';
 import cssSvg from '../Images/tech-stack/css.svg';
 import htmlSVG from '../Images/tech-stack/html.svg';
 import tsSvg from '../Images/tech-stack/ts.svg';
