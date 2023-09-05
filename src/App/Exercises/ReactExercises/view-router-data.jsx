@@ -11,6 +11,7 @@ import { excerciseMetaData as B9E4 } from './Blok-9-moreOrLessAdvanced/router-da
 import { excerciseMetaData as B9E5 } from './Blok-9-moreOrLessGame/router-data';
 import { excerciseMetaData as ToDoWithServer } from './ToDoWithServer/router-data';
 import { excerciseMetaData as REST } from './Blok-36-LocalDevAndFetch/router-data';
+import { BasicFormsMetaData } from './BasicForms/router-data';
 import { blockRouterMetaData as ReduxTest } from './Blok-46-ReduxTest/router-data';
 import { blockRouterMetaData as ReduxCounter } from './Blok-46-ReduxCounter/router-data';
 
@@ -26,6 +27,7 @@ export const blockRouterMetaData = [
   B9E5,
   ToDoWithServer,
   REST,
+  BasicFormsMetaData,
   ReduxTest,
   ReduxCounter,
 ];
