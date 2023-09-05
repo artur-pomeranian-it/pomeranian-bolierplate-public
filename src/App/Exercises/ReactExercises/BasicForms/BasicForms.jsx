@@ -7,8 +7,8 @@ export function BasicForms() {
     <div>
       <MasterHeader value="Formularz zamówienia" />
       <form className="shopping-form-container">
-        <h2 className="shopping-form-heading">Zamówienie produktu</h2>
         <div className="form-input-container">
+          <h2 className="shopping-form-heading">Zamówienie produktu</h2>
           <label htmlFor="productType" className="form-paragraph-title">
             Wybierz produkt*
           </label>
@@ -94,9 +94,9 @@ export function BasicForms() {
           </div>
         </fieldset>
 
-        <fieldset className="form-input-container form--spacing">
+        <fieldset className="form-input-container">
           <legend className="form-paragraph-title">
-            Dane do zamówienia produktu
+            <h3>Dane do zamówienia produktu</h3>
           </legend>
 
           <label htmlFor="fullname" className="form-paragraph-title">
@@ -176,19 +176,16 @@ export function BasicForms() {
         </fieldset>
 
         <fieldset className="form-input-container">
-          <legend className="shopping-form-heading">Zakładanie konta</legend>
-          <label htmlFor="account" className="form-paragraph-title">
+          <legend className="shopping-form-heading">
+            <h3>Zakładanie konta</h3>
+          </legend>
+          <span className="form-paragraph-title">
             Chcę założyć konto razem z zamówieniem
+          </span>
+          <label className="checkbox-container">
+            <input name="account" type="checkbox" className="check-box" />
+            zakładam konto
           </label>
-          <div className="checkbox-container">
-            <input
-              id="create-account"
-              name="account"
-              type="checkbox"
-              className="check-box"
-            />
-            <label htmlFor="create-account ">zakładam konto</label>
-          </div>
 
           <label htmlFor="password" className="form-paragraph-title">
             Moje hasło
@@ -213,7 +210,7 @@ export function BasicForms() {
 
         <fieldset className="form-input-container">
           <legend className="shopping-form-heading">
-            <h2>Zgody i newsletter</h2>
+            <h3>Zgody i newsletter</h3>
           </legend>
           <div>
             <p className="form-paragraph-title">
