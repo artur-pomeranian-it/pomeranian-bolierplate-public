@@ -7,100 +7,106 @@ export function BasicForms() {
     <div>
       <MasterHeader value="Formularz zamówienia" />
       <form className="shopping-form-container">
+        <h2 className="shopping-form-heading">Zamówienie produktu</h2>
         <div className="form-input-container">
-          <h2 className="shopping-form-heading">Zamówienie produktu</h2>
-          <label htmlFor="product" className="form-paragraph-title">
+          <label htmlFor="productType" className="form-paragraph-title">
             Wybierz produkt*
           </label>
-          <select className="form-input" id="product">
-            <option value="kurs-frontned">Kurs Frontend Developer</option>
-            <option value="kurs-backend">Kurs Backend Developer</option>
+          <select className="product-select" id="productType">
+            <option value="frontned">Kurs Frontend Developer</option>
+            <option value="backend">Kurs Backend Developer</option>
+            <option value="ux_ui">Kurs UX/UI</option>
           </select>
-
-          <fieldset className="form--spacing">
-            <legend className="form-paragraph-title">
-              Wybierz formę płatności*
-            </legend>
-            <label className="checkbox-container">
-              <input
-                name="payment-method"
-                type="radio"
-                id="payment-method-blik"
-                className="radio-box"
-                value="blik"
-              />
-              Blik
-            </label>
-
-            <label className="checkbox-container">
-              <input
-                name="payment-method"
-                type="radio"
-                id="payment-method-paypal"
-                className="radio-box"
-                value="paypal"
-              />
-              PayPal
-            </label>
-
-            <label className="checkbox-container">
-              <input
-                name="payment-method"
-                type="radio"
-                id="payment-method-standard"
-                className="radio-box"
-                value="przelew-tradycyjny"
-              />
-              Przelew tradycyjny
-            </label>
-          </fieldset>
-
-          <fieldset className="form--spacing">
-            <legend className="form-paragraph-title">
-              Opcje dodatkowe do zamówienia
-            </legend>
-            <div className="checkbox-container">
-              <input
-                name="ustawienie środowiska"
-                type="checkbox"
-                id="additional-options-env"
-                className="check-box"
-              />
-              <label for="additional-options-env">Ustawienie środowiska</label>
-            </div>
-            <div className="checkbox-container">
-              <input
-                name="intro do GitGub"
-                type="checkbox"
-                id="additional-options-github"
-                className="check-box"
-              />
-              <label for="additional-options-github">Intro do GitGub</label>
-            </div>
-            <div className="checkbox-container">
-              <input
-                name="materiały dodatkowe"
-                type="checkbox"
-                id="additional-options-extras"
-                className="check-box"
-              />
-              <label for="additional-options-extras">Materiały dodatkowe</label>
-            </div>
-          </fieldset>
         </div>
-        <div className="form-input-container">
-          <h2 className="shopping-form-heading">Dane do zamówienia produktu</h2>
-          <label
-            htmlFor="form-delivery-fullname"
-            className="form-paragraph-title"
-          >
+
+        <fieldset className="form-input-container">
+          <legend className="form-paragraph-title">
+            Wybierz formę płatności*
+          </legend>
+          <label className="checkbox-container">
+            <input
+              name="payment-method"
+              type="radio"
+              id="payment-method-blik"
+              className="radio-box"
+              value="blik"
+            />
+            blik
+          </label>
+
+          <label className="checkbox-container">
+            <input
+              name="payment-method"
+              type="radio"
+              id="payment-method-paypal"
+              className="radio-box"
+              value="paypal"
+            />
+            paypal
+          </label>
+
+          <label className="checkbox-container">
+            <input
+              name="payment-method"
+              type="radio"
+              id="payment-method-standard"
+              className="radio-box"
+              value="przelew-tradycyjny"
+            />
+            przelew tradycyjny
+          </label>
+        </fieldset>
+
+        <fieldset className="form-input-container">
+          <legend className="form-paragraph-title">
+            Opcje dodatkowe do zamówienia
+          </legend>
+          <div className="checkbox-container">
+            <input
+              name="ustawienie środowiska"
+              type="checkbox"
+              id="additional-options-env"
+              className="check-box"
+            />
+            <label htmlFor="additional-options-env">
+              ustawienie środowiska
+            </label>
+          </div>
+          <div className="checkbox-container">
+            <input
+              name="intro do GitGub"
+              type="checkbox"
+              id="additional-options-github"
+              className="check-box"
+            />
+            <label htmlFor="additional-options-github">intro do GitGub</label>
+          </div>
+          <div className="checkbox-container">
+            <input
+              name="materiały dodatkowe"
+              type="checkbox"
+              id="additional-options-extras"
+              className="check-box"
+            />
+            <label htmlFor="additional-options-extras">
+              materiały dodatkowe
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset className="form-input-container form--spacing">
+          <legend className="form-paragraph-title">
+            Dane do zamówienia produktu
+          </legend>
+
+          <label htmlFor="fullname" className="form-paragraph-title">
             Imię i nazwisko*
           </label>
           <input
-            name="form-delivery-fullname"
+            name="fullname"
             type="text"
-            id="form-delivery-fullname"
-            className="form-delivery-data"
+            id="fullname"
+            className="form-input-field"
             placeholder="wpisz swoje imię i nazwisko"
           />
 
@@ -111,7 +117,7 @@ export function BasicForms() {
             name="form-delivery-nick"
             type="text"
             id="form-delivery-nick"
-            className="form-delivery-data"
+            className="form-input-field"
             placeholder="wpisz swój pseudonim"
           />
 
@@ -125,7 +131,7 @@ export function BasicForms() {
             name="form-delivery-adress"
             type="text"
             id="form-delivery-adress"
-            className="form-delivery-data"
+            className="form-input-field"
             placeholder="adres, na który mamy wysłac zamówienie"
           />
 
@@ -136,34 +142,41 @@ export function BasicForms() {
             name="form-delivery-email"
             type="email"
             id="form-delivery-email"
-            className="form-delivery-data"
+            className="form-input-field"
             placeholder="jan.kowalski@gmail.com"
           />
 
-          <label for="form-delivery-number" className="form-paragraph-title">
+          <label
+            htmlFor="form-delivery-number"
+            className="form-paragraph-title"
+          >
             Numer kontaktowy*
           </label>
           <input
             name="form-delivery-number"
             type="tel"
             id="form-delivery-number"
-            className="form-delivery-data"
+            className="form-input-field"
             placeholder="+48 888 888 888"
           />
 
-          <label for="form-delivery-remarks" className="form-paragraph-title">
+          <label
+            htmlFor="form-delivery-remarks"
+            className="form-paragraph-title"
+          >
             Dodatkowe uwagi do zamówienia
           </label>
           <textarea
             name="form-delivery-remarks"
             type="text"
             id="form-delivery-remarks"
-            className="form-delivery-data"
+            className="form-input-field"
             placeholder="Jeśli masz jakieś uwagi, wpisz je tutaj..."
           />
-        </div>
-        <div className="form-input-container">
-          <h2 className="shopping-form-heading">Zakładanie konta</h2>
+        </fieldset>
+
+        <fieldset className="form-input-container">
+          <legend className="shopping-form-heading">Zakładanie konta</legend>
           <label htmlFor="account" className="form-paragraph-title">
             Chcę założyć konto razem z zamówieniem
           </label>
@@ -174,7 +187,7 @@ export function BasicForms() {
               type="checkbox"
               className="check-box"
             />
-            <label for="create-account ">zakładam konto</label>
+            <label htmlFor="create-account ">zakładam konto</label>
           </div>
 
           <label htmlFor="password" className="form-paragraph-title">
@@ -187,18 +200,21 @@ export function BasicForms() {
             placeholder="56ggW457hh#$"
           />
 
-          <label htmlFor="password" className="form-paragraph-title">
+          <label htmlFor="confirm-password" className="form-paragraph-title">
             Powtórz hasło:
           </label>
           <input
             type="password"
-            id="password"
+            id="confirm-password"
             className="password-box"
             placeholder="56ggW457hh#$"
           />
-        </div>
-        <div className="form-input-container">
-          <h2 className="shopping-form-heading">Zgody i newsletter</h2>
+        </fieldset>
+
+        <fieldset className="form-input-container">
+          <legend className="shopping-form-heading">
+            <h2>Zgody i newsletter</h2>
+          </legend>
           <div>
             <p className="form-paragraph-title">
               Realizując zamówienia, akcptujesz regulamin naszego sklepu
@@ -219,7 +235,7 @@ export function BasicForms() {
               </label>
             </div>
           </div>
-        </div>
+        </fieldset>
         <button type="submit" className="form-button">
           Składam zmówienie
         </button>
