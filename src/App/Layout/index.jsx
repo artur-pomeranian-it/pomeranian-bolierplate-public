@@ -17,7 +17,7 @@ export const Layout = ({ withSidebar }) => {
     <ErrorBoundary>
       <div className={getLayoutClassName(withSidebar)}>
         <AppHeader />
-        {withSidebar && <AppAside />}
+        {withSidebar && <AppAside className="aside-sidebar" />}
         <main>
           <Outlet />
         </main>

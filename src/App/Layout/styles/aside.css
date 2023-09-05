@@ -7,6 +7,12 @@ aside {
   overflow-y: auto;
 }
 
+@media (width < 850px) {
+  aside {
+    position: absolute;
+  }
+}
+
 aside ul {
   /* Nadpisanie domyślnych styli przeglądarki */
   padding-inline-start: 0.5rem;

@@ -12,9 +12,9 @@ import { MessageIcon } from '../Components/Icons/MessageIcon';
 import './styles/aside.css';
 import { TechStackIcon } from '../Components/Icons/TechStackIcon';
 
-export function AppAside() {
+export function AppAside({ className }) {
   return (
-    <aside>
+    <aside className={className}>
       <nav>
         <ul>
           <li>

@@ -1,0 +1,29 @@
+.settings fieldset {
+    border: none;
+    padding: 0;
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.settings legend {
+    font-weight: 700;
+}
+
+.settings label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;;
+}
+.settings input[type="radio"]{
+    margin-right: 0.5rem;
+    /* appearance: none;
+    border: 3px solid red;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    outline: 4px solid red;
+    outline-offset: -8px; */
+
+}
