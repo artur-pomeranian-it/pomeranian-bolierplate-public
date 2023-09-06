@@ -6,6 +6,10 @@
   /* grid-template-rows: calc(100vh - 5rem - 5rem - 1.5rem - 1.5rem); */
 }
 
+.exercise-main-container a:is(:link, :visited) {
+  color: inherit;
+}
+
 @media (width < 50rem) {
   .exercise-main-container {
     grid-template-columns: 1fr;
