@@ -19,7 +19,7 @@ export const ExerciseLinks = () => {
             </div>
             <div className="execercise-list__tags">
               {blockMetaData.tags.map((tag) => (
-                <span>{tag}</span>
+                <span key={tag}>{tag}</span>
               ))}
             </div>
           </Link>

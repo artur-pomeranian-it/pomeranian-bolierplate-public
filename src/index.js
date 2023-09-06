@@ -4,12 +4,15 @@ import { Provider } from 'react-redux';
 import './index.css';
 import { App } from './App';
 import { store } from './App/Store';
-// import { worker } from './App/Mocks/setupWorker';
+import { worker } from './App/Mocks/setupWorker';
 import app from './firebase';
 
-if (process.env.NODE_ENV === 'development') {
-  // worker.start();
-}
+// if (process.env.NODE_ENV === 'development') {
+worker.start({
+  onUnhandledRequest: 'bypass',
+});
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+// }
 console.log('Firebase App Name: ', app.name);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
