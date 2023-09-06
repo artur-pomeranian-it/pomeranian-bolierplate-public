@@ -5,11 +5,11 @@ import { RoundImage } from '../../Components/RoundImage/RoundImage';
 import { RightCornerMenuPopup } from '../RightCornerMenuPopup/RightCornerMenuPopup';
 import { useState } from 'react';
 
-export const HeaderMenu = () => {
+export const HeaderMenu = ({ isVisible }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="header-menu">
+    <div className={`header-menu ${isVisible && 'header-menu-visible'}`}>
       <SettingIcon className="header-menu__settings" />
       <RoundImage size="50" />
       <div className="header-menu__text">

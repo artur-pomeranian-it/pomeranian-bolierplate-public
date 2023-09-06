@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { AppHeader } from './AppHeader';
@@ -13,11 +13,12 @@ function getLayoutClassName(withSidebar) {
 }
 
 export const Layout = ({ withSidebar }) => {
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   return (
     <ErrorBoundary>
       <div className={getLayoutClassName(withSidebar)}>
-        <AppHeader />
-        {withSidebar && <AppAside className="aside-sidebar" />}
+        <AppHeader toggleMenu={() => setIsMenuVisible(!isMenuVisible)} />
+        {withSidebar && <AppAside isMenuVisible={isMenuVisible} />}
         <main>
           <Outlet />
         </main>

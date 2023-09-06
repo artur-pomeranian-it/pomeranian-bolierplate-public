@@ -12,9 +12,9 @@ import { MessageIcon } from '../Components/Icons/MessageIcon';
 import './styles/aside.css';
 import { TechStackIcon } from '../Components/Icons/TechStackIcon';
 
-export function AppAside({ className }) {
+export function AppAside({ isMenuVisible }) {
   return (
-    <aside className={className}>
+    <aside className={isMenuVisible ? '' : 'aside-show'}>
       <nav>
         <ul>
           <li>
