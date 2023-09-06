@@ -12,6 +12,13 @@
     0px 8px 20px 0px rgba(0, 0, 0, 0.04), 0px 17px 35px 0px rgba(0, 0, 0, 0.05),
     0px -4px 26px 0px rgba(0, 0, 0, 0.08);
 }
+@media (width < 50rem) {
+  .shopping-form-container {
+    background: none;
+    padding: 1rem;
+    box-shadow: none;
+  }
+}
 
 .form-input-container {  
   display: flex;
