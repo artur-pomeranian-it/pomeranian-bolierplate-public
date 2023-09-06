@@ -17,10 +17,10 @@ export function HtmlCssExercises() {
 
   return (
     <div>
-      <p>HTML & CSS - lista ćwiczeń</p>
+      <h2>HTML & CSS - lista ćwiczeń</h2>
       <GoBackLink label="Zamknij" />
 
-      <hr />
+      {/* <hr /> */}
 
       <Routes>
         <Route path="" element={<ExerciseLinks />} />

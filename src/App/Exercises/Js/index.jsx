@@ -17,10 +17,10 @@ export function JsExercises() {
 
   return (
     <div>
-      <p>JS - lista ćwiczeń</p>
+      <h2>JS - lista ćwiczeń</h2>
       <GoBackLink label="Zamknij" />
 
-      <hr />
+      {/* <hr /> */}
 
       <Routes>
         <Route path="" element={<ExerciseLinks />} />
