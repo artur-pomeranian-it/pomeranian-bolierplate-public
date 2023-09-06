@@ -14,7 +14,7 @@ import { TechStackIcon } from '../Components/Icons/TechStackIcon';
 
 export function AppAside({ isMenuVisible }) {
   return (
-    <aside className={isMenuVisible ? '' : 'aside-show'}>
+    <aside className={isMenuVisible ? 'aside-show' : ''}>
       <nav>
         <ul>
           <li>
