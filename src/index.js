@@ -6,11 +6,13 @@ import { App } from './App';
 import { store } from './App/Store';
 import { worker } from './App/Mocks/setupWorker';
 import app from './firebase';
+// import { server } from './App/Mocks/setupServer';
 
 // if (process.env.NODE_ENV === 'development') {
 worker.start({
   onUnhandledRequest: 'bypass',
 });
+
 console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 // }
 console.log('Firebase App Name: ', app.name);
