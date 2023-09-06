@@ -27,6 +27,12 @@
   padding: 1rem;
 }
 
+@media (width < 50rem) {
+  .dashboard-tiles {
+    justify-content: center;
+  }
+}
+
 /* tiles has to be wrapped by a div element */
 .dashboard-tiles > div {
   display: inline-flex;

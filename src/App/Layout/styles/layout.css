@@ -26,7 +26,7 @@
 main {
   grid-area: main;
   /* height: calc(100vh - 5rem - 5rem); */
-  overflow-y: auto;
+  /* overflow-y: auto; */
   display: flex;
   flex-direction: column;
   flex: 1;

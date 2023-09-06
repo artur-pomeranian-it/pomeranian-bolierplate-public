@@ -5,3 +5,9 @@
     justify-content: space-between;
     font-family: 'Poppins', sans-serif;    
 }
+
+@media (width < 50rem) {
+    .dashboard {
+        flex-wrap:  wrap;                
+    }
+}
