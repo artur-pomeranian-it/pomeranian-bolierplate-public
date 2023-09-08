@@ -39,12 +39,19 @@ export function Exercise() {
   );
 }
 
+// npmjs.com/package/citation-js
+// ------------Named Functions------------------
 // // funkcja nazwa(argumen1. argument2){zadanie do wykonania}
 // function f1(number1, number2) {}
 
 // // funkcja anonimowa
-// f2() => {};
-// const f2 = () => {};
+// Anonymous Functions: These are functions without a name. They are often used as callbacks.
+// function () {
+//  console.log("This is an anonymous function.");
+// }
+// setTimeout(function () {
+//  console.log("This is an anonymous function.");
+// }, 1000);
 
 // // funkcja strzałkowa
 // const f3 = () => ({ foo: 'bar' });
