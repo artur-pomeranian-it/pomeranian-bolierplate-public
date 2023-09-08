@@ -8,6 +8,9 @@ import { blockRouterMetaData as JsArrayMethodsExercise } from './JsArrayMethodsE
 import { blockRouterMetaData as JsStringsAsArrays } from './JsStringsAsArrays/router-data';
 import { blockRouterMetaData as JsObjectsBasics } from './JsObjectsBasics/router-data';
 import { blockRouterMetaData as JsDateTime } from './JsDateTime/router-data';
+import { blockRouterMetaData as JsFunctionBasics } from './JsFunctionBasics/router-data';
+import { blockRouterMetaData as Hoisting } from './Hoisting/router-data';
+import { blockRouterMetaData as ExerciseJsFunctions } from './ExerciseJsFunctions/router-data';
 import { blockRouterMetaData as Blok22Warmup } from './Blok22Warmup/router-data';
 import { blockRouterMetaData as SetTimeout } from './SetTimeout/router-data';
 import { blockRouterMetaData as VanishString } from './VanishString/router-data';
@@ -32,6 +35,9 @@ export const blockRouterMetaData = [
   Timer,
   JsAnimation,
   SlidingBanner,
+  JsFunctionBasics,
+  Hoisting,
+  ExerciseJsFunctions,
   HitTheMoleGame,
   MemoGame,
 ];
