@@ -21,8 +21,6 @@ import { blockRouterMetaData as HitTheMoleGame } from './HitTheMoleGame/router-d
 import { blockRouterMetaData as OOP } from './OOP/router-data';
 import { blockRouterMetaData as TryCatchProtoThis } from './TryCatchPrototype/router-data';
 import { blockRouterMetaData as JsonXMLStorage } from './JsonXMLStorage/router-data';
-import { blockRouterMetaData as TryCatchProtoThis } from './TryCatchPrototype';
-import { blockRouterMetaData as JsonXMLStorage } from './JsonXMLStorage/router-data';
 import { blockRouterMetaData as MemoGame } from './MemoGame/router-data';
 import { blockRouterMetaData as PromiseAndMe } from './promiseAndMe/router-data';
 import { blockRouterMetaData as UseEffectAndPromiseExercise } from './useEffectAndPromiseExercise/router-data';
