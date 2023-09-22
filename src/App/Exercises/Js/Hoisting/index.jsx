@@ -40,12 +40,13 @@ const addFrom1ToValue = (value) => {
     .fill(0)
     .reduce((prev) => [...prev, 'new random'], ['random value']);
 };
-console.time('rec');
-addNumbersFrom1ToValue(2000);
-console.timeEnd('rec');
-console.time('no-rec');
-addFrom1ToValue(2000);
-console.timeEnd('no-rec');
+
+// console.time('rec');
+// addNumbersFrom1ToValue(2000);
+// console.timeEnd('rec');
+// console.time('no-rec');
+// addFrom1ToValue(2000);
+// console.timeEnd('no-rec');
 
 export function Exercise() {
   const [numb, setNumb] = useState(0);
