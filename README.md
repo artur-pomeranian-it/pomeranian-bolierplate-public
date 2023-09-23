@@ -17,7 +17,9 @@ You may also see any lint errors in the console.
 ### `npm test`
 
 Builds the app for production to the `build` folder.\
+f you aren't satisfied with the build tool
 Launches the test runner in the interactive watch mode.\
+f you aren't satisfied with the build tool
 Builds the app for production to the `build` folder.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 f you aren't satisfied with the build tool
