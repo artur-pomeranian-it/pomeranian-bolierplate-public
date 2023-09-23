@@ -1,0 +1,11 @@
+{
+    "name": "John",
+    "surname": "Doe",
+    "age": null,
+    "cars": [
+        "Ford",
+        "BMW",
+        "Fiat"
+    ],
+    "isAdult": true
+}
