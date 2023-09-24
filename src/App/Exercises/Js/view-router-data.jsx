@@ -24,6 +24,7 @@ import { blockRouterMetaData as OOPzadania } from './OOP-Zadania/router-data';
 import { blockRouterMetaData as JsonXMLStorage } from './JsonXMLStorage/router-data';
 import { blockRouterMetaData as PromisesAndMe } from './PromisesAndMe/router-data';
 import { blockRouterMetaData as UseEffectAndPromiseExercise } from './UseEffectAndPromiseExercise/router-data';
+import { blockRouterMetaData as AsyncAwait } from './AsyncAwait/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -50,5 +51,6 @@ export const blockRouterMetaData = [
   JsonXMLStorage,
   PromisesAndMe,
   UseEffectAndPromiseExercise,
+  AsyncAwait,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
