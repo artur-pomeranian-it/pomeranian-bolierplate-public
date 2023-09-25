@@ -1,4 +1,10 @@
 export const OOP = () => {
+  // Obiekty jakie do tej pory poznaliśmy
+  // głównie jako key value pair
+  // const obj = {
+  //   speed: 0,
+  // };
+
   // -----------------------------------------------------------------------------
   // KLASA
   // -----------------------------------------------------------------------------
@@ -6,45 +12,13 @@ export const OOP = () => {
   // Klasa to pewnego rodzaju szablon lub wzór do tworzenia obiektów.
   // Opisuje jakie właściwości (pola) i metody będzie miał obiekt utworzony na podstawie klasy.
 
-  // -----------------------------------------------------------------------------
-  // INSTANCJA
-  // -----------------------------------------------------------------------------
-
-  // Instancja to konkretny obiekt utworzony na podstawie określonej klasy,
-  // która ma swoje własne unikalne wartości pól.
-
-  // -----------------------------------------------------------------------------
-  // OPERATOR new
-  // -----------------------------------------------------------------------------
-
-  // Operator new tworzy nową instancję klasy.
-  // Tworzenie instancji za pomocą new inicjuje proces konstrukcji obiektu zgodnie z definicją klasy.
-
-  // -----------------------------------------------------------------------------
-  // THIS
-  // -----------------------------------------------------------------------------
-
-  // Słowo kluczowe this odnosi się do bieżącego obiektu, na którym jest wywoływane.
-  // Wewnątrz metody this wskazuje na instancje klasy na której jest wywołana metoda.
-
-  // -----------------------------------------------------------------------------
-  // METODY STATYCZNE
-  // -----------------------------------------------------------------------------
-
-  // Metody statyczne to metody, które nie operują na instancji klasy, ale są zwiazane z klasą jako całością.
-  // Wywołuje się je bezpośrednio na klasie, a nie na instancji klasy.
-
-  // -----------------------------------------------------------------------------
-  // POLE STATYCZNE
-  // -----------------------------------------------------------------------------
-
-  // Pole statyczne to pola, które mają wspólne wartości dla wszystkich instancji danej klasy.
-
   class Car {
-    static numberOfCars = 0;
-
-    // function car(make, model) {}
     constructor(make, model) {
+      // -----------------------------------------------------------------------------
+      // THIS
+      // -----------------------------------------------------------------------------
+      // Słowo kluczowe this odnosi się do bieżącego obiektu, na którym jest wywoływane.
+      // Wewnątrz metody this wskazuje na instancje klasy na której jest wywołana metoda.
       this.make = make;
       this.model = model;
     }
@@ -53,41 +27,99 @@ export const OOP = () => {
     start() {
       console.log(`${this.make} ${this.model} is starting...`);
     }
-
-    // metoda statyczna
-    static getInfo() {
-      console.log('This is a car class');
-    }
   }
 
+  // -----------------------------------------------------------------------------
+  // INSTANCJA
+  // -----------------------------------------------------------------------------
+  // Instancja to konkretny obiekt utworzony na podstawie określonej klasy,
+  // która ma swoje własne unikalne wartości pól.
+  // -----------------------------------------------------------------------------
+  // OPERATOR new
+  // -----------------------------------------------------------------------------
+  // Operator new tworzy nową instancję klasy.
+  // Tworzenie instancji za pomocą new inicjuje proces konstrukcji obiektu zgodnie z definicją klasy.
   // INSTANCJA klasy CAR
   const myToyota = new Car('Toyota', 'Corolla');
   // INSTANCJA klasy CAR
   const myAudi = new Car('Audi', 'A4');
-
   myToyota.start();
   myAudi.start();
 
-  Car.getInfo();
-  Car.numberOfCars = 2;
-
-  console.log(Math.PI, Car.numberOfCars);
+  // -----------------------------------------------------------------------------
+  // METODY STATYCZNE
+  // -----------------------------------------------------------------------------
+  // Metody statyczne to metody, które nie operują na instancji klasy, ale są zwiazane z klasą jako całością.
+  // Wywołuje się je bezpośrednio na klasie, a nie na instancji klasy.
+  // -----------------------------------------------------------------------------
+  // POLE STATYCZNE
+  // -----------------------------------------------------------------------------
+  // Pole statyczne to pola, które mają wspólne wartości dla wszystkich instancji danej klasy.
+  class StaticCar {
+    static speed = 0;
+    static start() {
+      console.log("StaticCar: I'm running at speed of ", this.speed);
+    }
+    constructor(speed) {
+      StaticCar.speed = speed;
+    }
+  }
+  StaticCar.start();
+  StaticCar.speed = 4000;
+  StaticCar.start();
 
   // -----------------------------------------------------------------------------
   // KLASA STATYCZNA
   // -----------------------------------------------------------------------------
-
   // Klasa statyczna to klasa, która zawiera tylko metody statyczne i pola statyczne. np Math
+  class StaticClass {
+    static location = 'Poland';
+    static getTime = () => new Date();
+  }
+  console.log(
+    'StaticClass: current time in ',
+    StaticClass.location,
+    ' is ',
+    StaticClass.getTime()
+  );
 
   // -----------------------------------------------------------------------------
   // OPERATOR instaceof
   // -----------------------------------------------------------------------------
   // Operator instanceof sprawdza czy dany obiekt jest instancją danej klasy.
 
-  class DogTest {}
+  console.log('fastCar instanceof Car:', myAudi instanceof Car);
+  class NotACar {}
+  const otherCar = new NotACar();
+  console.log('fastCar instanceof NotACar:', myAudi instanceof NotACar);
+  if (otherCar instanceof Car) {
+    otherCar.start();
+  }
 
-  console.log(myToyota instanceof Car);
-  console.log(myToyota instanceof DogTest);
+  // -----------------------------------------------------------------------------
+  // DZIEDZICZENIE
+  // -----------------------------------------------------------------------------
+  // klasa nadrzędna
+  class AnimalParent {
+    constructor(name) {
+      this.name = name;
+    }
+    getName() {
+      return this.name;
+    }
+  }
+
+  // klasa podrzędna
+  class Dog extends AnimalParent {
+    bark() {
+      return 'hał';
+    }
+    speak() {
+      console.log(this.getName(), ' barks ', this.bark());
+    }
+  }
+  const dog = new Dog('Reksio');
+  dog.speak();
 
   // -----------------------------------------------------------------------------
   // POLIMORFIZM
@@ -96,26 +128,39 @@ export const OOP = () => {
   // Polimorfizm to zdolność różnych klas do reagowania na te same metody w różny sposób.
   // Oznacza to, że różne obiekty mogą wykonywać te same operacje, ale w zależności od typu obiektu - zachowanie może być inne
 
-  class AnimalPolimorpihsm {
+  class AnimalPoli {
     speak() {
       console.log('Animal makes a noise');
+      // throw new Error('not implemented');
     }
   }
 
-  class DogPolimorphism extends AnimalPolimorpihsm {
+  class DogPoli extends AnimalPoli {
     speak() {
       console.log('Dog barks');
     }
   }
+  const dogPoli = new DogPoli();
 
-  class CatPolimorphism extends AnimalPolimorpihsm {
+  class CatPoli extends AnimalPoli {
     speak() {
       console.log('Cat mewos');
     }
   }
+  const catPoli = new CatPoli();
 
-  const animals = [new DogPolimorphism(), new CatPolimorphism()];
-  animals.forEach((animal) => animal.speak());
+  class CowPoli extends AnimalPoli {}
+  const cowPoli = new CowPoli();
+
+  // dogPoli.speak();
+  // catPoli.speak();
+  const animals = [dogPoli, catPoli, myAudi, cowPoli];
+  ///--------------------
+  animals.forEach((animal) => {
+    if (animal instanceof AnimalPoli) {
+      animal.speak();
+    }
+  });
 
   // -----------------------------------------------------------------------------
   // HERMETYZACJA
@@ -136,66 +181,48 @@ export const OOP = () => {
 
   //          Właściwości i metody, do których dostęp jest ograniczony do wewnątrz obiektu, z wykorzystaniem hermetyzacji.
 
-  class ClassWithPrivate {
-    #accessKey = 0;
-    #privateFieldWithInitialize = 42;
-    // STATIC PUBLIC FIELD
-    // static publicFieldWithInitialize = 9;
-
-    // PUBLIC FIELD
-    publicFieldWithInitialize = 9;
-
-    #privateMethod() {
-      console.log("I'm private method");
+  class AnimalPrivate {
+    // prywatne właściwość (property)
+    #name = '';
+    // static private
+    static #counter = 0;
+    constructor(name) {
+      this.#name = name;
+    }
+    // STATIC PUBLIC method
+    getName() {
+      AnimalPrivate.#counter += 1;
+      console.log(
+        `Name is: ${this.#name}, was called ${AnimalPrivate.#counter} times.`
+      );
     }
 
-    returnPrivateField() {
-      // funkcja haszujaca
-      const hash = this.#accessKey + 1;
+    getStaticAge() {
+      return AnimalPrivate.#counter;
+    }
+    // prywatna metoda
+    #resetCounter() {
+      AnimalPrivate.#counter = 0;
+    }
 
-      return hash;
+    setName(newName) {
+      this.#name = newName;
+      this.#resetCounter();
     }
   }
-
-  const instanceOfClassWithPrivate = new ClassWithPrivate();
-  // console.log(instanceOfClassWithPrivate.#accessKey) //SyntaxError
-  console.log(instanceOfClassWithPrivate.returnPrivateField());
-
-  // PUBLIC FIELD
-  console.log(instanceOfClassWithPrivate.publicFieldWithInitialize);
+  const privateAnimal = new AnimalPrivate('Reksio');
+  // Private name #name is not defined.
+  // privateAnimal.#name;
+  privateAnimal.getName();
+  privateAnimal.getName();
+  privateAnimal.getName();
+  privateAnimal.setName('Reksio 2');
+  privateAnimal.getName();
+  const otherAnimal = new AnimalPrivate('Szarik');
+  otherAnimal.getName();
 
   // STATIC PUBLIC FIELD
   // console.log(ClassWithPrivate.publicFieldWithInitialize);
-
-  // -----------------------------------------------------------------------------
-  // DZIEDZICZENIE
-  // -----------------------------------------------------------------------------
-
-  // Dziedzczenie to mechanizm, w którym jedna klasa może odziedziczyć właściwości i metody z innej klasy.
-  // Dzięki temu możemy tworzyć hierarchię klas, gdzie klasa podrzędna dziedziczy zachowanie klasy nadrzędnej.
-
-  class Animal {
-    constructor(name) {
-      this.name = name;
-    }
-
-    getName() {
-      return this.name;
-    }
-  }
-
-  class Dog extends Animal {
-    bark() {
-      return 'woof';
-    }
-
-    speak() {
-      console.log(`${this.getName()} barks ${this.bark()}`);
-    }
-  }
-
-  const dog = new Dog('Reksio');
-  dog.speak();
 
   // -----------------------------------------------------------------------------
   // HERMETYZACJA A DZIEDZICZENIE
@@ -237,45 +264,40 @@ export const OOP = () => {
   // W przeciwieństwie do dziedziczenia, kompozycja nie wymaga hierarchii klas, a komponenty mogą być używane wielokrotnie
   // Kompozycja skupia się na tworzeniu obiektów poprzez łączenie ich komponentów.
 
-  // dziedziczenie
-  class AnimalInheritence {
+  // przykład z dziedziczeniem
+  class AnimalInherit {
     speak() {
-      console.log('Animal makes a noise');
+      console.log('Animal makes a sound');
     }
   }
-
-  class DogInheritence extends AnimalInheritence {
+  class DogInherit extends AnimalInherit {
     speak() {
       console.log('Dog barks');
     }
   }
+  const dogInherit = new DogInherit();
+  dogInherit.speak();
 
-  const dogInheritence = new DogInheritence();
-  dogInheritence.speak();
-
-  // kompozycja
+  // poprzez kompozycję
   class SpeakerComposition {
     constructor(sound) {
       this.sound = sound;
     }
-
     makeSound() {
       console.log(this.sound);
     }
   }
-
   class DogComposition {
     constructor() {
-      this.speaker = new SpeakerComposition('woof');
+      this.speaker = new SpeakerComposition('hał');
     }
-
     bark() {
       this.speaker.makeSound();
     }
   }
-
   const dogComposition = new DogComposition();
   dogComposition.bark();
+  console.log(dogComposition, dogInherit);
 
   // Zalety dziedziczenia:
   //    Reużywalność: Możemy dziedziczyć istniejący kod i zachowanie.
@@ -467,7 +489,18 @@ export const OOP = () => {
   console.log(myCar.turn('right'));
   console.log(myCar.stop());
   // -----------------------------------------------------------------------------
-  //ODSTĘP OD RETURN
-  //
-  return <div>OOP</div>;
+
+  return (
+    <div>
+      <h1>Klasy, OOP</h1>
+      <h2>Paradygmaty programowania</h2>
+      <p>programowanie strukturalne, funkcjonalne i obiektowe</p>
+      <h2>Object Oriented Programming </h2>
+      <p>
+        cechy OOP: abstrakcja, hermetyzacja, polimorfizm, dziedziczenie,
+        kompozycja
+      </p>
+      <h2>Przykłady powyżej</h2>
+    </div>
+  );
 };
