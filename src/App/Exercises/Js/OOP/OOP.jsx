@@ -1,4 +1,4 @@
-import './styles.css';
+import "./styles.css";
 
 export const OOP = () => {
   // const obj = {
@@ -37,10 +37,10 @@ export const OOP = () => {
   StaticCar.start();
 
   // operator instanceof
-  console.log('fastCar instanceof Car:', fastCar instanceof Car);
+  console.log("fastCar instanceof Car:", fastCar instanceof Car);
   class NotACar {}
   const otherCar = new NotACar();
-  console.log('fastCar instanceof NotACar:', fastCar instanceof NotACar);
+  console.log("fastCar instanceof NotACar:", fastCar instanceof NotACar);
   if (otherCar instanceof Car) {
     otherCar.start();
   }
@@ -50,21 +50,21 @@ export const OOP = () => {
 
   class AnimalPoli {
     speak() {
-      console.log('Animal makes a noise');
+      console.log("Animal makes a noise");
       // throw new Error('not implemented');
     }
   }
 
   class DogPoli extends AnimalPoli {
     speak() {
-      console.log('Dog barks');
+      console.log("Dog barks");
     }
   }
   const dogPoli = new DogPoli();
 
   class CatPoli extends AnimalPoli {
     speak() {
-      console.log('Cat mewos');
+      console.log("Cat mewos");
     }
   }
   const catPoli = new CatPoli();
@@ -96,20 +96,20 @@ export const OOP = () => {
   // klasa podrzędna
   class Dog extends AnimalParent {
     bark() {
-      return 'hał';
+      return "hał";
     }
     speak() {
-      console.log(this.getName(), ' barks ', this.bark());
+      console.log(this.getName(), " barks ", this.bark());
     }
   }
-  const dog = new Dog('Reksio');
+  const dog = new Dog("Reksio");
   dog.speak();
 
   // hermetyzacja
   class AnimalPrivate {
     // prywatne właściwość (property)
     #counter = 0;
-    #name = '';
+    #name = "";
     constructor(name) {
       this.#name = name;
     }
@@ -126,11 +126,11 @@ export const OOP = () => {
       this.#resetCounter();
     }
   }
-  const privateAnimal = new AnimalPrivate('Reksio');
+  const privateAnimal = new AnimalPrivate("Reksio");
   privateAnimal.getName();
   privateAnimal.getName();
   privateAnimal.getName();
-  privateAnimal.setName('Reksio 2');
+  privateAnimal.setName("Reksio 2");
   privateAnimal.getName();
   privateAnimal.getName();
 
@@ -139,12 +139,12 @@ export const OOP = () => {
   // przykład z dziedziczeniem
   class AnimalInherit {
     speak() {
-      console.log('Animal makes a sound');
+      console.log("Animal makes a sound");
     }
   }
   class DogInherit extends AnimalInherit {
     speak() {
-      console.log('Dog barks');
+      console.log("Dog barks");
     }
   }
   const dogInherit = new DogInherit();
@@ -161,7 +161,7 @@ export const OOP = () => {
   }
   class DogComposition {
     constructor() {
-      this.speaker = new SpeakerComposition('hał');
+      this.speaker = new SpeakerComposition("hał");
     }
     bark() {
       this.speaker.makeSound();
