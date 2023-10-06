@@ -45,7 +45,7 @@ const schemaValidationMessage = {
   },
 };
 
-const schema = yup.object({
+const schema = yup.object().shape({
   // Zamówienie produktu
   productType: yup.string().required(schemaValidationMessage.required),
   paymentMethod: yup.string().required(schemaValidationMessage.required),
@@ -70,35 +70,40 @@ const schema = yup.object({
   // Zakładanie konta
   isCreatedAccountChecked: yup.boolean(schemaValidationMessage.boolean),
   password: yup.string().when('isCreatedAccountChecked', {
-    is: true, // only apply teh validation when account is to be created
-    then: yup
-      .string()
-      .required(schemaValidationMessage.required)
-      .min(
-        schemaValidationValues.password.min,
-        schemaValidationMessage.password.min
-      )
-      .matches(
-        schemaValidationRegex.password.smallLetters,
-        schemaValidationMessage.password.smallLetters
-      )
-      .matches(
-        schemaValidationRegex.password.bigLetters,
-        schemaValidationMessage.password.bigLetters
-      )
-      .matches(
-        schemaValidationRegex.password.numbers,
-        schemaValidationMessage.password.numbers
-      ),
-    otherwise: yup.string(),
+    is: true,
+    then: () =>
+      yup
+        .string()
+        .required(schemaValidationMessage.required)
+        .min(
+          schemaValidationValues.password.min,
+          schemaValidationMessage.password.min
+        )
+        .matches(
+          schemaValidationRegex.password.smallLetters,
+          schemaValidationMessage.password.smallLetters
+        )
+        .matches(
+          schemaValidationRegex.password.bigLetters,
+          schemaValidationMessage.password.bigLetters
+        )
+        .matches(
+          schemaValidationRegex.password.numbers,
+          schemaValidationMessage.password.numbers
+        ),
   }),
-  // confirmPassword: yup
-  //   .string()
-  //   .required(schemaValidationMessage.required)
-  //   .oneOf(
-  //     [yup.ref('password')],
-  //     schemaValidationMessage.password.confirmPassword
-  //   ),
+
+  confirmPassword: yup.string().when('isCreatedAccountChecked', {
+    is: true,
+    then: () =>
+      yup
+        .string()
+        .required(schemaValidationMessage.required)
+        .oneOf(
+          [yup.ref('password')],
+          schemaValidationMessage.password.confirmPassword
+        ),
+  }),
 
   // Zgody i newsletter
   isTermsChecked: yup
