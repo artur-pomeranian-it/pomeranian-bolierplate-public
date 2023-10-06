@@ -19,7 +19,7 @@
   gap: 0.5rem;
 }
 
-.form-input-container :is(input, textarea, select, fieldset) {
+.form-input-container :is(input, textarea, select, fieldset, .product-react-select ) {
   max-width: 30rem;
 }
 
@@ -42,13 +42,21 @@ fieldset.form-input-container {
   background: #fff;
 }
 
+.product-react-select {
+  font-family: inherit;
+  width: 100%;
+}
+.product-react-select .react-select__value-container {
+  padding: 0.4rem 1rem;  
+}
+
 .check-box,
 .radio-box {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-input {
+input, option {
   accent-color: #fe3756;
 }
 

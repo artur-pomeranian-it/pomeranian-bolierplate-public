@@ -1,141 +1,18 @@
 import React from 'react';
-// doesn't work with react-hook-form
-// import Select from 'react-select';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 import './style.css';
-
-/* 
-  requires installation of:
-  npm i react-hook-form
-  npm i yup
-  npm i @hookform/resolvers
-
- */
-
-const schemaValidationRegex = {
-  phone: /^\d{9}$/,
-  password: {
-    smallLetters: /[a-z]/,
-    bigLetters: /[A-Z]/,
-    numbers: /[0-9]/,
-  },
-};
-
-const schemaValidationValues = {
-  password: {
-    min: 8,
-  },
-};
-
-const schemaValidationMessage = {
-  required: 'Pole jest wymagane',
-  boolean: 'To pole musi być zaznaczone lub nie',
-
-  email: 'Wpisz poprawny adres email',
-  phone: 'Wpisz poprawny numer telefonu',
-  password: {
-    min: `Hasło musi mieć minimum ${schemaValidationValues.password.min} znaków`,
-    smallLetters: 'Hasło musi zawierać małe litery',
-    bigLetters: 'Hasło musi zawierać duże litery',
-    numbers: 'Hasło musi zawierać cyfry',
-    confirmPassword: 'Hasła muszą być takie same',
-  },
-};
-
-const schema = yup.object({
-  // Zamówienie produktu
-  productType: yup.string().required(schemaValidationMessage.required),
-  paymentMethod: yup.string().required(schemaValidationMessage.required),
-  isEnvChecked: yup.boolean(schemaValidationMessage.boolean),
-  isGithubChecked: yup.boolean(schemaValidationMessage.boolean),
-  isAdditionalDataChecked: yup.boolean(schemaValidationMessage.boolean),
-
-  // Dane do realizacji zamówienia
-  name: yup.string().required(schemaValidationMessage.required),
-  nickname: yup.string().required(schemaValidationMessage.required),
-  address: yup.string().required(schemaValidationMessage.required),
-  email: yup
-    .string()
-    .email(schemaValidationMessage.email)
-    .required(schemaValidationMessage.required),
-  phone: yup
-    .string()
-    .matches(schemaValidationRegex.phone, schemaValidationMessage.phone)
-    .required(schemaValidationMessage.required),
-  description: yup.string(),
-
-  // Zakładanie konta
-  isCreatedAccountChecked: yup.boolean(schemaValidationMessage.boolean),
-  password: yup
-    .string()
-    .required(schemaValidationMessage.required)
-    .min(
-      schemaValidationValues.password.min,
-      schemaValidationMessage.password.min
-    )
-    .matches(
-      schemaValidationRegex.password.smallLetters,
-      schemaValidationMessage.password.smallLetters
-    )
-    .matches(
-      schemaValidationRegex.password.bigLetters,
-      schemaValidationMessage.password.bigLetters
-    )
-    .matches(
-      schemaValidationRegex.password.numbers,
-      schemaValidationMessage.password.numbers
-    ),
-  confirmPassword: yup
-    .string()
-    .required(schemaValidationMessage.required)
-    .oneOf(
-      [yup.ref('password')],
-      schemaValidationMessage.password.confirmPassword
-    ),
-
-  // Zgody i newsletter
-  isTermsChecked: yup
-    .boolean(schemaValidationMessage.boolean)
-    .oneOf([true], schemaValidationMessage.required),
-  isNewsletterChecked: yup.boolean(schemaValidationMessage.boolean),
-});
+import { MasterHeader } from '../../../Components/MasterHeader/MasterHeader';
 
 export function BasicForms() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit = (data) => {
-    console.log('submit', data);
-  };
-
-  console.log(errors);
-
   return (
     <div>
       <MasterHeader value="Formularz zamówienia" />
-      <form
-        className="shopping-form-container"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="shopping-form-container">
         <div className="form-input-container">
           <h2 className="shopping-form-heading">Zamówienie produktu</h2>
           <label htmlFor="productType" className="form-paragraph-title">
             Wybierz produkt*
           </label>
-
-          <select
-            className="product-select"
-            id="productType"
-            {...register('productType')}
-          >
+          <select className="product-select" id="productType">
             <option value="frontned">Kurs Frontend Developer</option>
             <option value="backend">Kurs Backend Developer</option>
             <option value="ux_ui">Kurs UX/UI</option>
@@ -153,8 +30,6 @@ export function BasicForms() {
               id="payment-method-blik"
               className="radio-box"
               value="blik"
-              defaultChecked
-              {...register('paymentMethod')}
             />
             blik
           </label>
@@ -166,7 +41,6 @@ export function BasicForms() {
               id="payment-method-paypal"
               className="radio-box"
               value="paypal"
-              {...register('paymentMethod')}
             />
             paypal
           </label>
@@ -178,7 +52,6 @@ export function BasicForms() {
               id="payment-method-standard"
               className="radio-box"
               value="przelew-tradycyjny"
-              {...register('paymentMethod')}
             />
             przelew tradycyjny
           </label>
@@ -194,7 +67,6 @@ export function BasicForms() {
               type="checkbox"
               id="additional-options-env"
               className="check-box"
-              {...register('isEnvChecked')}
             />
             <label htmlFor="additional-options-env">
               ustawienie środowiska
@@ -206,8 +78,6 @@ export function BasicForms() {
               type="checkbox"
               id="additional-options-github"
               className="check-box"
-              defaultChecked
-              {...register('isGithubChecked')}
             />
             <label htmlFor="additional-options-github">intro do GitGub</label>
           </div>
@@ -217,7 +87,6 @@ export function BasicForms() {
               type="checkbox"
               id="additional-options-extras"
               className="check-box"
-              {...register('isAdditionalDataChecked')}
             />
             <label htmlFor="additional-options-extras">
               materiały dodatkowe
@@ -239,8 +108,6 @@ export function BasicForms() {
             id="fullname"
             className="form-input-field"
             placeholder="wpisz swoje imię i nazwisko"
-            defaultValue="Jan Kowalski"
-            {...register('name')}
           />
 
           <label htmlFor="form-delivery-nick" className="form-paragraph-title">
@@ -252,8 +119,6 @@ export function BasicForms() {
             id="form-delivery-nick"
             className="form-input-field"
             placeholder="wpisz swój pseudonim"
-            defaultValue="JanKow"
-            {...register('nickname')}
           />
 
           <label
@@ -268,8 +133,6 @@ export function BasicForms() {
             id="form-delivery-adress"
             className="form-input-field"
             placeholder="adres, na który mamy wysłac zamówienie"
-            defaultValue="rondo ONZ, Warszawa"
-            {...register('address')}
           />
 
           <label htmlFor="form-delivery-email" className="form-paragraph-title">
@@ -281,8 +144,6 @@ export function BasicForms() {
             id="form-delivery-email"
             className="form-input-field"
             placeholder="jan.kowalski@gmail.com"
-            defaultValue="jan@gmail.com"
-            {...register('email')}
           />
 
           <label
@@ -296,9 +157,7 @@ export function BasicForms() {
             type="tel"
             id="form-delivery-number"
             className="form-input-field"
-            placeholder="888888888"
-            defaultValue="888888888"
-            {...register('phone')}
+            placeholder="+48 888 888 888"
           />
 
           <label
@@ -313,8 +172,6 @@ export function BasicForms() {
             id="form-delivery-remarks"
             className="form-input-field"
             placeholder="Jeśli masz jakieś uwagi, wpisz je tutaj..."
-            style={{ minHeight: '4rem' }}
-            {...register('description')}
           />
         </fieldset>
 
@@ -326,13 +183,7 @@ export function BasicForms() {
             Chcę założyć konto razem z zamówieniem
           </span>
           <label className="checkbox-container">
-            <input
-              name="account"
-              type="checkbox"
-              className="check-box"
-              defaultChecked
-              {...register('isCreatedAccountChecked')}
-            />
+            <input name="account" type="checkbox" className="check-box" />
             zakładam konto
           </label>
 
@@ -343,9 +194,7 @@ export function BasicForms() {
             type="password"
             id="password"
             className="password-box"
-            placeholder="56ggW457hh#"
-            defaultValue="56ggW457hh#"
-            {...register('password')}
+            placeholder="56ggW457hh#$"
           />
 
           <label htmlFor="confirm-password" className="form-paragraph-title">
@@ -355,9 +204,7 @@ export function BasicForms() {
             type="password"
             id="confirm-password"
             className="password-box"
-            placeholder="56ggW457hh#"
-            defaultValue="56ggW457hh#"
-            {...register('confirmPassword')}
+            placeholder="56ggW457hh#$"
           />
         </fieldset>
 
@@ -370,13 +217,7 @@ export function BasicForms() {
               Realizując zamówienia, akcptujesz regulamin naszego sklepu
             </p>
             <div className="checkbox-container">
-              <input
-                type="checkbox"
-                id="rules"
-                className="check-box"
-                defaultChecked
-                {...register('isTermsChecked')}
-              />
+              <input type="checkbox" id="rules" className="check-box" />
               <label htmlFor="rules">akceptuję regulamin*</label>
             </div>
           </div>
@@ -385,12 +226,7 @@ export function BasicForms() {
               Dołącz do naszego newslettera z promocjami dla naszych klientów
             </p>
             <div className="checkbox-container">
-              <input
-                type="checkbox"
-                id="newsletter"
-                className="check-box"
-                {...register('isNewsletterChecked')}
-              />
+              <input type="checkbox" id="newsletter" className="check-box" />
               <label htmlFor="newsletter">
                 zapisuję się na listę mailingową
               </label>
