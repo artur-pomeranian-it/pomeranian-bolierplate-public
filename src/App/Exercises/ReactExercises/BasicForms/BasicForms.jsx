@@ -69,32 +69,36 @@ const schema = yup.object({
 
   // Zakładanie konta
   isCreatedAccountChecked: yup.boolean(schemaValidationMessage.boolean),
-  password: yup
-    .string()
-    .required(schemaValidationMessage.required)
-    .min(
-      schemaValidationValues.password.min,
-      schemaValidationMessage.password.min
-    )
-    .matches(
-      schemaValidationRegex.password.smallLetters,
-      schemaValidationMessage.password.smallLetters
-    )
-    .matches(
-      schemaValidationRegex.password.bigLetters,
-      schemaValidationMessage.password.bigLetters
-    )
-    .matches(
-      schemaValidationRegex.password.numbers,
-      schemaValidationMessage.password.numbers
-    ),
-  confirmPassword: yup
-    .string()
-    .required(schemaValidationMessage.required)
-    .oneOf(
-      [yup.ref('password')],
-      schemaValidationMessage.password.confirmPassword
-    ),
+  password: yup.string().when('isCreatedAccountChecked', {
+    is: true, // only apply teh validation when account is to be created
+    then: yup
+      .string()
+      .required(schemaValidationMessage.required)
+      .min(
+        schemaValidationValues.password.min,
+        schemaValidationMessage.password.min
+      )
+      .matches(
+        schemaValidationRegex.password.smallLetters,
+        schemaValidationMessage.password.smallLetters
+      )
+      .matches(
+        schemaValidationRegex.password.bigLetters,
+        schemaValidationMessage.password.bigLetters
+      )
+      .matches(
+        schemaValidationRegex.password.numbers,
+        schemaValidationMessage.password.numbers
+      ),
+    otherwise: yup.string(),
+  }),
+  // confirmPassword: yup
+  //   .string()
+  //   .required(schemaValidationMessage.required)
+  //   .oneOf(
+  //     [yup.ref('password')],
+  //     schemaValidationMessage.password.confirmPassword
+  //   ),
 
   // Zgody i newsletter
   isTermsChecked: yup
@@ -116,7 +120,7 @@ export function BasicForms() {
     console.log('submit', data);
   };
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <div>
@@ -140,6 +144,7 @@ export function BasicForms() {
             <option value="backend">Kurs Backend Developer</option>
             <option value="ux_ui">Kurs UX/UI</option>
           </select>
+          <p className="form-error-mess">{errors.productType?.message}</p>
         </div>
 
         <fieldset className="form-input-container">
@@ -182,6 +187,7 @@ export function BasicForms() {
             />
             przelew tradycyjny
           </label>
+          <p className="form-error-mess">{errors.paymentMethod?.message}</p>
         </fieldset>
 
         <fieldset className="form-input-container">
@@ -240,8 +246,10 @@ export function BasicForms() {
             className="form-input-field"
             placeholder="wpisz swoje imię i nazwisko"
             defaultValue="Jan Kowalski"
+            aria-invalid={errors.name ? true : false}
             {...register('name')}
           />
+          <p className="form-error-mess">{errors.name?.message}</p>
 
           <label htmlFor="form-delivery-nick" className="form-paragraph-title">
             Twój pseudonim*
@@ -253,8 +261,10 @@ export function BasicForms() {
             className="form-input-field"
             placeholder="wpisz swój pseudonim"
             defaultValue="JanKow"
+            aria-invalid={errors.nickname ? true : false}
             {...register('nickname')}
           />
+          <p className="form-error-mess">{errors.nickname?.message}</p>
 
           <label
             htmlFor="form-delivery-adress"
@@ -269,8 +279,10 @@ export function BasicForms() {
             className="form-input-field"
             placeholder="adres, na który mamy wysłac zamówienie"
             defaultValue="rondo ONZ, Warszawa"
+            aria-invalid={errors.address ? true : false}
             {...register('address')}
           />
+          <p className="form-error-mess">{errors.address?.message}</p>
 
           <label htmlFor="form-delivery-email" className="form-paragraph-title">
             Adres e-mail*
@@ -282,8 +294,10 @@ export function BasicForms() {
             className="form-input-field"
             placeholder="jan.kowalski@gmail.com"
             defaultValue="jan@gmail.com"
+            aria-invalid={errors.email ? true : false}
             {...register('email')}
           />
+          <p className="form-error-mess">{errors.email?.message}</p>
 
           <label
             htmlFor="form-delivery-number"
@@ -298,8 +312,10 @@ export function BasicForms() {
             className="form-input-field"
             placeholder="888888888"
             defaultValue="888888888"
+            aria-invalid={errors.phone ? true : false}
             {...register('phone')}
           />
+          <p className="form-error-mess">{errors.phone?.message}</p>
 
           <label
             htmlFor="form-delivery-remarks"
@@ -314,8 +330,10 @@ export function BasicForms() {
             className="form-input-field"
             placeholder="Jeśli masz jakieś uwagi, wpisz je tutaj..."
             style={{ minHeight: '4rem' }}
+            aria-invalid={errors.description ? true : false}
             {...register('description')}
           />
+          <p className="form-error-mess">{errors.description?.message}</p>
         </fieldset>
 
         <fieldset className="form-input-container">
@@ -345,8 +363,10 @@ export function BasicForms() {
             className="password-box"
             placeholder="56ggW457hh#"
             defaultValue="56ggW457hh#"
+            aria-invalid={errors.password ? true : false}
             {...register('password')}
           />
+          <p className="form-error-mess">{errors.password?.message}</p>
 
           <label htmlFor="confirm-password" className="form-paragraph-title">
             Powtórz hasło:
@@ -357,8 +377,10 @@ export function BasicForms() {
             className="password-box"
             placeholder="56ggW457hh#"
             defaultValue="56ggW457hh#"
+            aria-invalid={errors.confirmPassword ? true : false}
             {...register('confirmPassword')}
           />
+          <p className="form-error-mess">{errors.confirmPassword?.message}</p>
         </fieldset>
 
         <fieldset className="form-input-container">
@@ -375,10 +397,12 @@ export function BasicForms() {
                 id="rules"
                 className="check-box"
                 defaultChecked
+                aria-invalid={errors.isTermsChecked ? true : false}
                 {...register('isTermsChecked')}
               />
               <label htmlFor="rules">akceptuję regulamin*</label>
             </div>
+            <p className="form-error-mess">{errors.isTermsChecked?.message}</p>
           </div>
           <div>
             <p className="form-paragraph-title">
