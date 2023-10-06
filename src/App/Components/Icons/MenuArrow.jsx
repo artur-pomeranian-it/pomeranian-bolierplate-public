@@ -1,4 +1,4 @@
-export function MenuArrow({ className = '' }) {
+export function MenuArrow({ className = '', onClick = () => {} }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -7,6 +7,7 @@ export function MenuArrow({ className = '' }) {
       viewBox="0 0 20 20"
       fill="none"
       className={className}
+      onClick={onClick}
     >
       <g clipPath="url(#clip0_5298_14543)">
         <path
