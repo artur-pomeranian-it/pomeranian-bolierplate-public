@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 // doesn't work with react-hook-form
 // import Select from 'react-select';
 import { useForm } from 'react-hook-form';
@@ -49,10 +49,12 @@ const schema = yup.object().shape({
   // Zamówienie produktu
   productType: yup.string().required(schemaValidationMessage.required),
   paymentMethod: yup.string().required(schemaValidationMessage.required),
-  isEnvChecked: yup.boolean(schemaValidationMessage.boolean),
-  isGithubChecked: yup.boolean(schemaValidationMessage.boolean),
-  isAdditionalDataChecked: yup.boolean(schemaValidationMessage.boolean),
-
+  // isEnvChecked: yup.boolean(schemaValidationMessage.boolean),
+  // isGithubChecked: yup.boolean(schemaValidationMessage.boolean),
+  // isAdditionalDataChecked: yup.boolean(schemaValidationMessage.boolean),
+  extras: yup.mixed().test('is-undefined', 'value must be defined', (value) => {
+    return value === undefined || (value instanceof Array && value.length > 0);
+  }),
   // Dane do realizacji zamówienia
   name: yup.string().required(schemaValidationMessage.required),
   nickname: yup.string().required(schemaValidationMessage.required),
@@ -63,7 +65,7 @@ const schema = yup.object().shape({
     .required(schemaValidationMessage.required),
   phone: yup
     .string()
-    .matches(schemaValidationRegex.phone, schemaValidationMessage.phone)
+    .matches(/^\d{9}$/, schemaValidationMessage.phone)
     .required(schemaValidationMessage.required),
   description: yup.string(),
 
@@ -125,11 +127,35 @@ export function BasicForms() {
     console.log('submit', data);
   };
 
-  // console.log(errors);
+  console.log(errors);
+
+  const myRef = useRef();
+  const handleNew = (event) => {
+    const yp = yup.string().max(1);
+    event.preventDefault();
+    for (const a of event.target) {
+      console.log(a.name, a.value);
+    }
+    console.log(event);
+    console.log(myRef);
+    if (yp.isValidSync(myRef?.current.value)) {
+      myRef.current.value = 'Ok';
+    } else {
+      myRef.current.value = 'Not';
+    }
+  };
+  const change = (evemt) => {
+    console.log(evemt);
+  };
 
   return (
     <div>
       <MasterHeader value="Formularz zamówienia" />
+      <form onSubmit={handleNew} onChange={change}>
+        <input type="text" name="new-input" defaultValue="hello" ref={myRef} />
+        <input type="text" name="new-input" defaultValue="hello" ref={myRef} />
+        <button>Submit</button>
+      </form>
       <form
         className="shopping-form-container"
         onSubmit={handleSubmit(onSubmit)}
@@ -201,11 +227,11 @@ export function BasicForms() {
           </legend>
           <div className="checkbox-container">
             <input
-              name="ustawienie środowiska"
               type="checkbox"
               id="additional-options-env"
               className="check-box"
-              {...register('isEnvChecked')}
+              value="env"
+              {...register('extras')}
             />
             <label htmlFor="additional-options-env">
               ustawienie środowiska
@@ -213,22 +239,22 @@ export function BasicForms() {
           </div>
           <div className="checkbox-container">
             <input
-              name="intro do GitGub"
               type="checkbox"
               id="additional-options-github"
               className="check-box"
-              defaultChecked
-              {...register('isGithubChecked')}
+              value="github"
+              // defaultChecked
+              {...register('extras')}
             />
             <label htmlFor="additional-options-github">intro do GitGub</label>
           </div>
           <div className="checkbox-container">
             <input
-              name="materiały dodatkowe"
               type="checkbox"
               id="additional-options-extras"
               className="check-box"
-              {...register('isAdditionalDataChecked')}
+              value="additional-materials"
+              {...register('extras')}
             />
             <label htmlFor="additional-options-extras">
               materiały dodatkowe
@@ -311,7 +337,6 @@ export function BasicForms() {
             Numer kontaktowy*
           </label>
           <input
-            name="form-delivery-number"
             type="tel"
             id="form-delivery-number"
             className="form-input-field"
@@ -329,7 +354,6 @@ export function BasicForms() {
             Dodatkowe uwagi do zamówienia
           </label>
           <textarea
-            name="form-delivery-remarks"
             type="text"
             id="form-delivery-remarks"
             className="form-input-field"
@@ -350,7 +374,6 @@ export function BasicForms() {
           </span>
           <label className="checkbox-container">
             <input
-              name="account"
               type="checkbox"
               className="check-box"
               defaultChecked

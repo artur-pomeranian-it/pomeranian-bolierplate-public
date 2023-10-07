@@ -42,6 +42,12 @@ fieldset.form-input-container {
   background: #fff;
 }
 
+.password-box[aria-invalid='true'],
+.form-input-field[aria-invalid='true'] {
+  outline: 1px solid red;
+  color: red;
+}
+
 .product-react-select {
   font-family: inherit;
   width: 100%;
