@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 // doesn't work with react-hook-form
 // import Select from 'react-select';
 import { useForm } from 'react-hook-form';
@@ -49,12 +48,10 @@ const schema = yup.object().shape({
   // Zamówienie produktu
   productType: yup.string().required(schemaValidationMessage.required),
   paymentMethod: yup.string().required(schemaValidationMessage.required),
-  // isEnvChecked: yup.boolean(schemaValidationMessage.boolean),
-  // isGithubChecked: yup.boolean(schemaValidationMessage.boolean),
-  // isAdditionalDataChecked: yup.boolean(schemaValidationMessage.boolean),
-  extras: yup.mixed().test('is-undefined', 'value must be defined', (value) => {
-    return value === undefined || (value instanceof Array && value.length > 0);
-  }),
+  // extras: yup.mixed().test('is-undefined', 'value must be defined', (value) => {
+  //   return value === undefined || (value instanceof Array && value.length > 0);
+  // }),
+  extras: yup.array().min(1),
   // Dane do realizacji zamówienia
   name: yup.string().required(schemaValidationMessage.required),
   nickname: yup.string().required(schemaValidationMessage.required),
@@ -121,6 +118,9 @@ export function BasicForms() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      extras: [],
+    },
   });
 
   const onSubmit = (data) => {
@@ -129,33 +129,9 @@ export function BasicForms() {
 
   console.log(errors);
 
-  const myRef = useRef();
-  const handleNew = (event) => {
-    const yp = yup.string().max(1);
-    event.preventDefault();
-    for (const a of event.target) {
-      console.log(a.name, a.value);
-    }
-    console.log(event);
-    console.log(myRef);
-    if (yp.isValidSync(myRef?.current.value)) {
-      myRef.current.value = 'Ok';
-    } else {
-      myRef.current.value = 'Not';
-    }
-  };
-  const change = (evemt) => {
-    console.log(evemt);
-  };
-
   return (
     <div>
       <MasterHeader value="Formularz zamówienia" />
-      <form onSubmit={handleNew} onChange={change}>
-        <input type="text" name="new-input" defaultValue="hello" ref={myRef} />
-        <input type="text" name="new-input" defaultValue="hello" ref={myRef} />
-        <button>Submit</button>
-      </form>
       <form
         className="shopping-form-container"
         onSubmit={handleSubmit(onSubmit)}
