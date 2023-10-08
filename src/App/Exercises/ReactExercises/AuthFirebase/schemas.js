@@ -8,4 +8,4 @@ export const registerSchema = yup.object({
     .oneOf([yup.ref('password')], 'Passwords must match'),
 });
 
-export const loginSchema = registerSchema.pick(['username', 'password']);
+export const loginSchema = registerSchema.pick(['email', 'password']);

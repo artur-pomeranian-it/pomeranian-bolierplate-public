@@ -54,6 +54,6 @@
     font-weight: 600;
 }
 
-.auth-form-error::content {
+.auth-form-error {
     color: #ff5722;
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useFormInputs } from './useFormInputs';
 import { loginSchema } from './schemas';
 import { logIn } from '../../../Firebase/firebaseClient';
+import * as yup from 'yup';
 
 export const LogIn = ({ toggle }) => {
   const [inputs, handleInputChange] = useFormInputs();
@@ -14,6 +15,9 @@ export const LogIn = ({ toggle }) => {
       const { email, password } = await loginSchema.validate(inputs);
       await logIn(email, password);
     } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        console.log(error.path, error.message);
+      }
       setErrorMessage(error.message);
     }
   };
