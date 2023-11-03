@@ -113,7 +113,6 @@ export const JsonXMLStorage = () => {
         wbudowana walidacja
       </p>
       <p>Powiązany termin WSDL - web schema definition language (IBM)</p>
-      <ExampleSOAP />
       <h2>SOAP vs REST - todo</h2>
       <p>SOAP - single object access protocol</p>
       <p>REST - representative state transfer</p>
