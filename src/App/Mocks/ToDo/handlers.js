@@ -11,7 +11,8 @@ export const baseURL = 'http://localhost:3333';
 export const basePath = `${baseURL}/api/todo`;
 export const DELAY = 10;
 
-const mockGet = rest.get(basePath, (_req, res, ctx) => {
+const mockGet = rest.get(basePath, (req, res, ctx) => {
+  req.headers.delete();
   const data = getFromLocalStorage();
   return res(ctx.delay(DELAY), ctx.json(data));
 });

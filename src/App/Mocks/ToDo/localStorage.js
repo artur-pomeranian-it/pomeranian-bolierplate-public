@@ -24,8 +24,9 @@ export const editLocalStorage = (callback) => {
 
 export const addToDo = (todo) => {
   const newData = editLocalStorage((data) => {
-    const { id } = data.reduce((prev, current) =>
-      prev?.id > current?.id ? prev : current
+    const { id } = data.reduce(
+      (prev, current) => (prev?.id > current?.id ? prev : current),
+      { id: 0 }
     );
     const newId = id + 1;
     const newToDo = {
@@ -60,7 +61,7 @@ export const markAsDone = (id) => {
 
 export const updateToDo = (id, newTodo) => {
   const newData = editLocalStorage((data) =>
-    data.map((todo) => (todo?.id !== id ? todo : newTodo))
+    data.map((todo) => (todo?.id !== id ? todo : { ...todo, ...newTodo }))
   );
   return newData.find((todo) => todo?.id === id);
 };
