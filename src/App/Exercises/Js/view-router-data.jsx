@@ -48,6 +48,8 @@ export const blockRouterMetaData = [
   OOP,
   TryCatchProtoThis,
   JsonXMLStorage,
+  TryCatchProtoThis,
+  JsonXMLStorage,
   MemoGame,
   PromiseAndMe,
   UseEffectAndPromiseExercise,
