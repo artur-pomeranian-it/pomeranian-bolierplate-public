@@ -12,6 +12,7 @@ import { excerciseMetaData as B9E5 } from './Blok-9-moreOrLessGame/router-data';
 import { excerciseMetaData as ToDoWithServer } from './ToDoWithServer/router-data';
 import { excerciseMetaData as REST } from './Blok-36-LocalDevAndFetch/router-data';
 import { BasicFormsMetaData } from './BasicForms/router-data';
+import { blockRouterMetaData as firebase } from './AuthFirebase/router-data';
 import { blockRouterMetaData as ReduxTest } from './Blok-46-ReduxTest/router-data';
 import { blockRouterMetaData as ReduxCounter } from './Blok-46-ReduxCounter/router-data';
 
@@ -28,6 +29,7 @@ export const blockRouterMetaData = [
   ToDoWithServer,
   REST,
   BasicFormsMetaData,
+  firebase,
   ReduxTest,
   ReduxCounter,
 ];
