@@ -2,7 +2,6 @@ import './styles.css';
 import { LocalStorage } from './LocalStorage';
 import { SessionStorage } from './SessionStorage';
 import { CookiesStorage } from './CookiesStorage';
-import { ExampleSOAP } from './ExampleSOAP';
 
 export const JsonXMLStorage = () => {
   // -----------------------------------------------------------------------------
