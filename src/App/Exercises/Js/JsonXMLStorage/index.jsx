@@ -2,12 +2,11 @@ import './styles.css';
 import { LocalStorage } from './LocalStorage';
 import { SessionStorage } from './SessionStorage';
 import { CookiesStorage } from './CookiesStorage';
+import { ExampleSOAP } from './ExampleSOAP';
 
 export const JsonXMLStorage = () => {
   // -----------------------------------------------------------------------------
   // JSON
-  // MIME (Multipurpose Internet Mail Extensions) - standardowy sposób określania typów danych w internecie
-  // dla json - application/json
   // -----------------------------------------------------------------------------
 
   // -----------------------------------------------------------------------------
@@ -17,10 +16,8 @@ export const JsonXMLStorage = () => {
   const jsonString = '{"name":"John", "age":30, "car":null}';
   const jsonBoolean = 'true';
 
-  const jsonParsed = JSON.parse(jsonString);
+  const parsedJson = JSON.parse(jsonString);
   const jsonBooleanParsed = JSON.parse(jsonBoolean);
-  console.log('JSON parsed', jsonParsed);
-  console.log('JSON boolean parsed', jsonBooleanParsed);
 
   // -----------------------------------------------------------------------------
   // EVAL() - wykonuje dowolny kod JavaScript - co może być niebezpieczne,
@@ -41,7 +38,6 @@ export const JsonXMLStorage = () => {
   };
 
   const serializedObj = JSON.stringify(objForSerialization);
-  console.log('serializedObj', serializedObj);
 
   // -----------------------------------------------------------------------------
   // DESERIALIZACJA (JSON.parse a nie JSON.deserialize)
@@ -58,12 +54,12 @@ export const JsonXMLStorage = () => {
   const emptyValueSerialized = JSON.stringify(emptyValue);
   console.log('emptyValueSerialized', emptyValueSerialized);
 
+  const emptyValueDeserialized = JSON.parse(emptyValueSerialized);
+  console.log('emptyValueDeserialized', emptyValueDeserialized);
+
   const undefinedValue = undefined;
   const undefinedValueSerialized = JSON.stringify(undefinedValue);
   console.log('undefinedValueSerialized', undefinedValueSerialized);
-
-  const emptyValueDeserialized = JSON.parse(emptyValueSerialized);
-  console.log('emptyValueDeserialized', emptyValueDeserialized);
 
   // JSON obsługuje tylko podstawowe typy danych:
   // string, number, boolean, object, array, null
@@ -88,6 +84,44 @@ export const JsonXMLStorage = () => {
 
   return (
     <div>
+      <h1>JsonXMLStorage</h1>
+      <h2>JSON kim jest JSON?</h2>
+      <p>JavaScript Object Notation</p>
+      <p>lekki format wymiany danych</p>
+      <p>wykorzystywany może być przez różne języki programowania</p>
+      <p>The JSON Format Evaluates to JavaScript Objects</p>
+      <p>
+        Internet Media Type = application/json (formerly known as a MIME type)
+      </p>
+      <p>rozszerzenie pliku .json</p>
+      <h2>Parsowanie</h2>
+      <p>{jsonString}</p>
+      <p>
+        parsowanie - deserializacja przykład {parsedJson.name}, boolean:{' '}
+        {jsonBooleanParsed}
+      </p>
+      <p>stringify - serializacja przykład: {serializedObj}</p>
+      <h2>XML</h2>
+      <p>
+        XML (ang. Extensible Markup Language, rozszerzalny język znaczników)
+        uniwersalny język znaczników przeznaczony do reprezentowania różnych
+        danych w strukturalizowany sposób.{' '}
+      </p>
+      <p>
+        XML vs. JSON: trudniejszy do nauczenia, bardziej skąplikowany, większy
+        rozmiar, wolniejszy, większa kontrola nad strukturą wymienianych danych,
+        wbudowana walidacja
+      </p>
+      <p>Powiązany termin WSDL - web schema definition language (IBM)</p>
+      <h2>SOAP vs REST - todo</h2>
+      <p>SOAP - single object access protocol</p>
+      <p>REST - representative state transfer</p>
+      <h2>storage</h2>
+      <ul>
+        <li>LocalStorage</li>
+        <li>SessionStorage</li>
+        <li>CookiesStorage </li>
+      </ul>
       JSON XML STORAGE
       <LocalStorage />
       <SessionStorage />
