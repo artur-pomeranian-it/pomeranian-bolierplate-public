@@ -60,7 +60,7 @@ export const Blocks = () => {
           <p className="dashboard-tile-description">
             stack technologiczny realizowany na kursie
           </p>
-          <SeeMoreLink to="tech-stack" />
+          <SeeMoreLink to="/tech-stack" />
         </div>
 
         <div>
