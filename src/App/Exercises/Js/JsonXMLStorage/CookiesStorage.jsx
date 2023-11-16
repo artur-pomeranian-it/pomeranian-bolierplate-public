@@ -2,7 +2,7 @@
 // COOKIES
 // -----------------------------------------------------------------------------
 
-export function CookieStorage() {
+export function CookiesStorage() {
   const setCookies = () => {
     setCookie('login', 'artur', 1);
     setCookie('email', 'artur@artur.pl', 2);
