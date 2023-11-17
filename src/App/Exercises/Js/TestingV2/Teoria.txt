@@ -1,0 +1,66 @@
+/* 
+
+Co to są testy? 
+  -> Anslysis, Design, Build, Test
+  -> Od wymagań do akceptacji wymagań
+    -> Test Case
+
+    Rodzaje Testów: 
+    >    jednostkowe(Unit Testy),
+    >    integracyjne (Integration),
+        e2e,
+        manualne,
+    >    User Interface (Selenium, Cypres),
+        UAT,
+        testy regresyjne
+        smoke testy,
+        wydajnościowe,
+        security,
+        disaster recovery,
+*/
+
+/* 
+    V-model 
+    Piramida Testów (Testing pyramid)
+    Puchar Testów (Testing trophy)
+*/
+
+/* 
+    TDD - Test Driven Development
+    BDD - Business Driven Development - BDD is a development technique that focuses on the system’s behavior
+    ATDD - Acceptance Test-Driven Devlopment - ATDD is a technique similar to BDD, focusing more on capturing the requirements
+    (Cucamber)
+*/
+
+//  Testy uczą / wymuszają pisanie lepszego kodu
+
+/* 
+    Zależności:
+
+    więcej testów -
+        + więcej pewności co do zachowania kodu, 
+        + mniejsze ryzyko wprowadzania zmian
+        - trzeba pisać testy
+        - zmiana w kodzie może wymagać zmiany testów
+        - false positives, false negatives (czyli gdzie jest błąd)            
+
+    im mniej testów:
+        + mniej pracy (nie trzeba pisać testów)
+        + nie trzeba zmieniać testów w przypadku zmian
+        - pełna regresja przy każdej zmianie (ogrom pracy)
+        - wydłużony czas pomiędzy wdrożeniami
+        - ryzyko że jakakolwiek zmiana zepsuje wydania
+        - code freeze
+        - dużo czasu poświęcane na obsługę błędów mniej na kodowanie
+        - zakaz kodowania
+        
+    
+    Po co testować, skoro domyślasz się że powinno działać?
+    Ja płacę za nowe funkcjonalności, róbcie więcej featcherów, a nie testy będziecie pisać!
+    Testy nie mają żadnej wartości dla klienta, a  jedynie gotowa funkcjonalność!
+    Nie po to zatrudniam programistów żeby pisali testy, od tego są testerzy/UAT!
+    Przecież po to zatrudniam doświadczonych programistów żeby pisali szybki kod, więc po co testy wydajnościowe?
+    Testy wydajnościowe, security zrobi się przed wdrożeniem bo takie są wymagania!
+*/
+
+// https://jestjs.io/docs/getting-started

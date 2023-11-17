@@ -1,0 +1,5 @@
+match /posts/{postID} {
+      allow create: if request.auth.uid != null;
+      allow read: if resource.data.author == request.auth.uid;
+      allow delete: if resource.data.author == request.auth.uid;
+    }
